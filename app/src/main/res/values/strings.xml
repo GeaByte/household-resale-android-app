@@ -39,6 +39,17 @@
     <string name="buyer">Buyer</string>
     <string name="seller">Seller</string>
     <string name="choose_portal">What would you like to do</string>
+    <string-array name="categories">
+        <item>Vehicle</item>
+        <item>Appliance</item>
+        <item>Clothing</item>
+        <item>Electronic</item>
+        <item>Toys Game</item>
+        <item>Other</item>
+    </string-array>
+    <string name="addImage">Add Image</string>
+    <string name="listButton">List</string>
+
 
 
 

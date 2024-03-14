@@ -5,7 +5,7 @@
     <string name="txDescription">Sell and Buy your item</string>
     <string name="btLogin">Login</string>
     <string name="btRegister">Register</string>
-    <string name="txLoginDesc">Sign in</string>
+    <string name="txLoginDesc"><b><font><a>Sign in</a></font></b></string>
     <string name="edEmail">Email</string>
     <string name="edPassword">Password</string>
     <string name="txHousehold">Household Items Picture</string>
@@ -35,7 +35,7 @@
     <string name="txtProductName">Product Name 1</string>
     <string name="btnSelect">Select</string>
     <string name="txtPrice">$19.99</string>
-    <string name="reg_text">Don\'t have an account? <b><font color="black">Sign up.</font></b></string>
+    <string name="reg_text">Don\'t have an account?</string>
     <string name="buyer">Buyer</string>
     <string name="seller">Seller</string>
     <string name="choose_portal">What would you like to do</string>
@@ -65,5 +65,6 @@
     <string name="MainPage">Main Page</string>
     <string name="RegisterPage">Register Page</string>
     <string name="UserSellerPage">User or Seller Page</string>
+    <string name="txtSignUp">Sign up</string>
 
 </resources>

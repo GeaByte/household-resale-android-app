@@ -66,5 +66,6 @@
     <string name="RegisterPage">Register Page</string>
     <string name="UserSellerPage">User or Seller Page</string>
     <string name="txtSignUp">Sign up</string>
+    <string name="edUsername">Username</string>
 
 </resources>

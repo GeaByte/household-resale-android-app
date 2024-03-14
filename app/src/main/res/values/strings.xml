@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">VanDeal Household</string>
+    <string name="txLogo">Logo Picture</string>
+    <string name="txWelcome">Welcome to VanDeal HouseHold</string>
+    <string name="txDescription">Sell and Buy your item</string>
+    <string name="btLogin">Login</string>
+    <string name="btRegister">Register</string>
+    <string name="txLoginDesc">Sign in</string>
+    <string name="edEmail">Email</string>
+    <string name="edPassword">Password</string>
+    <string name="txHousehold">Household Items Picture</string>
+    <string name="txForgotPassword">Forgot Password?</string>
+    <string name="txRegisterDesc">Create your Account</string>
+    <string name="edName">Full Name</string>
+    <string name="edAddress">Address</string>
+    <string name="edPhone">Phone Number</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be > 5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="homeTitle">Welcome to VanDeal Household</string>
+    <string name="txtfeaturedItems">Featured Items</string>
+    <string name="txtorderManagement">Order Management</string>
+    <string name="btnBuyAnItem">Buy an Item</string>
+    <string name="btnSellAnItem">Sell an Item</string>
+    <string name="btnViewEditOrderDetails">View/Edit Order Details</string>
+    <string name="btnViewOrderStatus">View Order Status</string>
+    <string name="btnViewOrderHistory">View Order History</string>
+    <string name="btnLogout">Log out</string>
+    <string name="imgProfileDescription">Profile Avatar</string>
+    <string name="tvUsername">Username</string>
+    <string name="txtUserEmail">username@email.com</string>
+    <string name="buyingTitle">Buy an item</string>
+    <string name="searchHint">Search for an item</string>
+    <string name="imgProductDescription">Product Image</string>
+    <string name="txtProductName">Product Name 1</string>
+    <string name="btnSelect">Select</string>
+    <string name="txtPrice">$19.99</string>
+    <string name="reg_text">Don\'t have an account? <b><font color="black">Sign up.</font></b></string>
+    <string name="buyer">Buyer</string>
+    <string name="seller">Seller</string>
+    <string name="choose_portal">What would you like to do</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="Test">Go to Testing Page</string>
+    <string name="BuyingPage">Buying Page</string>
+    <string name="HomePage">Home Page</string>
+    <string name="LoginPage">Login Page</string>
+    <string name="MainPage">Main Page</string>
+    <string name="RegisterPage">Register Page</string>
+    <string name="UserSellerPage">User or Seller Page</string>
+
+</resources>

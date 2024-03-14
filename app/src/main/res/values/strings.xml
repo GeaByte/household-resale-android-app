@@ -58,5 +58,13 @@
     <string name="MainPage">Main Page</string>
     <string name="RegisterPage">Register Page</string>
     <string name="UserSellerPage">User or Seller Page</string>
+    <string name="list_item_scrollview">Scroll View</string>
+    <string name="enter_item_tittle">Enter Item Title</string>
+    <string name="item_description">Description</string>
+    <string name="enter_price">Enter Price</string>
+    <string name="item_location">Location</string>
+    <string name="type_service">Type Of Service</string>
+    <string name="item_sell">Sell</string>
+    <string name="item_rent">Rent</string>
 
 </resources>

@@ -39,25 +39,6 @@
     <string name="buyer">Buyer</string>
     <string name="seller">Seller</string>
     <string name="choose_portal">What would you like to do</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <string name="Test">Go to Testing Page</string>
     <string name="BuyingPage">Buying Page</string>
     <string name="HomePage">Home Page</string>
@@ -65,7 +46,24 @@
     <string name="MainPage">Main Page</string>
     <string name="RegisterPage">Register Page</string>
     <string name="UserSellerPage">User or Seller Page</string>
+    <string name="list_item_scrollview">Scroll View</string>
+    <string name="enter_item_tittle">Enter Item Title</string>
+    <string name="item_description">Description</string>
+    <string name="enter_price">Enter Price</string>
+    <string name="item_location">Location</string>
+    <string name="type_service">Type Of Service</string>
+    <string name="item_sell">Sell</string>
+    <string name="item_rent">Rent</string>
+    <string-array name="categories">
+        <item>Vehicle</item>
+        <item>Appliance</item>
+        <item>Clothing</item>
+        <item>Electronic</item>
+        <item>Toys Game</item>
+        <item>Other</item>
+    </string-array>
+    <string name="addImage">Add Image</string>
+    <string name="listButton">List</string>
     <string name="txtSignUp">Sign up</string>
     <string name="edUsername">Username</string>
-
 </resources>

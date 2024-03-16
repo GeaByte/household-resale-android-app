@@ -18,16 +18,16 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.072"
+        app:layout_constraintVertical_bias="0.03"
         tools:ignore="TextSizeCheck" />
 
     <EditText
         android:id="@+id/edName"
         android:layout_width="350dp"
         android:layout_height="48dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/edName"
         android:inputType="text"
@@ -36,11 +36,10 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.246"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.18" />
 
     <EditText
-        android:id="@+id/edAddress"
+        android:id="@+id/edStreet"
         android:layout_width="350dp"
         android:layout_height="48dp"
         android:autofillHints=""
@@ -52,7 +51,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.442" />
+        app:layout_constraintVertical_bias="0.387" />
 
     <EditText
         android:id="@+id/edCreateEmail"
@@ -67,7 +66,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.653" />
+        app:layout_constraintVertical_bias="0.704" />
 
     <EditText
         android:id="@+id/edCreatPassword"
@@ -83,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.755" />
+        app:layout_constraintVertical_bias="0.805" />
 
     <EditText
         android:id="@+id/edPhone"
@@ -98,7 +97,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.549" />
+        app:layout_constraintVertical_bias="0.601" />
 
     <Button
         android:id="@+id/btCreatAcc"
@@ -112,14 +111,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.917"
+        app:layout_constraintVertical_bias="0.934"
         tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/btTest"
         android:layout_width="100dp"
         android:layout_height="95dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="#F57E7878"
         android:text="@string/Test"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -131,6 +130,7 @@
         android:id="@+id/edUsername"
         android:layout_width="350dp"
         android:layout_height="48dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/edUsername"
         android:inputType="text"
@@ -139,6 +139,36 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.345"
+        app:layout_constraintVertical_bias="0.282" />
+
+    <Spinner
+        android:id="@+id/spCity"
+        style="@android:style/Widget.DeviceDefault.Light.Spinner"
+        android:layout_width="158dp"
+        android:layout_height="48dp"
+        android:entries="@array/cities"
+        android:prompt="@string/txtCity"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.877"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <EditText
+        android:id="@+id/edZipCode"
+        android:layout_width="149dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="@string/edZipCode"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
         android:autofillHints="" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

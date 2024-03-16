@@ -14,17 +14,20 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button btTest = (Button) findViewById(R.id.btTest);
-        btTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, TestingPages.class));
-            }
-        });
+        Button login = findViewById(R.id.btnLogin);
+        login.setOnClickListener(this::onClickLogin);
 
 
     }
-    public void clickOnSignUp(View view){
+    public void onClickSignUp(View view){
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
+
+    public void onClickLogin(View view){
+        /*
+        should perform user authentication prior to direct them to Home page
+        will implement authentication after db is set
+         */
+        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
     }
 }

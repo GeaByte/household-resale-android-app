@@ -98,19 +98,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
-    <Button
-        android:id="@+id/btTest"
-        android:layout_width="133dp"
-        android:layout_height="74dp"
-        android:layout_marginBottom="512dp"
-        android:backgroundTint="#F57E7878"
-        android:text="@string/Test"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.978"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TextSizeCheck" />
-
     <TextView
         android:id="@+id/tvSignUp"
         android:layout_width="wrap_content"
@@ -118,13 +105,15 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="84dp"
-        android:onClick="clickOnSignUp"
+        android:minHeight="48dp"
+        android:onClick="onClickSignUp"
         android:text="@string/txtSignUp"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/txNoAccount"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        tools:ignore="UsingOnClickInXml" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

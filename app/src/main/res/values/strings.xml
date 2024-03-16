@@ -66,4 +66,14 @@
     <string name="listButton">List</string>
     <string name="txtSignUp">Sign up</string>
     <string name="edUsername">Username</string>
+    <string name="txtOrderID">Order ID:</string>
+    <string name="txtItemName">Item Name:</string>
+    <string name="txtOrderDate">Order Date:</string>
+    <string name="txtStatus">Status:</string>
+    <string name="btnView">View</string>
+    <string name="btnEdit">Edit</string>
+    <string name="txtOrderDetail">Order Details</string>
+    <string name="txtItemDetail">Item Details:</string>
+    <string name="txtDeliveryOption">Delivery Option:</string>
+    <string name="btnEditOrder">Edit Order</string>
 </resources>

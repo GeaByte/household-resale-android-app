@@ -13,13 +13,5 @@ public class UserOrSellerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_or_seller);
-
-        Button btTest = (Button) findViewById(R.id.btTest);
-        btTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserOrSellerActivity.this, TestingPages.class));
-            }
-        });
     }
 }

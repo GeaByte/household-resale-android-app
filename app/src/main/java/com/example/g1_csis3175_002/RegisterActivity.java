@@ -23,15 +23,8 @@ public class RegisterActivity extends AppCompatActivity {
         EditText phone = findViewById(R.id.edPhone);
         EditText email = findViewById(R.id.edCreateEmail);
         EditText password = findViewById(R.id.edCreatPassword);
-        Button btTest = (Button) findViewById(R.id.btTest);
         Button btRegister = (Button) findViewById(R.id.btCreatAcc);
         databaseHelper = new DatabaseHelper(this);
-        btTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, TestingPages.class));
-            }
-        });
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             boolean isInserted;
@@ -45,9 +38,11 @@ public class RegisterActivity extends AppCompatActivity {
                         password.getText().toString()
                 );
 
-                if(isInserted)
+                if(isInserted) {
                     Toast.makeText(RegisterActivity.this, "You are registered.",
                             Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                }
                 else
                     Toast.makeText(RegisterActivity.this,
                             "Not able to register", Toast.LENGTH_LONG).show();

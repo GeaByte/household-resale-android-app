@@ -10,8 +10,8 @@
         android:id="@+id/tvHomeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:text="@string/homeTitle"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -20,14 +20,15 @@
 
     <LinearLayout
         android:id="@+id/loFeaturedItem"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="37dp"
         android:background="#DAD8D8"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHomeTitle">
 
@@ -59,14 +60,15 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="116dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="37dp"
         android:background="#DAD8D8"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -111,7 +113,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/btnLogout"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#E91E1E"
@@ -122,20 +124,21 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="350dp"
-        android:layout_height="190dp"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="37dp"
         android:background="#DAD8D8"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loFeaturedItem"
         tools:ignore="TextSizeCheck">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvOrderManagement"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:gravity="bottom"
@@ -144,41 +147,21 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btnViewOrderHistory"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#2196F3"
-            android:text="@string/btnViewEditOrderDetails"
+            android:text="@string/btnViewOrderHistory"
             android:textColor="#212121" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/btnViewOrderStatus"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#2196F3"
             android:text="@string/btnViewOrderStatus"
             android:textColor="#212121" />
 
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#2196F3"
-            android:text="@string/btnViewOrderHistory"
-            android:textColor="#212121" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btTest"
-        android:layout_width="92dp"
-        android:layout_height="63dp"
-        android:backgroundTint="#F57E7878"
-        android:text="@string/Test"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.401"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

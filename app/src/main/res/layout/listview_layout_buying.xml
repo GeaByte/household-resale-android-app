@@ -6,7 +6,8 @@
     android:layout_height="300dp"
     android:background="#DAD8D8"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="UsingOnClickInXml">
 
     <ImageView
         android:id="@+id/imgProduct"
@@ -38,6 +39,7 @@
         android:layout_width="190dp"
         android:layout_height="50dp"
         android:backgroundTint="#2196F3"
+        android:onClick="onClickSelect"
         android:text="@string/btnSelect"
         android:textColor="#212121"
         tools:ignore="TouchTargetSizeCheck" />

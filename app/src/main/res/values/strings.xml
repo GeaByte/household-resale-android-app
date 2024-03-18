@@ -32,7 +32,7 @@
     <string name="buyingTitle">Buy an item</string>
     <string name="searchHint">Search for an item</string>
     <string name="imgProductDescription">Product Image</string>
-    <string name="txtProductName">Product Name 1</string>
+    <string name="txtProductName">Product Name:</string>
     <string name="btnSelect">Select</string>
     <string name="txtPrice">$19.99</string>
     <string name="reg_text">Don\'t have an account?</string>
@@ -66,6 +66,20 @@
     <string name="listButton">List</string>
     <string name="txtSignUp">Sign up</string>
     <string name="edUsername">Username</string>
-    <string name="edit_title">Edit Order</string>
-    <string name="edit_button">Save</string>
+    <string name="txtOrderID">Order ID:</string>
+    <string name="txtItemName">Item Name:</string>
+    <string name="txtOrderDate">Order Date:</string>
+    <string name="txtStatus">Status:</string>
+    <string name="btnView">View</string>
+    <string name="btnEdit">Edit</string>
+    <string name="txtOrderDetail">Order Details</string>
+    <string name="txtItemDetail">Item Details:</string>
+    <string name="txtDeliveryOption">Delivery Option:</string>
+    <string name="btnEditOrder">Edit Order</string>
+    <string name="txtOriginalPrice">Original Price:</string>
+    <string name="txtDiscountPrice">Discount Price:</string>
+    <string name="txtSellerInformation">Seller Information:</string>
+    <string name="txtContact">Contact:</string>
+    <string name="btnPlaceOrder">Place Order</string>
+    <string name="btnBack">Back</string>
 </resources>

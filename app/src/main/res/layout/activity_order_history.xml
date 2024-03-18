@@ -4,47 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuyingActivity">
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="37dp"
-        android:gravity="center"
-        android:queryHint="@string/searchHint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvBuyTitle" />
+    tools:context=".OrderHistoryActivity">
 
     <TextView
-        android:id="@+id/tvBuyTitle"
+        android:id="@+id/tvViewEditOrderTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="@string/buyingTitle"
-        android:textSize="24sp"
+        android:text="@string/btnViewEditOrderDetails"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextSizeCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <GridView
-        android:id="@+id/GVbuying"
+    <ListView
+        android:id="@+id/lvOrders"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:gravity="center"
-        android:numColumns="2"
-        android:verticalSpacing="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvViewEditOrderTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

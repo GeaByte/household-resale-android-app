@@ -32,7 +32,7 @@
     <string name="buyingTitle">Buy an item</string>
     <string name="searchHint">Search for an item</string>
     <string name="imgProductDescription">Product Image</string>
-    <string name="txtProductName">Product Name 1</string>
+    <string name="txtProductName">Product Name:</string>
     <string name="btnSelect">Select</string>
     <string name="txtPrice">$19.99</string>
     <string name="reg_text">Don\'t have an account?</string>
@@ -76,4 +76,10 @@
     <string name="txtItemDetail">Item Details:</string>
     <string name="txtDeliveryOption">Delivery Option:</string>
     <string name="btnEditOrder">Edit Order</string>
+    <string name="txtOriginalPrice">Original Price:</string>
+    <string name="txtDiscountPrice">Discount Price:</string>
+    <string name="txtSellerInformation">Seller Information:</string>
+    <string name="txtContact">Contact:</string>
+    <string name="btnPlaceOrder">Place Order</string>
+    <string name="btnBack">Back</string>
 </resources>

@@ -89,22 +89,14 @@
 
         <Button
             android:id="@+id/btnView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#4CAF50"
             android:onClick="onClickView"
             android:text="@string/btnView"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle,UsingOnClickInXml" />
 
-        <Button
-            android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#2196F3"
-            android:text="@string/btnEdit"
-            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
 </LinearLayout>

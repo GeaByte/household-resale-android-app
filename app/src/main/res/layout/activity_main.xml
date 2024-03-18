@@ -10,53 +10,49 @@
         android:id="@+id/imgLogo1"
         android:layout_width="169dp"
         android:layout_height="181dp"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/txLogo"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085"
         app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/txWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/txWelcome"
         android:textColor="@color/material_dynamic_primary20"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427" />
+        app:layout_constraintTop_toBottomOf="@+id/imgLogo1" />
 
     <TextView
         android:id="@+id/txDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/txDescription"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txWelcome" />
 
     <Button
         android:id="@+id/btRegister"
         android:layout_width="116dp"
         android:layout_height="58dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="#4CAF50"
         android:text="@string/btRegister"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.64"
+        app:layout_constraintStart_toEndOf="@+id/btLogin"
+        app:layout_constraintTop_toBottomOf="@+id/txDescription"
         tools:cornerRadius="0dp"
         tools:ignore="TextContrastCheck,TextSizeCheck" />
 
@@ -64,15 +60,13 @@
         android:id="@+id/btLogin"
         android:layout_width="116dp"
         android:layout_height="58dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="#673AB7"
         android:text="@string/btLogin"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintEnd_toStartOf="@+id/btRegister"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.642"
+        app:layout_constraintTop_toBottomOf="@+id/txDescription"
         tools:cornerRadius="0dp"
         tools:ignore="TextContrastCheck" />
 

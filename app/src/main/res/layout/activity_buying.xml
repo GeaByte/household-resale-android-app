@@ -8,38 +8,41 @@
 
     <SearchView
         android:id="@+id/searchView"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="37dp"
         android:gravity="center"
         android:queryHint="@string/searchHint"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBuyTitle" />
 
     <TextView
         android:id="@+id/tvBuyTitle"
-        android:layout_width="174dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:text="@string/buyingTitle"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextSizeCheck" />
 
     <GridView
         android:id="@+id/GVbuying"
-        android:layout_width="409dp"
-        android:layout_height="578dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:gravity="center"
         android:numColumns="2"
         android:verticalSpacing="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView" />

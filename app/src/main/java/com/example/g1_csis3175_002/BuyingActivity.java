@@ -30,4 +30,8 @@ public class BuyingActivity extends AppCompatActivity {
         ProductGVAdapter adapter = new ProductGVAdapter(this, productModelArrayList);
         productGV.setAdapter((adapter));
     }
+
+    public void onClickSelect(View view){
+        startActivity(new Intent(BuyingActivity.this, ItemDetailActivity.class));
+    }
 }

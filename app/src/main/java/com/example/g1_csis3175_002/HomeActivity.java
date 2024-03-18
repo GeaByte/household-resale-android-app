@@ -21,14 +21,14 @@ public class HomeActivity extends AppCompatActivity {
         TextView userEmail = findViewById(R.id.tvUserEmail);
         Button buyItem = findViewById(R.id.btnBuyItem);
         Button sellItem = findViewById(R.id.btnSellItem);
-        Button viewEditOrder = findViewById(R.id.btnViewEditOrderDetails);
+        Button viewEditOrder = findViewById(R.id.btnViewOrderHistory);
         Button viewOrderStatus = findViewById(R.id.btnViewOrderStatus);
         Button viewOrderHistory = findViewById(R.id.btnViewOrderHistory);
         Button logout = findViewById(R.id.btnLogout);
 
         buyItem.setOnClickListener(this::onClickBuyAnItem);
         sellItem.setOnClickListener(this::onClickSellAnItem);
-        viewEditOrder.setOnClickListener(this::onClickViewEditOrder);
+        viewEditOrder.setOnClickListener(this::onClickViewOrderHistory);
         viewOrderStatus.setOnClickListener(this::onClickViewOrderStatus);
         viewOrderHistory.setOnClickListener(this::onClickViewOrderHistory);
         logout.setOnClickListener(this::onClickLogout);
@@ -49,16 +49,13 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(HomeActivity.this, ListItemSeller.class));
     }
 
-    public void onClickViewEditOrder(View view){
-        startActivity(new Intent(HomeActivity.this, ViewEditOrderActivity.class));
+    public void onClickViewOrderHistory(View view){
+        startActivity(new Intent(HomeActivity.this, OrderHistoryActivity.class));
     }
     public void onClickViewOrderStatus(View view){
 
     }
 
-    public void onClickViewOrderHistory(View view){
-
-    }
 
     public void onClickLogout(View view){
         /*

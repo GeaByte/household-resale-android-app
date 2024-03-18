@@ -60,10 +60,10 @@ public class ListItemSeller extends AppCompatActivity {
         radioButtonRent = findViewById(R.id.radioButtonRent);
         imgView = findViewById(R.id.imgView);
         Button btnAddImage = findViewById(R.id.btnAddImage);
+        Button btnList = findViewById(R.id.btnList);
 
-        Button buttonSell = findViewById(R.id.buttonSell);
 
-        buttonSell.setOnClickListener(new View.OnClickListener() {
+        btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -86,17 +86,6 @@ public class ListItemSeller extends AppCompatActivity {
                     Toast.makeText(ListItemSeller.this, "Failed to list item", Toast.LENGTH_SHORT).show();
                 }
 
-
-
-                    // Do something with the collected data
-                    // For now, just displaying a toast with the collected data
-                  /*  String message = "Title: " + title +
-                            "\nDescription: " + description +
-                            "\nPrice: " + price +
-                            "\nLocation: " + location +
-                            "\nCategory: " + category +
-                            "\nSell/Rent: " + sellRent;
-                    Toast.makeText(ListItemSeller.this, message, Toast.LENGTH_LONG).show();*/
 
 
             }

@@ -7,23 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".ListItemSeller">
 
-
-    <ImageView
-        android:id="@+id/imgLogo02"
-        android:layout_width="100dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/txLogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="150dp"
         android:contentDescription="@string/list_item_scrollview"
         tools:layout_editor_absoluteY="120dp">
 
@@ -156,20 +143,36 @@
                 android:layout_marginStart="146dp"
                 android:layout_marginTop="11dp"
                 android:layout_marginEnd="156dp"
-                android:contentDescription="@string/txLogo"
-                app:srcCompat="@drawable/baseline_image_24" />
+                android:contentDescription="TODO"
+                app:srcCompat="@drawable/baseline_image_24"
+                tools:ignore="ContentDescription,HardcodedText" />
 
             <Button
-                android:id="@+id/btnList"
+                android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imgView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
-                android:text="@string/listButton"
+                android:text="@string/edit_button"
                 android:textSize="20sp" />
 
         </RelativeLayout>
 
     </ScrollView>
+
+    <TextView
+        android:id="@+id/txtViewEditTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:drawableLeft="@drawable/baseline_edit_24"
+        android:text="@string/edit_title"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded,UseCompatTextViewDrawableXml" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -82,4 +82,6 @@
     <string name="txtContact">Contact:</string>
     <string name="btnPlaceOrder">Place Order</string>
     <string name="btnBack">Back</string>
+    <string name="edit_button">Edit</string>
+    <string name="edit_title">Edit Title</string>
 </resources>

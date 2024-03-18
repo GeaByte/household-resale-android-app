@@ -2,10 +2,10 @@ package com.example.g1_csis3175_002;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -140,7 +140,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean addUser(String name, String username, String address, String zipcode, String city,
+    // addUser
+    public boolean addUser(String username, String name, String address, String zipcode, String city,
+                           int contact, String email, String password, boolean isBuyer, boolean isSeller){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(T1COL1,username);
+        values.put(T1COL2,name);
+        values.put(T1COL3,address);
+        values.put(T1COL4, zipcode);
+        values.put(T1COL5, city);
+        values.put(T1COL6, contact);
+        values.put(T1COL7, email);
+        values.put(T1COL8, password);
+        values.put(T1COL9, isBuyer ? 1 : 0);
+        values.put(T1COL10, isSeller ? 1 : 0);
+
+
+        long r = sqLiteDatabase.insert(TABLE1_NAME, null, values);
+        return r > 0;
+
+    }
+    public boolean addUser(String username, String name, String address, String zipcode, String city,
                            int contact, String email, String password){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -154,27 +175,83 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(T1COL8, password);
 
         long r = sqLiteDatabase.insert(TABLE1_NAME, null, values);
-        if(r>0)
-            return true;
-        else
-            return false;
+        return r > 0;
 
     }
 
-    public boolean addProduct(Integer pId, double price, String description, String sellersInfo){
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+    // getUser
+    public Cursor getUser(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE1_NAME, null, T1COL1 + "=?", new String[] { username }, null, null, null);
+    }
+
+    // updateUser
+    public boolean updateUser(String username, String name, String address, String zipcode,
+                              String city, int contact, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(T2COL2,pId);
-        values.put(T2COL3,price);
-        values.put(T2COL4, description);
-        values.put(T2COL5, sellersInfo);
+        values.put(T1COL2,name);
+        values.put(T1COL3,address);
+        values.put(T1COL4, zipcode);
+        values.put(T1COL5, city);
+        values.put(T1COL6, contact);
+        values.put(T1COL7, email);
+        values.put(T1COL8, password);
 
-        long r = sqLiteDatabase.insert(TABLE2_NAME, null, values);
-        if(r>0)
-            return true;
-        else
-            return false;
+        int rowsAffected = db.update(TABLE1_NAME, values, T1COL1 + "=?", new String[] { username });
+        return rowsAffected > 0;
+    }
 
+    // deleteUser
+    public boolean deleteUser(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete(TABLE1_NAME, T1COL1 + "=?", new String[] { username });
+        return rowsDeleted > 0;
+    }
+
+
+
+    //2-Product
+    // addProduct
+    public long addProduct(String description, String sellersInfo, String picture, int orderId, int quantity, double price) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(T2COL2, price);
+        values.put(T2COL3, description);
+        values.put(T2COL4, sellersInfo);
+        values.put(T2COL5, picture);
+        values.put(T2COL6, orderId);
+        values.put(T2COL7, quantity);
+
+        return db.insert(TABLE2_NAME, null, values);
+    }
+
+    // getProduct
+    public Cursor getProduct(int productId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE2_NAME, null, T2COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null);
+    }
+
+    // updateProduct
+    public boolean updateProduct(int productId, String description, String sellersInfo, String picture, int orderId, int quantity, double price) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(T2COL2, price);
+        values.put(T2COL3, description);
+        values.put(T2COL4, sellersInfo);
+        values.put(T2COL5, picture);
+        values.put(T2COL6, orderId);
+        values.put(T2COL7, quantity);
+
+        int rowsAffected = db.update(TABLE2_NAME, values, T2COL1 + "=?", new String[] {String.valueOf(productId)});
+        return rowsAffected > 0;
+    }
+
+    // deleteProduct
+    public boolean deleteProduct(int productId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete(TABLE2_NAME, T2COL1 + "=?", new String[] {String.valueOf(productId)});
+        return rowsDeleted > 0;
     }
 
     public boolean addOrder(Integer oId, String address, String date, String status){
@@ -186,12 +263,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(T2COL5, status);
 
         long r = sqLiteDatabase.insert(TABLE2_NAME, null, values);
-        if(r>0)
-            return true;
-        else
-            return false;
+        return r > 0;
 
     }
-
-
 }

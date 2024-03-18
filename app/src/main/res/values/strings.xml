@@ -66,4 +66,6 @@
     <string name="listButton">List</string>
     <string name="txtSignUp">Sign up</string>
     <string name="edUsername">Username</string>
+    <string name="edit_title">Edit Order</string>
+    <string name="edit_button">Save</string>
 </resources>

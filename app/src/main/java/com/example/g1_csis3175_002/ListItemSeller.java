@@ -3,7 +3,10 @@ package com.example.g1_csis3175_002;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -133,20 +136,26 @@ public class ListItemSeller extends AppCompatActivity {
     }
 
     private String saveImageToInternalStorage(ImageView imageView) {
-        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-        Bitmap bitmap = drawable.getBitmap();
+        Drawable drawable = imageView.getDrawable();
+        Bitmap bitmap;
 
-        // Get the context wrapper
+        if (drawable instanceof BitmapDrawable) {
+            bitmap = ((BitmapDrawable) drawable).getBitmap();
+        } else if (drawable instanceof VectorDrawable) {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                    drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+        } else {
+            throw new IllegalArgumentException("Unsupported drawable type");
+        }
+
         ContextWrapper wrapper = new ContextWrapper(getApplicationContext());
-
-        // Create a new file
         File file = wrapper.getDir("Images", MODE_PRIVATE);
-
-        // Generate a unique filename
         file = new File(file, "image" + System.currentTimeMillis() + ".jpg");
 
         try {
-            // Compress the bitmap and save it to the file
             OutputStream stream = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             stream.flush();
@@ -155,7 +164,6 @@ public class ListItemSeller extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Return the file path
         return file.getAbsolutePath();
     }
 }

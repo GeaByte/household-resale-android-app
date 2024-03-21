@@ -59,36 +59,35 @@ public class DatabaseHelperTest {
 
     @Test
     public void addProductTest() {
-        long productId = dbHelper.addProduct("nice", "123", "Nice", 1, 1, 123);
+        long productId = dbHelper.addProduct("iphone", "descri", 100.11, "elec", "sell", "123/123/123", "Jimmy", 2);
         assertNotEquals(-1, productId);
     }
 
 
     @Test
     public void getProductTest() {
-        dbHelper.addProduct("nice", "123", "Nice", 1, 1, 123);
-        Cursor cursor = dbHelper.getProduct(1);
-        assertTrue(cursor.moveToFirst()); // True if there is data (the user exists)
+        long productId = dbHelper.addProduct("iphone", "description", 100.11, "electronics", "sell", "123/123/123", "Jimmy", 2);
+        assertNotEquals(-1, productId);
+        Cursor cursor = dbHelper.getProduct(productId);
+        assertTrue(cursor != null && cursor.moveToFirst());
         cursor.close();
     }
 
     @Test
     public void updateProductTest() {
-        // Add product and get the new ID
-        long newProductId = dbHelper.addProduct("nice", "123", "Nice", 1, 1, 123.0);
+        long productId = dbHelper.addProduct("iphone", "description", 100.11, "electronics", "sell", "123/123/123", "Jimmy", 2);
+        assertNotEquals(-1, productId);
 
-        // Check if product was added successfully
-        assertTrue(newProductId != -1);
-
-        // Update the product using the new ID
-        boolean updateResult = dbHelper.updateProduct((int)newProductId, "Doe", "125 Elm Street", "NewPicture.jpg", 1, 1, 123.0);
+        boolean updateResult = dbHelper.updateProduct((int)productId, "Doe", "125 Elm Street", 11, "clothes", "rent", "321/321/312", "Mama", 3);
         assertTrue(updateResult);
+
     }
 
     @Test
     public void deleteProductTest() {
-        dbHelper.addProduct("nice", "123", "Nice", 1, 1, 123);
-        boolean result = dbHelper.deleteProduct(1);
+        long productId = dbHelper.addProduct("iphone", "description", 100.11, "electronics", "sell", "123/123/123", "Jimmy", 2);
+        assertNotEquals(-1, productId);
+        boolean result = dbHelper.deleteProduct(productId);
         assertTrue(result);
     }
 

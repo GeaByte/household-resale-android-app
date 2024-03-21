@@ -27,8 +27,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T2COL3 = "Description";
     final static String T2COL4 = "SellersInfo";
     final static String T2COL5 = "Picture";
-    final static String T2COL6 = "OrderID";
+    final static String T2COL6 = "SellOrRent";
     final static String T2COL7 = "Quantity";
+    final static String T2COL8 = "Category";
+    final static String T2COL9 = "ProductName";
+//    final static String T2COL10 = "SellOrRent";
     final static String TABLE3_NAME = "UserOrder";
     final static String T3COL1 = "OrderID";
     final static String T3COL2 = "ShippingAddress";
@@ -73,8 +76,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL3 + " TEXT," +
                 T2COL4 + " TEXT," +
                 T2COL5 + " TEXT," +
-                T2COL6 + " INTEGER," +
+                T2COL6 + " TEXT," +
                 T2COL7 + " INTEGER," +
+                T2COL8 + " TEXT," +
+                T2COL9 + " TEXT," +
                 "FOREIGN KEY(" + T2COL6 + ") REFERENCES " + TABLE3_NAME + "(" +
                 T3COL1 + ")" + ");";
 
@@ -213,42 +218,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //2-Product
     // addProduct
-    public long addProduct(String description, String sellersInfo, String picture, int orderId, int quantity, double price) {
+    public long addProduct(String productName, String description, double price, String category, String sellOrRent, String imagePath, String sellerName, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(T2COL9, productName);
+        values.put(T2COL4, sellerName);
         values.put(T2COL2, price);
         values.put(T2COL3, description);
-        values.put(T2COL4, sellersInfo);
-        values.put(T2COL5, picture);
-        values.put(T2COL6, orderId);
+        values.put(T2COL5, imagePath);
+//        values.put(T2COL6, orderId);
         values.put(T2COL7, quantity);
+        values.put(T2COL8, category);
+        values.put(T2COL6, sellOrRent);
 
-        return db.insert(TABLE2_NAME, null, values);
+        long result = db.insert(TABLE2_NAME, null, values);
+        return result;
     }
 
-    // getProduct
-    public Cursor getProduct(int productId) {
+    // getProduct join location
+    public Cursor getProduct(long productId) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(TABLE2_NAME, null, T2COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null);
     }
 
     // updateProduct
-    public boolean updateProduct(int productId, String description, String sellersInfo, String picture, int orderId, int quantity, double price) {
+    public boolean updateProduct(int productId, String productName, String description, double price, String category, String sellOrRent, String imagePath, String sellerName, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(T2COL9, productName);
+        values.put(T2COL4, sellerName);
         values.put(T2COL2, price);
         values.put(T2COL3, description);
-        values.put(T2COL4, sellersInfo);
-        values.put(T2COL5, picture);
-        values.put(T2COL6, orderId);
+        values.put(T2COL5, imagePath);
+//        values.put(T2COL6, orderId);
         values.put(T2COL7, quantity);
+        values.put(T2COL8, category);
+        values.put(T2COL6, sellOrRent);
 
         int rowsAffected = db.update(TABLE2_NAME, values, T2COL1 + "=?", new String[] {String.valueOf(productId)});
         return rowsAffected > 0;
     }
 
     // deleteProduct
-    public boolean deleteProduct(int productId) {
+    public boolean deleteProduct(long productId) {
         SQLiteDatabase db = this.getWritableDatabase();
         int rowsDeleted = db.delete(TABLE2_NAME, T2COL1 + "=?", new String[] {String.valueOf(productId)});
         return rowsDeleted > 0;

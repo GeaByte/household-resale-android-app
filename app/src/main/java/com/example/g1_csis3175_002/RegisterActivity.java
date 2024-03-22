@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -19,30 +20,40 @@ public class RegisterActivity extends AppCompatActivity {
 
         EditText name = findViewById(R.id.edName);
         EditText username = findViewById(R.id.edUsername);
-        EditText address = findViewById(R.id.edAddress);
+        EditText address = findViewById(R.id.edStreet);
+        EditText zipcode = findViewById(R.id.edZipCode);
         EditText phone = findViewById(R.id.edPhone);
         EditText email = findViewById(R.id.edCreateEmail);
         EditText password = findViewById(R.id.edCreatPassword);
+        Spinner spCity = (Spinner) findViewById(R.id.spCity);
+        Button btTest = (Button) findViewById(R.id.btTest);
         Button btRegister = (Button) findViewById(R.id.btCreatAcc);
         databaseHelper = new DatabaseHelper(this);
+        btTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this, TestingPages.class));
+            }
+        });
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             boolean isInserted;
             @Override
             public void onClick(View v) {
-                isInserted = databaseHelper.addRecord(name.getText().toString(),
+                String city = spCity.getSelectedItem().toString();
+                isInserted = databaseHelper.addUser(name.getText().toString(),
                         username.getText().toString(),
                         address.getText().toString(),
+                        zipcode.getText().toString(),
+                        city,
                         Integer.parseInt(phone.getText().toString()),
                         email.getText().toString(),
                         password.getText().toString()
                 );
 
-                if(isInserted) {
+                if(isInserted)
                     Toast.makeText(RegisterActivity.this, "You are registered.",
                             Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                }
                 else
                     Toast.makeText(RegisterActivity.this,
                             "Not able to register", Toast.LENGTH_LONG).show();

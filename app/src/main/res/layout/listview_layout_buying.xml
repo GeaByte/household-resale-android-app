@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="180dp"
-    android:layout_height="300dp"
+    android:layout_height="330dp"
+    android:layout_marginEnd="10dp"
     android:background="#DAD8D8"
     android:gravity="center"
     android:orientation="vertical"
@@ -11,7 +12,7 @@
 
     <ImageView
         android:id="@+id/imgProduct"
-        android:layout_width="180dp"
+        android:layout_width="150dp"
         android:layout_height="200dp"
         android:contentDescription="@string/imgProductDescription"
         tools:ignore="ImageContrastCheck"
@@ -19,8 +20,9 @@
 
     <TextView
         android:id="@+id/tvProductName"
-        android:layout_width="180dp"
-        android:layout_height="30dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:gravity="center"
         android:text="@string/txtProductName"
         android:textSize="20sp"
         tools:ignore="TextSizeCheck" />
@@ -29,6 +31,7 @@
         android:id="@+id/tvPrice"
         android:layout_width="180dp"
         android:layout_height="30dp"
+        android:gravity="center"
         android:text="@string/txtPrice"
         android:textColor="#B71C1C"
         android:textSize="20sp"

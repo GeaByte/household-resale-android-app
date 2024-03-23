@@ -40,6 +40,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:gravity="center"
+        android:horizontalSpacing="30dp"
         android:numColumns="2"
         android:verticalSpacing="24dp"
         app:layout_constraintBottom_toBottomOf="parent"

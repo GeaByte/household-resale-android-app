@@ -26,15 +26,8 @@ public class RegisterActivity extends AppCompatActivity {
         EditText email = findViewById(R.id.edCreateEmail);
         EditText password = findViewById(R.id.edCreatPassword);
         Spinner spCity = (Spinner) findViewById(R.id.spCity);
-        Button btTest = (Button) findViewById(R.id.btTest);
         Button btRegister = (Button) findViewById(R.id.btCreatAcc);
         databaseHelper = new DatabaseHelper(this);
-        btTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, TestingPages.class));
-            }
-        });
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             boolean isInserted;

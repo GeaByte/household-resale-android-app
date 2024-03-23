@@ -114,18 +114,6 @@
         app:layout_constraintVertical_bias="0.934"
         tools:ignore="TextContrastCheck" />
 
-    <Button
-        android:id="@+id/btTest"
-        android:layout_width="100dp"
-        android:layout_height="95dp"
-        android:layout_marginBottom="4dp"
-        android:backgroundTint="#F57E7878"
-        android:text="@string/Test"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <EditText
         android:id="@+id/edUsername"
         android:layout_width="350dp"

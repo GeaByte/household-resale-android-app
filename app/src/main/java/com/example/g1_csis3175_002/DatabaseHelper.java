@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -23,14 +25,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T1COL10 = "IsSeller";
     final static String TABLE2_NAME = "Product";
     final static String T2COL1 = "ProductID";
-    final static String T2COL2 = "Price";
+    final static String T2COL2 = "Title";
     final static String T2COL3 = "Description";
-    final static String T2COL4 = "SellersInfo";
-    final static String T2COL5 = "Picture";
-    final static String T2COL6 = "SellOrRent";
-    final static String T2COL7 = "Quantity";
-    final static String T2COL8 = "Category";
-    final static String T2COL9 = "ProductName";
+    final static String T2COL4 = "Price";
+    final static String T2COL5 = "Location";
+    final static String T2COL6 = "Category";
+    final static String T2COL7 = "SellOrRent";
+    final static String T2COL8 = "ImagePath";
+
 //    final static String T2COL10 = "SellOrRent";
     final static String TABLE3_NAME = "UserOrder";
     final static String T3COL1 = "OrderID";
@@ -72,14 +74,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String queryTable2 = "CREATE TABLE " + TABLE2_NAME + "(" +
                 T2COL1 + " INTEGER PRIMARY KEY," +
-                T2COL2 + " REAL," +
+                T2COL2 + " TEXT," +
                 T2COL3 + " TEXT," +
-                T2COL4 + " TEXT," +
+                T2COL4 + " REAL," +
                 T2COL5 + " TEXT," +
                 T2COL6 + " TEXT," +
                 T2COL7 + " INTEGER," +
                 T2COL8 + " TEXT," +
-                T2COL9 + " TEXT," +
                 "FOREIGN KEY(" + T2COL6 + ") REFERENCES " + TABLE3_NAME + "(" +
                 T3COL1 + ")" + ");";
 
@@ -142,6 +143,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE1_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE2_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE3_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE4_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE5_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
         onCreate(sqLiteDatabase);
     }
 
@@ -221,7 +228,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long addProduct(String productName, String description, double price, String category, String sellOrRent, String imagePath, String sellerName, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(T2COL9, productName);
+//        values.put(T2COL9, productName);
         values.put(T2COL4, sellerName);
         values.put(T2COL2, price);
         values.put(T2COL3, description);
@@ -245,7 +252,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean updateProduct(int productId, String productName, String description, double price, String category, String sellOrRent, String imagePath, String sellerName, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(T2COL9, productName);
+//        values.put(T2COL9, productName);
         values.put(T2COL4, sellerName);
         values.put(T2COL2, price);
         values.put(T2COL3, description);

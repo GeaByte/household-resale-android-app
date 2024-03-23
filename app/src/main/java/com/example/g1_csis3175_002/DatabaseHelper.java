@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -25,15 +26,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T1COL10 = "IsSeller";
     final static String TABLE2_NAME = "Product";
     final static String T2COL1 = "ProductID";
-    final static String T2COL2 = "Title";
+    final static String T2COL2 = "ProductName";
     final static String T2COL3 = "Description";
     final static String T2COL4 = "Price";
     final static String T2COL5 = "Location";
     final static String T2COL6 = "Category";
-    final static String T2COL7 = "SellOrRent";
+    final static String T2COL7 = "SellOrShare";
     final static String T2COL8 = "ImagePath";
-
-//    final static String T2COL10 = "SellOrRent";
     final static String TABLE3_NAME = "UserOrder";
     final static String T3COL1 = "OrderID";
     final static String T3COL2 = "ShippingAddress";
@@ -76,13 +75,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL1 + " INTEGER PRIMARY KEY," +
                 T2COL2 + " TEXT," +
                 T2COL3 + " TEXT," +
-                T2COL4 + " REAL," +
+                T2COL4 + " TEXT," +
                 T2COL5 + " TEXT," +
                 T2COL6 + " TEXT," +
-                T2COL7 + " INTEGER," +
-                T2COL8 + " TEXT," +
-                "FOREIGN KEY(" + T2COL6 + ") REFERENCES " + TABLE3_NAME + "(" +
-                T3COL1 + ")" + ");";
+                T2COL7 + " TEXT," +
+                T2COL8 + " TEXT);";
 
 
         String queryTable3 = "CREATE TABLE " + TABLE3_NAME + "(" +
@@ -225,21 +222,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //2-Product
     // addProduct
-    public long addProduct(String productName, String description, double price, String category, String sellOrRent, String imagePath, String sellerName, int quantity) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-//        values.put(T2COL9, productName);
-        values.put(T2COL4, sellerName);
-        values.put(T2COL2, price);
-        values.put(T2COL3, description);
-        values.put(T2COL5, imagePath);
-//        values.put(T2COL6, orderId);
-        values.put(T2COL7, quantity);
-        values.put(T2COL8, category);
-        values.put(T2COL6, sellOrRent);
+    public boolean addProduct(String productName, String description, String price, String location,
+                           String category, String sellOrShare, String imagePath) {
+        try{
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(T2COL2, productName);
+            values.put(T2COL3, description);
+            values.put(T2COL4, price);
+            values.put(T2COL5, location);
+            values.put(T2COL6, category);
+            values.put(T2COL7, sellOrShare);
+            values.put(T2COL8, imagePath);
 
-        long result = db.insert(TABLE2_NAME, null, values);
-        return result;
+            long result = db.insert(TABLE2_NAME, null, values);
+            return result != -1;
+        }
+        catch (Exception e) {
+            Log.e("DatabaseHelper", "Error inserting product: " + e.getMessage());
+            return false;
+        }
+
+
+
+
     }
 
     // getProduct join location
@@ -249,18 +255,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // updateProduct
-    public boolean updateProduct(int productId, String productName, String description, double price, String category, String sellOrRent, String imagePath, String sellerName, int quantity) {
+    public boolean updateProduct(int productId, String productName, String description, String price, String location,
+                                 String category, String sellOrShare, String imagePath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-//        values.put(T2COL9, productName);
-        values.put(T2COL4, sellerName);
-        values.put(T2COL2, price);
+        values.put(T2COL2, productName);
         values.put(T2COL3, description);
-        values.put(T2COL5, imagePath);
-//        values.put(T2COL6, orderId);
-        values.put(T2COL7, quantity);
-        values.put(T2COL8, category);
-        values.put(T2COL6, sellOrRent);
+        values.put(T2COL4, price);
+        values.put(T2COL5, location);
+        values.put(T2COL6, category);
+        values.put(T2COL7, sellOrShare);
+        values.put(T2COL8, imagePath);
 
         int rowsAffected = db.update(TABLE2_NAME, values, T2COL1 + "=?", new String[] {String.valueOf(productId)});
         return rowsAffected > 0;
@@ -285,4 +290,85 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return r > 0;
 
     }
+
+    public ArrayList<ProductModel> getAllProducts() {
+        ArrayList<ProductModel> productList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                T2COL2,
+                T2COL3,
+                T2COL4,
+                T2COL8
+        };
+
+        Cursor cursor = db.query(
+                TABLE2_NAME,   // The table to query
+                projection,   // The array of columns to return (pass null to get all)
+                null,         // The columns for the WHERE clause
+                null,         // The values for the WHERE clause
+                null,         // don't group the rows
+                null,         // don't filter by row groups
+                null          // The sort order
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
+
+                ProductModel product = new ProductModel(productName, price, imagePath, description);
+                productList.add(product);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return productList;
+    }
+
+    public ArrayList<ProductModel> searchProducts(String query) {
+        ArrayList<ProductModel> productList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                T2COL2,
+                T2COL3,
+                T2COL4,
+                T2COL8
+        };
+
+        String selection = T2COL2 + " LIKE ?";
+        String[] selectionArgs = new String[]{"%" + query + "%"};
+
+        Cursor cursor = db.query(
+                TABLE2_NAME,   // The table to query
+                projection,   // The array of columns to return (pass null to get all)
+                selection,    // The columns for the WHERE clause
+                selectionArgs, // The values for the WHERE clause
+                null,         // don't group the rows
+                null,         // don't filter by row groups
+                null          // The sort order
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
+
+                ProductModel product = new ProductModel(productName, price, imagePath, description);
+                productList.add(product);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return productList;
+    }
+
+
 }

@@ -17,19 +17,19 @@ import java.util.ArrayList;
 public class BuyingActivity extends AppCompatActivity {
     GridView productGV;
     DatabaseHelper databaseHelper;
-    DatabaseHelperSeller databaseHelperSeller;
+//    DatabaseHelperSeller databaseHelperSeller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buying);
         databaseHelper = new DatabaseHelper(this);
-        databaseHelperSeller = new DatabaseHelperSeller(this);
+//        databaseHelperSeller = new DatabaseHelperSeller(this);
 
         SearchView searchView = findViewById(R.id.searchView);
 
         productGV = findViewById(R.id.GVbuying);
         ArrayList<ProductModel> productModelArrayList = new ArrayList<>();
-        productModelArrayList = databaseHelperSeller.getAllProducts();
+        productModelArrayList = databaseHelper.getAllProducts();
         ProductGVAdapter adapter = new ProductGVAdapter(this, productModelArrayList);
         productGV.setAdapter(adapter);
 
@@ -41,7 +41,7 @@ public class BuyingActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<ProductModel> filteredList = databaseHelperSeller.searchProducts(newText);
+                ArrayList<ProductModel> filteredList = databaseHelper.searchProducts(newText);
                 adapter.clear();
                 adapter.addAll(filteredList);
                 adapter.notifyDataSetChanged();

@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
 
         btRegister.setOnClickListener(new View.OnClickListener() {
-            boolean isInserted;
+            String isInserted;
             @Override
             public void onClick(View v) {
                 String city = spCity.getSelectedItem().toString();
@@ -44,12 +44,24 @@ public class RegisterActivity extends AppCompatActivity {
                         password.getText().toString()
                 );
 
-                if(isInserted)
-                    Toast.makeText(RegisterActivity.this, "You are registered.",
-                            Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(RegisterActivity.this,
-                            "Not able to register", Toast.LENGTH_LONG).show();
+                switch (isInserted) {
+                    case UserMessage.SUCCESS:
+                        Toast.makeText(RegisterActivity.this, "You are registered.", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                        break;
+                    case UserMessage.EMAIL_EXISTS:
+                        Toast.makeText(RegisterActivity.this, "This email already exists", Toast.LENGTH_LONG).show();
+                        break;
+                    case UserMessage.USERNAME_EXISTS:
+                        Toast.makeText(RegisterActivity.this, "This username already exists", Toast.LENGTH_LONG).show();
+                        break;
+                    case UserMessage.ERROR:
+                        Toast.makeText(RegisterActivity.this, "Not able to register", Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        Toast.makeText(RegisterActivity.this, "Unexpected error", Toast.LENGTH_LONG).show();
+                        break;
+                }
             }
         });
     }

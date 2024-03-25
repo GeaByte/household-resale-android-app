@@ -32,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtStatus" />
+        app:layout_constraintTop_toBottomOf="@+id/txtStatus"
+        tools:ignore="VisualLintButtonSize" />
 
     <EditText
         android:id="@+id/txtOrderID"
@@ -47,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.119"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imgEditView" />
 
     <EditText
         android:id="@+id/txtItemDetail"
@@ -64,21 +65,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtOrderID" />
 
-    <Spinner
-        android:id="@+id/spnDiliOption"
-        android:layout_width="290dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="12dp"
-        android:entries="@array/txtDeliveryOpt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.198"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtItemDetail" />
-
     <EditText
         android:id="@+id/txtStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/txtStatus"
         android:inputType="text"
@@ -87,12 +78,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnDiliOption"
-        app:layout_constraintVertical_bias="0.114"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDiliOption"
+        app:layout_constraintVertical_bias="0.237" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgEditView"
         android:layout_width="89dp"
         android:layout_height="79dp"
         android:layout_marginTop="24dp"
@@ -100,7 +90,8 @@
         app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvOrderDetailTitle"
-        app:srcCompat="@drawable/baseline_add_a_photo_24" />
+        app:srcCompat="@drawable/baseline_add_a_photo_24"
+        android:contentDescription="@string/todo" />
 
     <ImageView
         android:id="@+id/btnBackToOrder"
@@ -112,6 +103,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSaveEdit"
         app:layout_constraintVertical_bias="0.483"
-        app:srcCompat="@drawable/baseline_arrow_back_24" />
+        app:srcCompat="@drawable/baseline_arrow_back_24"
+        android:contentDescription="TODO"
+        tools:ignore="ContentDescription,HardcodedText" />
+
+    <EditText
+        android:id="@+id/txtDiliOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/txtDeliveryOption"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.129"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtItemDetail"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

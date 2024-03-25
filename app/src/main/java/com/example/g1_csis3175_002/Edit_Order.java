@@ -24,7 +24,7 @@ public class Edit_Order extends AppCompatActivity {
         setContentView(R.layout.activity_edit_order);
 
         Button btnSave = findViewById(R.id.btnSaveEdit);
-        Spinner option = findViewById(R.id.spnDiliOption);
+        TextView option = findViewById(R.id.txtDiliOption);
         TextView orderID = findViewById(R.id.txtOrderID);
         TextView itemDetail = findViewById(R.id.txtItemDetail);
 
@@ -47,18 +47,7 @@ public class Edit_Order extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String optionChoose = option.getSelectedItem().toString();
 
-
-                if (optionChoose.equals("Choose Delivery Option")){
-                    Toast.makeText(Edit_Order.this,
-                            "Plsease Choose Delivery Option",Toast.LENGTH_LONG).show();
-                }
-                else
-                    Toast.makeText(Edit_Order.this,
-                            "Saved Your Edit",Toast.LENGTH_LONG).show();
-
-                Integer.parseInt(orderID.getText().toString());
 
 
 

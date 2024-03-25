@@ -20,15 +20,15 @@
 
     <ImageView
         android:id="@+id/imgOrderDetailProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="88dp"
+        android:layout_height="78dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:contentDescription="@string/imgProductDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvOrderDetailTitle"
         tools:ignore="ImageContrastCheck"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/baseline_add_a_photo_24" />
 
     <TextView
         android:id="@+id/tvOrderId"

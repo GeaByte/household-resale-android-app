@@ -10,6 +10,13 @@ public class ProductModel {
 
     private String description;
 
+    private int orderId;
+    private String itemDetail;
+    private String deliveryOption;
+    private String orderStatus;
+
+
+
 
     public ProductModel(String productName, double price, String imagePath,String description) {
         this.productName = productName;
@@ -18,6 +25,15 @@ public class ProductModel {
         this.imagePath = imagePath;
         this.description = description;
 
+    }
+
+    // Constructor
+    public ProductModel(int orderId, String itemDetail, String deliveryOption, String orderStatus, String imagePath) {
+        this.orderId = orderId;
+        this.itemDetail = itemDetail;
+        this.deliveryOption = deliveryOption;
+        this.orderStatus = orderStatus;
+        this.imagePath = imagePath;
     }
 
     public void setPrice(double price) {
@@ -59,4 +75,14 @@ public class ProductModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public int getOrderId() {return orderId;}
+
+    public String getItemDetail() {return itemDetail;}
+
+    public String getDeliveryOption() { return deliveryOption;}
+
+    public String getOrderStatus() { return orderStatus;}
+
+
 }

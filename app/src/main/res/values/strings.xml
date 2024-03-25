@@ -121,6 +121,7 @@
     <string name="edit_title">Edit Title</string>
     <string name="txtEditOrder">Edit Order</string>
     <string name="btnSaveEdit">Save Edit</string>
+    <string name="todo">TODO</string>
 
     <string-array name="txtDeliveryOpt">
         <item>Choose Delivery Option</item>

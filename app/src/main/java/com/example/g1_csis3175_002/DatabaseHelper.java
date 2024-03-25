@@ -78,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL1 + " INTEGER PRIMARY KEY," +
                 T2COL2 + " TEXT," +
                 T2COL3 + " TEXT," +
-                T2COL4 + " TEXT," +
+                T2COL4 + " REAL," +
                 T2COL5 + " TEXT," +
                 T2COL6 + " TEXT," +
                 T2COL7 + " TEXT," +
@@ -449,5 +449,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return productList;
     }
 
+    public void resetDatabase(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE1_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE2_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE3_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE4_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE5_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
 
+        onCreate(db);
+        insertFakeData(db);
+    }
+
+    private void insertFakeData(SQLiteDatabase db) {
+        //insert user table
+        for (int i = 1; i <= 5; i++) {
+            ContentValues userValues = new ContentValues();
+            userValues.put(T1COL1, "username" + i);
+            userValues.put(T1COL2, "Name" + i);
+            userValues.put(T1COL3, "Address" + i);
+            userValues.put(T1COL4, "ZipCode" + i);
+            userValues.put(T1COL5, "City" + i);
+            userValues.put(T1COL6, 12345 + i);
+            userValues.put(T1COL7, i + "@com");
+            userValues.put(T1COL8, i);
+            userValues.put(T1COL9, 0);
+            userValues.put(T1COL10, 0);
+            db.insert(TABLE1_NAME, null, userValues);
+        }
+
+        // insert product table
+        for (int i = 1; i <= 5; i++) {
+            ContentValues productValues = new ContentValues();
+            productValues.put(T2COL2, "ProductName" + i);
+            productValues.put(T2COL3, "Description" + i);
+            productValues.put(T2COL4, i*10);
+            productValues.put(T2COL5, "Location" + i);
+            productValues.put(T2COL6, "Category" + i);
+            productValues.put(T2COL7, i % 2 == 0 ? "Sell" : "Share");
+            productValues.put(T2COL8, "/data/data/com.example.g1_csis3175_002/app_Images/" + i + ".jpg");
+            db.insert(TABLE2_NAME, null, productValues);
+        }
+    }
 }

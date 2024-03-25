@@ -3,7 +3,9 @@ package com.example.g1_csis3175_002;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,23 +24,26 @@ public class HomeActivity extends AppCompatActivity {
         Button buyItem = findViewById(R.id.btnBuyItem);
         Button sellItem = findViewById(R.id.btnSellItem);
         Button viewEditOrder = findViewById(R.id.btnViewOrderHistory);
-        Button viewOrderStatus = findViewById(R.id.btnViewOrderStatus);
         Button viewOrderHistory = findViewById(R.id.btnViewOrderHistory);
         Button logout = findViewById(R.id.btnLogout);
 
         buyItem.setOnClickListener(this::onClickBuyAnItem);
         sellItem.setOnClickListener(this::onClickSellAnItem);
         viewEditOrder.setOnClickListener(this::onClickViewOrderHistory);
-        viewOrderStatus.setOnClickListener(this::onClickViewOrderStatus);
         viewOrderHistory.setOnClickListener(this::onClickViewOrderHistory);
         logout.setOnClickListener(this::onClickLogout);
+
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        String usernamePreferences = sharedPref.getString("username", "");
+        String emailPreferences = sharedPref.getString("email", "");
 
         /*
 
          */
         profileIcon.setImageResource(R.drawable.buyer);
-        username.setText("Khai, Lin, Mucnique, Raymond");
-        userEmail.setText("klmr@student.douglascollege.ca");
+        username.setText(usernamePreferences);
+        userEmail.setText(emailPreferences);
     }
 
     public void onClickBuyAnItem(View view){
@@ -51,9 +56,6 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onClickViewOrderHistory(View view){
         startActivity(new Intent(HomeActivity.this, OrderHistoryActivity.class));
-    }
-    public void onClickViewOrderStatus(View view){
-
     }
 
 

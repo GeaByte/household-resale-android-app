@@ -50,33 +50,35 @@
         app:layout_constraintTop_toBottomOf="@+id/imgOrderDetailProduct" />
 
     <TextView
-        android:id="@+id/tvItemDetail"
+        android:id="@+id/txtShippingAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="@string/txtItemDetail"
+        android:text="@string/txtShippingAddress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvOrderId" />
 
     <TextView
-        android:id="@+id/tvDeliveryOption"
+        android:id="@+id/txtOrderDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="138dp"
-        android:text="@string/txtDeliveryOption"
+        android:layout_marginTop="24dp"
+        android:text="@string/txtOrderDate"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemDetail" />
+        app:layout_constraintTop_toBottomOf="@+id/txtShippingAddress" />
 
     <TextView
-        android:id="@+id/tvShowDeliveryOption"
+        android:id="@+id/tvShowOrdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="138dp"
-        app:layout_constraintStart_toEndOf="@+id/tvDeliveryOption"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemDetail" />
+        app:layout_constraintBottom_toBottomOf="@+id/txtOrderDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toEndOf="@+id/txtOrderDate"
+        app:layout_constraintTop_toBottomOf="@+id/txtShippingAddress"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tvOrderStatus"
@@ -86,7 +88,7 @@
         android:layout_marginTop="24dp"
         android:text="@string/txtStatus"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeliveryOption" />
+        app:layout_constraintTop_toBottomOf="@+id/txtOrderDate" />
 
     <TextView
         android:id="@+id/tvShowOrderStatus"
@@ -95,18 +97,27 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toEndOf="@+id/tvOrderStatus"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeliveryOption" />
+        app:layout_constraintTop_toBottomOf="@+id/txtOrderDate" />
 
     <Button
         android:id="@+id/btnEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="88dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="#2196F3"
         android:text="@string/btnEditOrder"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvOrderStatus" />
+
+    <TextView
+        android:id="@+id/txtShowAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="151dp"
+        tools:layout_editor_absoluteY="226dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

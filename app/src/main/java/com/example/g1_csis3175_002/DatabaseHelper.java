@@ -42,6 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T4COL1 = "Username";
     final static String T4COL2 = "OrderID";
     final static String TABLE5_NAME = "Buyer_buys_Product";
+
+
     final static String T5COL1 = "Username";
     final static String T5COL2 = "ProductID";
     final static String TABLE6_NAME = "Seller_sells_Product";
@@ -194,6 +196,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.query(TABLE1_NAME, null, T1COL1 + "=?", new String[] { username }, null, null, null);
     }
 
+    // get order details by order ID
+    public Cursor getOrderDetails(int orderId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE3_NAME, null, T3COL1 + "=?", new String[] { String.valueOf(orderId) }, null, null, null);
+    }
+
+    // Method to update shipping address by order ID
+    public boolean updateShippingAddress(int orderId, String newAddress) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(T3COL2, newAddress);
+        int rowsAffected = db.update(TABLE3_NAME, values, T3COL1 + "=?", new String[]{String.valueOf(orderId)});
+        return rowsAffected > 0;
+    }
+
     // updateUser
     public boolean updateUser(String username, String name, String address, String zipcode,
                               String city, int contact, String email, String password) {
@@ -217,6 +234,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int rowsDeleted = db.delete(TABLE1_NAME, T1COL1 + "=?", new String[] { username });
         return rowsDeleted > 0;
     }
+
+    public Cursor viewOrder(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String query = " SELECT * FROM  " + "product";
+        Cursor c = sqLiteDatabase.rawQuery(query,null);
+        return c;
+    }
+
+
 
 
 

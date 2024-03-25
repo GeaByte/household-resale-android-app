@@ -246,6 +246,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+
+
     //2-Product
     // addProduct
     public boolean addProduct(String productName, String description, String price, String location,

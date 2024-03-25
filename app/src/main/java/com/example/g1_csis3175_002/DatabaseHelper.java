@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+//import android.os.Message;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -170,9 +171,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return r > 0;
 
     }
-    public boolean addUser(String username, String name, String address, String zipcode, String city,
+    public String addUser(String username, String name, String address, String zipcode, String city,
                            int contact, String email, String password){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        //check unique email
+        try (Cursor checkUniqueEmail = sqLiteDatabase.query(TABLE1_NAME, new String[] { T1COL7 },
+                T1COL7 + "=?", new String[] { email }, null, null, null)) {
+            if (checkUniqueEmail.moveToFirst()) {
+                return UserMessage.EMAIL_EXISTS;
+            }
+        }
+
+        //check unique name
+        try (Cursor checkUniqueName = sqLiteDatabase.query(TABLE1_NAME, new String[] { T1COL1 },
+                T1COL1 + "=?", new String[] { username }, null, null, null)) {
+            if (checkUniqueName.moveToFirst()) {
+                return UserMessage.USERNAME_EXISTS;
+            }
+        }
+
         ContentValues values = new ContentValues();
         values.put(T1COL1,username);
         values.put(T1COL2,name);
@@ -184,7 +202,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(T1COL8, password);
 
         long r = sqLiteDatabase.insert(TABLE1_NAME, null, values);
-        return r > 0;
+        return r > 0? UserMessage.SUCCESS: UserMessage.ERROR;
 
     }
 

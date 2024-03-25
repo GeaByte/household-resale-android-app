@@ -34,8 +34,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String city = spCity.getSelectedItem().toString();
-                isInserted = databaseHelper.addUser(name.getText().toString(),
+                isInserted = databaseHelper.addUser(
                         username.getText().toString(),
+                        name.getText().toString(),
                         address.getText().toString(),
                         zipcode.getText().toString(),
                         city,

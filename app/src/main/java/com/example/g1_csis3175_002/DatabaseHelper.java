@@ -219,6 +219,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public String getUsernameByEmail(String email) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String username = null;
+
+        try (Cursor cursor = sqLiteDatabase.query(
+                TABLE1_NAME,
+                new String[]{T1COL1},
+                T1COL7 + "=?",
+                new String[]{email},
+                null,
+                null,
+                null)) {
+
+            if (cursor.moveToFirst()) {
+                username = cursor.getString(cursor.getColumnIndexOrThrow(T1COL1));
+            }
+        }
+        return username;
+    }
+
     // getUser
     public Cursor getUser(String username) {
         SQLiteDatabase db = this.getReadableDatabase();

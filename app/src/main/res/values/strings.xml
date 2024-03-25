@@ -119,4 +119,13 @@
     <string name="btnBack">Back</string>
     <string name="edit_button">Edit</string>
     <string name="edit_title">Edit Title</string>
+    <string name="txtEditOrder">Edit Order</string>
+    <string name="btnSaveEdit">Save Edit</string>
+
+    <string-array name="txtDeliveryOpt">
+        <item>Choose Delivery Option</item>
+        <item>Delivery</item>
+        <item>Pick Up</item>
+
+    </string-array>
 </resources>

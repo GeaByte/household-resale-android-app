@@ -206,6 +206,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public String loginUser(String email, String password) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        try (Cursor cursor = sqLiteDatabase.query(TABLE1_NAME, new String[]{T1COL7, T1COL8},
+                T1COL7 + "=? AND " + T1COL8 + "=?", new String[]{email, password}, null, null, null)) {
+            if (cursor.moveToFirst()) {
+                return UserMessage.SUCCESS;
+            } else {
+                return UserMessage.ERROR;
+            }
+        }
+    }
+
     // getUser
     public Cursor getUser(String username) {
         SQLiteDatabase db = this.getReadableDatabase();

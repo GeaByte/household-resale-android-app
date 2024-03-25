@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import com.bumptech.glide.Glide;
 
 public class ProductGVAdapter extends ArrayAdapter<ProductModel> {
     public ProductGVAdapter(@NonNull Context context, ArrayList<ProductModel> productModelArrayList) {
@@ -30,8 +31,13 @@ public class ProductGVAdapter extends ArrayAdapter<ProductModel> {
         TextView productPrice = listitemView.findViewById(R.id.tvPrice);
         ImageView productImage = listitemView.findViewById(R.id.imgProduct);
         productName.setText(productModel.getProductName());
-        productImage.setImageResource((productModel.getImgid()));
         productPrice.setText(String.format(Locale.US, "$%.2f", productModel.getPrice()));
+
+        Glide.with(getContext())
+                .load(productModel.getImagePath())
+                .into(productImage);
+
+
         return listitemView;
     }
 }

@@ -13,6 +13,7 @@
     <string name="txRegisterDesc">Create your Account</string>
     <string name="edName">Full Name</string>
     <string name="edAddress">Address</string>
+    <string name="edZipCode">Zip Code</string>
     <string name="edPhone">Phone Number</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be > 5 characters</string>
@@ -32,13 +33,48 @@
     <string name="buyingTitle">Buy an item</string>
     <string name="searchHint">Search for an item</string>
     <string name="imgProductDescription">Product Image</string>
-    <string name="txtProductName">Product Name:</string>
+    <string name="txtProductName">Product Name: </string>
     <string name="btnSelect">Select</string>
     <string name="txtPrice">$19.99</string>
     <string name="reg_text">Don\'t have an account?</string>
     <string name="buyer">Buyer</string>
     <string name="seller">Seller</string>
     <string name="choose_portal">What would you like to do</string>
+    <string name="edUsername">Username</string>
+    <string name="txtCity">Select City</string>
+    <string-array name="cities">
+        <item>Vancouver</item>
+        <item>Burnaby</item>
+        <item>Coquitlam</item>
+        <item>Delta</item>
+        <item>Langley</item>
+        <item>Maple Ridge</item>
+        <item>New Westminster</item>
+        <item>North Vancouver</item>
+        <item>Pitt Meadows</item>
+        <item>Port Moody</item>
+        <item>Richmond</item>
+        <item>Surrey</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <string name="Test">Go to Testing Page</string>
     <string name="BuyingPage">Buying Page</string>
     <string name="HomePage">Home Page</string>
@@ -46,6 +82,7 @@
     <string name="MainPage">Main Page</string>
     <string name="RegisterPage">Register Page</string>
     <string name="UserSellerPage">User or Seller Page</string>
+    <string name="txtSignUp">Sign up</string>
     <string name="list_item_scrollview">Scroll View</string>
     <string name="enter_item_tittle">Enter Item Title</string>
     <string name="item_description">Description</string>
@@ -53,7 +90,7 @@
     <string name="item_location">Location</string>
     <string name="type_service">Type Of Service</string>
     <string name="item_sell">Sell</string>
-    <string name="item_rent">Rent</string>
+    <string name="item_share">Share</string>
     <string-array name="categories">
         <item>Vehicle</item>
         <item>Appliance</item>
@@ -64,8 +101,6 @@
     </string-array>
     <string name="addImage">Add Image</string>
     <string name="listButton">List</string>
-    <string name="txtSignUp">Sign up</string>
-    <string name="edUsername">Username</string>
     <string name="txtOrderID">Order ID:</string>
     <string name="txtItemName">Item Name:</string>
     <string name="txtOrderDate">Order Date:</string>
@@ -84,4 +119,6 @@
     <string name="btnBack">Back</string>
     <string name="edit_button">Edit</string>
     <string name="edit_title">Edit Title</string>
+
+
 </resources>

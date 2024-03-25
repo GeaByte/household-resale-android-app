@@ -2,34 +2,55 @@ package com.example.g1_csis3175_002;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class BuyingActivity extends AppCompatActivity {
     GridView productGV;
+    DatabaseHelper databaseHelper;
+//    DatabaseHelperSeller databaseHelperSeller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buying);
+        databaseHelper = new DatabaseHelper(this);
+//        databaseHelperSeller = new DatabaseHelperSeller(this);
+
+        SearchView searchView = findViewById(R.id.searchView);
 
         productGV = findViewById(R.id.GVbuying);
         ArrayList<ProductModel> productModelArrayList = new ArrayList<>();
-        /*
-        testing buying layout with some sample products
-        will change this part after figure out how to get data from database
-         */
-        productModelArrayList.add(new ProductModel("Make some money", R.drawable.buyer, 19.99));
-        productModelArrayList.add(new ProductModel("kitchenware", R.drawable.img1, 5.99));
-        productModelArrayList.add(new ProductModel("spending", R.drawable.seller, 9.99));
-
+        productModelArrayList = databaseHelper.getAllProducts();
         ProductGVAdapter adapter = new ProductGVAdapter(this, productModelArrayList);
-        productGV.setAdapter((adapter));
+        productGV.setAdapter(adapter);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<ProductModel> filteredList = databaseHelper.searchProducts(newText);
+                adapter.clear();
+                adapter.addAll(filteredList);
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
     }
+
+
 
     public void onClickSelect(View view){
         startActivity(new Intent(BuyingActivity.this, ItemDetailActivity.class));

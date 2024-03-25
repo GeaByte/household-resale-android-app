@@ -6,10 +6,18 @@ public class ProductModel {
 
     private double price;
 
-    public ProductModel(String productName, int imgid, double price) {
+    private String imagePath;
+
+    private String description;
+
+
+    public ProductModel(String productName, double price, String imagePath,String description) {
         this.productName = productName;
         this.imgid = imgid;
         this.price = price;
+        this.imagePath = imagePath;
+        this.description = description;
+
     }
 
     public void setPrice(double price) {
@@ -34,5 +42,21 @@ public class ProductModel {
 
     public int getImgid() {
         return imgid;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

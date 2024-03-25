@@ -10,31 +10,33 @@
         android:id="@+id/imgLogo1"
         android:layout_width="169dp"
         android:layout_height="181dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="80dp"
         android:contentDescription="@string/txLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
-    <TextView
-        android:id="@+id/txWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/txWelcome"
-        android:textColor="@color/material_dynamic_primary20"
-        android:textSize="25sp"
-        android:textStyle="bold"
+    <Button
+        android:id="@+id/btRegister"
+        android:layout_width="116dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#4CAF50"
+        android:text="@string/btRegister"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogo1" />
+        app:layout_constraintStart_toEndOf="@+id/btLogin"
+        app:layout_constraintTop_toBottomOf="@+id/txDescription"
+        tools:cornerRadius="0dp"
+        tools:ignore="TextContrastCheck,TextSizeCheck" />
 
     <TextView
         android:id="@+id/txDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/txDescription"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -43,31 +45,31 @@
         app:layout_constraintTop_toBottomOf="@+id/txWelcome" />
 
     <Button
-        android:id="@+id/btRegister"
-        android:layout_width="116dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="#4CAF50"
-        android:text="@string/btRegister"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btLogin"
-        app:layout_constraintTop_toBottomOf="@+id/txDescription"
-        tools:cornerRadius="0dp"
-        tools:ignore="TextContrastCheck,TextSizeCheck" />
-
-    <Button
         android:id="@+id/btLogin"
         android:layout_width="116dp"
         android:layout_height="58dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="#673AB7"
         android:text="@string/btLogin"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/btRegister"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txDescription"
         tools:cornerRadius="0dp"
         tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/txWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/txWelcome"
+        android:textColor="@color/material_dynamic_primary20"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogo1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

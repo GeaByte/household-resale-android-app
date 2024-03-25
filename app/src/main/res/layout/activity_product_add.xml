@@ -103,7 +103,7 @@
                 android:textSize="20sp" />
 
             <RadioGroup
-                android:id="@+id/radioGroupSellRent"
+                android:id="@+id/radioGroupSellShare"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewSellOrRent"
@@ -120,11 +120,11 @@
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <RadioButton
-                    android:id="@+id/radioButtonRent"
+                    android:id="@+id/radioButtonShare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="@string/item_rent"
+                    android:text="@string/item_share"
                     android:textSize="20sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -135,7 +135,7 @@
                 android:id="@+id/btnAddImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/radioGroupSellRent"
+                android:layout_below="@+id/radioGroupSellShare"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="131dp"

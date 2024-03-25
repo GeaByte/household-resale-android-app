@@ -38,8 +38,8 @@ public class ListItemSeller extends AppCompatActivity {
 
     private EditText edtItemtitle, editTextDescription, editTextPrice, editTextLocation;
     private Spinner spinnerCategory;
-    private RadioGroup radioGroupSellRent;
-    private RadioButton radioButtonSell, radioButtonRent;
+    private RadioGroup radioGroupSellShare;
+    private RadioButton radioButtonSell, radioButtonShare;
 
 
     @Override
@@ -58,9 +58,9 @@ public class ListItemSeller extends AppCompatActivity {
         editTextPrice = findViewById(R.id.editTextPrice);
         editTextLocation = findViewById(R.id.editTextLocation);
         spinnerCategory = findViewById(R.id.spinnerCategory);
-        radioGroupSellRent = findViewById(R.id.radioGroupSellRent);
+        radioGroupSellShare = findViewById(R.id.radioGroupSellShare);
         radioButtonSell = findViewById(R.id.radioButtonSell);
-        radioButtonRent = findViewById(R.id.radioButtonRent);
+        radioButtonShare = findViewById(R.id.radioButtonShare);
         imgView = findViewById(R.id.imgView);
         Button btnAddImage = findViewById(R.id.btnAddImage);
         Button btnList = findViewById(R.id.btnList);
@@ -71,25 +71,23 @@ public class ListItemSeller extends AppCompatActivity {
             public void onClick(View v) {
 
                     // Get data from views
-                    String title = edtItemtitle.getText().toString();
+                    String productName = edtItemtitle.getText().toString();
                     String description = editTextDescription.getText().toString();
                     String price = editTextPrice.getText().toString();
                     String location = editTextLocation.getText().toString();
                     String category = spinnerCategory.getSelectedItem().toString();
-                    String sellRent = radioButtonSell.isChecked() ? "Sell" : "Rent";
+                    String sellOrShare = radioButtonSell.isChecked() ? "Sell" : "Share";
                 // Save the image to the filesystem
                 String imagePath = saveImageToInternalStorage(imgView);
 
                 // Insert data into the database
-                DatabaseHelperSeller dbHelper = new DatabaseHelperSeller(ListItemSeller.this);
-                boolean inserted = dbHelper.insertItem(title, description, price, location, category, sellRent, imagePath);
+                DatabaseHelper dbHelper = new DatabaseHelper(ListItemSeller.this);
+                boolean inserted = dbHelper.addProduct(productName, description, price, location, category, sellOrShare, imagePath);
                 if (inserted) {
                     Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ListItemSeller.this, "Failed to list item", Toast.LENGTH_SHORT).show();
                 }
-
-
 
             }
         });

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ public class ProductGVAdapter extends ArrayAdapter<ProductModel> {
         ImageView productImage = listitemView.findViewById(R.id.imgProduct);
         productName.setText(productModel.getProductName());
         productPrice.setText(String.format(Locale.US, "$%.2f", productModel.getPrice()));
+        Button btnSelect = listitemView.findViewById(R.id.btnSelect);
+        btnSelect.setTag(productModel.getProductID());
 
         Glide.with(getContext())
                 .load(productModel.getImagePath())

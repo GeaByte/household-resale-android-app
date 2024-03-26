@@ -328,9 +328,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // getProduct join location
-    public Cursor getProduct(long productId) {
+    public ProductModel getProduct(long productId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE2_NAME, null, T2COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null);
+        ProductModel product = null;
+        try (Cursor cursor = db.query(TABLE2_NAME, new String[] {T2COL2, T2COL3, T2COL4, T2COL8}, T2COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null)) {
+            if (cursor.moveToFirst()) {
+                String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
+
+                product = new ProductModel(productName, price, imagePath, description);
+            }
+        }
+        return product;
     }
 
     // updateProduct
@@ -375,6 +386,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] projection = {
+                T2COL1,
                 T2COL2,
                 T2COL3,
                 T2COL4,
@@ -393,12 +405,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
+                int productID = cursor.getInt(cursor.getColumnIndexOrThrow(T2COL1));
                 String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
                 String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
                 String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
 
-                ProductModel product = new ProductModel(productName, price, imagePath, description);
+                ProductModel product = new ProductModel(productID, productName, price, imagePath, description);
                 productList.add(product);
             } while (cursor.moveToNext());
 

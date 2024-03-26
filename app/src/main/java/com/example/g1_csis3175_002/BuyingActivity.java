@@ -53,6 +53,9 @@ public class BuyingActivity extends AppCompatActivity {
 
 
     public void onClickSelect(View view){
-        startActivity(new Intent(BuyingActivity.this, ItemDetailActivity.class));
+        int productID = (int) view.getTag();
+        Intent detailIntent = new Intent(BuyingActivity.this, ItemDetailActivity.class);
+        detailIntent.putExtra("ProductID", productID);
+        startActivity(detailIntent);
     }
 }

@@ -2,13 +2,13 @@ package com.example.g1_csis3175_002;
 
 public class OrderModel {
     private long id;
-    private String[] itemNames;
+    private int itemID;
     private String date;
     private String status;
 
-    public OrderModel(long id, String[] itemNames, String date, String status) {
+    public OrderModel(long id, int itemName, String date, String status) {
         this.id = id;
-        this.itemNames = itemNames;
+        this.itemID = itemID;
         this.date = date;
         this.status = status;
     }
@@ -17,8 +17,8 @@ public class OrderModel {
         return id;
     }
 
-    public String[] getItemNames() {
-        return itemNames;
+    public int getItemID() {
+        return itemID;
     }
 
     public String getDate() {
@@ -29,8 +29,7 @@ public class OrderModel {
         return status;
     }
 
-    public void setItemNames(String[] itemNames) {
-        this.itemNames = itemNames;
+    public void setItemID(int itemID){this.itemID = itemID;
     }
 
     public void setDate(String date) {

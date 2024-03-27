@@ -17,13 +17,13 @@ import java.util.ArrayList;
 public class BuyingActivity extends AppCompatActivity {
     GridView productGV;
     DatabaseHelper databaseHelper;
-//    DatabaseHelperSeller databaseHelperSeller;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buying);
         databaseHelper = new DatabaseHelper(this);
-//        databaseHelperSeller = new DatabaseHelperSeller(this);
+
 
         SearchView searchView = findViewById(R.id.searchView);
 

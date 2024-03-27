@@ -27,9 +27,10 @@ public class OrderDetailLVAdapter extends ArrayAdapter<OrderModel> {
         TextView orderDate = listitemView.findViewById(R.id.tvShowOrderDate);
         TextView status = listitemView.findViewById(R.id.tvShowStatus);
         orderId.setText(Long.toString(orderModel.getId()));
-        String[] itemNames = orderModel.getItemNames();
-        String items = String.join(", ", itemNames);
-        itemName.setText(items);
+        int itemID = orderModel.getItemID();
+//        String items = String.join(", ", itemID);
+//        itemName.setText(items);
+        itemName.setText(itemID);
         orderDate.setText(orderModel.getDate());
         status.setText(orderModel.getStatus());
         return listitemView;

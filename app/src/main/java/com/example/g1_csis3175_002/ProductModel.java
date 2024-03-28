@@ -1,6 +1,8 @@
 package com.example.g1_csis3175_002;
 
 import java.io.Serializable;
+import java.util.Date;
+
 public class ProductModel implements Serializable {
     private int productID;
     private String productName;
@@ -16,6 +18,8 @@ public class ProductModel implements Serializable {
     private String itemDetail;
     private String deliveryOption;
     private String orderStatus;
+
+    private Date orderDate;
 
     private static final long serialVersionUID = 1L;
 
@@ -44,6 +48,14 @@ public class ProductModel implements Serializable {
         this.price = price;
         this.imagePath = imagePath;
         this.description = description;
+    }
+
+    public ProductModel(String productName, double price, String imagePath,String description, Date orderDate) {
+        this.productName = productName;
+        this.price = price;
+        this.imagePath = imagePath;
+        this.description = description;
+        this.orderDate = orderDate;
     }
 
     public void setPrice(double price) {
@@ -97,6 +109,14 @@ public class ProductModel implements Serializable {
     public String getDeliveryOption() { return deliveryOption;}
 
     public String getOrderStatus() { return orderStatus;}
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
 
 
 }

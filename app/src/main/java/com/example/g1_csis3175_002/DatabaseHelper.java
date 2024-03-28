@@ -8,7 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 //import android.os.Message;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+/*import java.util.Date;
+import java.util.Locale;*/
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -34,6 +40,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T2COL6 = "Category";
     final static String T2COL7 = "SellOrShare";
     final static String T2COL8 = "ImagePath";
+
+    final static String T2COL9 = "OderDate";
     final static String TABLE3_NAME = "UserOrder";
     final static String T3COL1 = "OrderID";
     final static String T3COL2 = "ShippingAddress";
@@ -82,7 +90,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL5 + " TEXT," +
                 T2COL6 + " TEXT," +
                 T2COL7 + " TEXT," +
-                T2COL8 + " TEXT);";
+                T2COL8 + " TEXT," +
+                T2COL9 + " DATE DEFAULT CURRENT_DATE);";
 
 
         String queryTable3 = "CREATE TABLE " + TABLE3_NAME + "(" +
@@ -338,8 +347,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
                 String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
 
+
                 product = new ProductModel(productName, price, imagePath, description);
             }
+        }
+        return product;
+    }
+
+    public ProductModel getProduct2(long productId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ProductModel product = null;
+        try (Cursor cursor = db.query(TABLE2_NAME, new String[] {T2COL2, T2COL3, T2COL4, T2COL8, T2COL9}, T2COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null)) {
+            if (cursor.moveToFirst()) {
+                String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
+                String dateOrder = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
+                // Parse the order date string into a Date object
+               /* SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                Date orderDate = dateFormat.parse(dateOrder);*/
+
+                String orderDateStr = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
+
+                // Parse the order date string into a Date object
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                Date orderDate = dateFormat.parse(orderDateStr);
+
+
+                product = new ProductModel(productName, price, imagePath, description,orderDate);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return product;
     }
@@ -501,7 +540,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             productValues.put(T2COL5, "Location" + i);
             productValues.put(T2COL6, "Category" + i);
             productValues.put(T2COL7, i % 2 == 0 ? "Sell" : "Share");
-            productValues.put(T2COL8, "/data/data/com.example.g1_csis3175_002/app_Images/" + i + ".jpg");
+            /*productValues.put(T2COL8, "/data/data/com.example.g1_csis3175_002/app_Images/" + i + ".jpg");*/
+            productValues.put(T2COL8, "/data/data/com.example.g1_csis3175_002/app_Images/image1710818257614.jpg");
+            productValues.put(T2COL9,"2024-03-27");
             db.insert(TABLE2_NAME, null, productValues);
         }
     }

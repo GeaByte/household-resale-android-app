@@ -51,8 +51,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T4COL1 = "Username";
     final static String T4COL2 = "OrderID";
     final static String TABLE5_NAME = "Buyer_buys_Product";
-
-
     final static String T5COL1 = "Username";
     final static String T5COL2 = "ProductID";
     final static String TABLE6_NAME = "Seller_sells_Product";
@@ -62,6 +60,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String TABLE7_NAME = "Seller_shares_Product";
     final static String T7COL1 = "Username";
     final static String T7COL2 = "ProductID";
+
+    final static String TABLE8_NAME = "OrderStatus";
+    final static String T8COL1 = "OrderID";
+    final static String T8COL2 = "ShippingAddress";
+    final static String T8COL3 = "OrderDate";
+    final static String T8COL4 = "Status";
+    final static String T8COL5 = "ImagePath";
+
     final static int DATABASE_VERSION = 1;
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -137,6 +143,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + T7COL2 + ") REFERENCES " + TABLE2_NAME + "(" +
                 T2COL1 + ")" + ");";
 
+        String queryTable8 = "CREATE TABLE " + TABLE8_NAME + "(" +
+                T8COL1 + " INTEGER PRIMARY KEY," +
+                T8COL2 + " TEXT," +
+                T8COL3 + " TEXT," +
+                T8COL4 + " TEXT," +
+                T8COL5 + " TEXT," +
+                "FOREIGN KEY(" + T8COL1 + ") REFERENCES " + TABLE2_NAME + "(" + T2COL1 + ")," +
+                "FOREIGN KEY(" + T8COL5 + ") REFERENCES " + TABLE2_NAME + "(" + T2COL8 + "))";
+
+
 
         sqLiteDatabase.execSQL(queryTable1);
         sqLiteDatabase.execSQL(queryTable2);
@@ -145,6 +161,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(queryTable5);
         sqLiteDatabase.execSQL(queryTable6);
         sqLiteDatabase.execSQL(queryTable7);
+        sqLiteDatabase.execSQL(queryTable8);
 
 
     }
@@ -158,6 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE5_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE8_NAME);
         onCreate(sqLiteDatabase);
     }
 
@@ -256,11 +274,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.query(TABLE1_NAME, null, T1COL1 + "=?", new String[] { username }, null, null, null);
     }
 
-    // get order details by order ID
-    public Cursor getOrderDetails(int orderId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE3_NAME, null, T3COL1 + "=?", new String[] { String.valueOf(orderId) }, null, null, null);
-    }
+
+
 
     // Method to update shipping address by order ID
     public boolean updateShippingAddress(int orderId, String newAddress) {
@@ -271,6 +286,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowsAffected > 0;
     }
 
+
+    // Method to retrieve order details by ID
+    public OrderModel getOrderById(int orderId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        OrderModel order = null;
+
+        // Define the columns you want to retrieve from the database
+        String[] projection = {
+                T8COL1, // Assuming the primary key column name is "OrderID"
+                T8COL2, // Shipping Address
+                T8COL3, // Order Date
+                T8COL4  // Order Status
+        };
+
+        // Define the selection criteria (WHERE clause)
+        String selection = T8COL1 + " = ?";
+        String[] selectionArgs = { String.valueOf(orderId) };
+
+        Cursor cursor = db.query(
+                TABLE8_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            // Extract data from the cursor and create an OrderModel object
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(T8COL1));
+            String shippingAddress = cursor.getString(cursor.getColumnIndexOrThrow(T8COL2));
+            String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(T8COL3));
+            String orderStatus = cursor.getString(cursor.getColumnIndexOrThrow(T8COL4));
+
+            // Create the OrderModel object
+            order = new OrderModel(id, shippingAddress, orderDate, orderStatus);
+
+
+            // Close the cursor
+            cursor.close();
+        }
+
+        // Close the database connection
+        db.close();
+
+        return order;
+    }
     // updateUser
     public boolean updateUser(String username, String name, String address, String zipcode,
                               String city, int contact, String email, String password) {
@@ -357,30 +420,72 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ProductModel getProduct2(long productId) {
         SQLiteDatabase db = this.getReadableDatabase();
         ProductModel product = null;
-        try (Cursor cursor = db.query(TABLE2_NAME, new String[] {T2COL2, T2COL3, T2COL4, T2COL8, T2COL9}, T2COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null)) {
+        try (Cursor cursor = db.query(TABLE8_NAME, new String[] { T8COL2, T8COL3, T8COL4, T8COL5}, T8COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null)) {
             if (cursor.moveToFirst()) {
-                String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
-                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
-                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
-                String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
-                String dateOrder = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
-                // Parse the order date string into a Date object
-               /* SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                Date orderDate = dateFormat.parse(dateOrder);*/
+                String shippingAddress = cursor.getString(cursor.getColumnIndexOrThrow(T8COL2));
 
-                String orderDateStr = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
-
+                String orderDateStr = cursor.getString(cursor.getColumnIndexOrThrow(T8COL3));
                 // Parse the order date string into a Date object
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 Date orderDate = dateFormat.parse(orderDateStr);
+                String status = cursor.getString(cursor.getColumnIndexOrThrow(T8COL4));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T8COL5));
 
 
-                product = new ProductModel(productName, price, imagePath, description,orderDate);
+
+                product = new ProductModel(shippingAddress, orderDate,status, imagePath);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return product;
+    }
+
+    public Cursor viewOrderWithImgPath() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // SQL query to join the OrderStatus and Product tables
+        String query = "SELECT o.ProductID, o.ShippingAddress, o.OrderDate, o.OrderStatus, p.ImagePath " +
+                "FROM OrderStatus o " +
+                "INNER JOIN Product p ON o.ProductID = p.ProductID";
+
+        // Execute the query
+        return db.rawQuery(query, null);
+    }
+
+    public ArrayList<OrderModel> getAllOrders() {
+        ArrayList<OrderModel> orders = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            // Query the database to retrieve all orders
+            cursor = db.query(TABLE8_NAME, null, null, null, null, null, null);
+
+            // Iterate over the cursor and extract data from each row
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    int orderId = cursor.getInt(cursor.getColumnIndexOrThrow(T8COL1));
+                    String shippingAddress = cursor.getString(cursor.getColumnIndexOrThrow(T8COL2));
+                    String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(T8COL3));
+                    String status = cursor.getString(cursor.getColumnIndexOrThrow(T8COL4));
+                    String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T8COL5));
+
+                    // Create an OrderModel object and add it to the list
+                    OrderModel order = new OrderModel(orderId, shippingAddress, orderDate, status);
+                    orders.add(order);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            // Close the cursor to release its resources
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        // Return the list of orders
+        return orders;
     }
 
     // updateProduct
@@ -419,6 +524,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return r > 0;
 
     }
+
+
 
     public ArrayList<ProductModel> getAllProducts() {
         ArrayList<ProductModel> productList = new ArrayList<>();
@@ -509,6 +616,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE5_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE8_NAME);
 
         onCreate(db);
         insertFakeData(db);
@@ -544,6 +652,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             productValues.put(T2COL8, "/data/data/com.example.g1_csis3175_002/app_Images/image1710818257614.jpg");
             productValues.put(T2COL9,"2024-03-27");
             db.insert(TABLE2_NAME, null, productValues);
+        }
+
+        for (int i = 1; i <= 5; i++) {
+            ContentValues productValues = new ContentValues();
+            productValues.put(T8COL2, "ProductName" + i);
+            productValues.put(T8COL3, "Description" + i);
+            productValues.put(T8COL4, i*10);
+            productValues.put(T8COL5,  "/data/data/com.example.g1_csis3175_002/app_Images/image1710818257614.jpg");
+
+            db.insert(TABLE8_NAME, null, productValues);
         }
     }
 }

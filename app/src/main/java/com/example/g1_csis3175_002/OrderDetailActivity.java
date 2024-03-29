@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -35,93 +36,31 @@ public class OrderDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
 
-        Button btnEdit = findViewById(R.id.btnEdit);
         ImageView productImage = findViewById(R.id.imgOrderDetailProduct);
-
-        // Initialize TextViews
-        txtShippingAddress = findViewById(R.id.txtShowAddress);
-        tvShowOrdate = findViewById(R.id.tvShowOrdate);
-        tvShowOrderStatus = findViewById(R.id.tvShowOrderStatus);
-        tvShowOrderID = findViewById(R.id.tvShowOrderId);
-
-
-        // Get order ID from intent or any other source
-
-        int productID = getIntent().getIntExtra("ProductID", 1);
-
-
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        product = databaseHelper.getProduct2(productID);
+        TextView orderIdTextView = findViewById(R.id.tvShowOrderId);
+        TextView shippingAddressTextView = findViewById(R.id.txtShowAddress);
+        TextView orderDateTextView = findViewById(R.id.tvShowOrdate);
+        TextView orderStatusTextView = findViewById(R.id.tvShowOrderStatus);
 
 
 
-        tvShowOrderID.setText(String.valueOf(product.getProductID()+001));
+        // Retrieve the order ID from the intent extras
+        int orderId = getIntent().getIntExtra("ORDER_ID", -1); // Example: retrieving order ID
 
-        txtShippingAddress.setText(product.getProductName());
-        /*tvShowOrdate.setText(String.format(Locale.getDefault(), "$%.2f", product.getPrice()));*/
-        /*tvShowOrdate.setText(String.valueOf(product.getOrderDate()));*/
+        // Retrieve the order details from the database based on the order ID
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        OrderModel order = dbHelper.getOrderById(orderId);
 
-        Date orderDate = product.getOrderDate();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String formattedDate = dateFormat.format(orderDate);
-        tvShowOrdate.setText(formattedDate);
-        tvShowOrderStatus.setText(product.getDescription());
-        Glide.with(this)
-                .load(product.getImagePath())
-                .into(productImage);
+        // Populate the views with the order details
+        if (order != null) {
 
-      /*  // Initialize DatabaseHelper
-        dbHelper = new DatabaseHelper(this);
+            // Example: Assuming OrderModel has methods to retrieve product image, shipping address, order date, and status
+            /*productImage.setImageResource(order.getStatus());*/
+            orderIdTextView.setText(String.valueOf(order.getId()));
+            shippingAddressTextView.setText(order.getStatus());
+            orderDateTextView.setText(order.getDate());
+            orderStatusTextView.setText(order.getStatus());
 
-
-        // Get order details
-        Cursor cursor = dbHelper.getOrderDetails(orderId);*/
-
-        // Move the cursor to the first row
-      /*  if (cursor != null && cursor.moveToFirst()) {
-            // Retrieve data from the cursor
-            String shippingAddress = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.T3COL2));
-            String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.T3COL3));
-            String orderStatus = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.T3COL4));
-
-            // Populate TextViews with the retrieved data
-            txtShippingAddress.setText(shippingAddress);
-            tvShowOrdate.setText(orderDate);
-            tvShowOrderStatus.setText(orderStatus);
-
-            // Close the cursor
-            cursor.close();
-        }*/
-
-
-
-
-        String statusOrder = tvShowOrderStatus.getText().toString();
-        /*String statusOrder = "Deliveried"; //test */
-
-        if (statusOrder != "Deliveried"){
-            btnEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(OrderDetailActivity.this,Edit_Order.class));
-                }
-            });
         }
-        else
-            btnEdit.setText("Report");
-
-
-        /*
-        sample data
-         */
-
-        /*id.setText("001");
-        deliveryOption.setText("Delivery");
-        status.setText("Selling");
-        productImage.setImageResource(R.drawable.logo);*/
-
-        //check order status
-        //if delivered: change button to report
-        //if not delivered: keep it as edit
     }
 }

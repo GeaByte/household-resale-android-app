@@ -21,6 +21,9 @@ public class ProductModel implements Serializable {
 
     private Date orderDate;
 
+    private String shippingAddress;
+
+
     private static final long serialVersionUID = 1L;
 
 
@@ -57,6 +60,16 @@ public class ProductModel implements Serializable {
         this.description = description;
         this.orderDate = orderDate;
     }
+
+    public ProductModel(String shippingAddress,Date orderDate,String orderStatus,String imagePath ) {
+        this.shippingAddress = shippingAddress;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.imagePath = imagePath;
+
+    }
+
+
 
     public void setPrice(double price) {
         this.price = price;
@@ -114,9 +127,12 @@ public class ProductModel implements Serializable {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
+    public void setOrderDate(Date orderDate) {this.orderDate = orderDate;}
+
+    public String getShippingAddress() {return shippingAddress;}
+    public void setShippingAddress (String shippingAddress){this.shippingAddress=shippingAddress;}
+
+
 
 
 }

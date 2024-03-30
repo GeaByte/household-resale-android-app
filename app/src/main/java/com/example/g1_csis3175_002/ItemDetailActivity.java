@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -30,9 +32,13 @@ public class ItemDetailActivity extends AppCompatActivity {
         TextView tvDiscount = findViewById(R.id.txtProductPrice);
         TextView txtSellerInfo = findViewById(R.id.txtSellerInfo);
         TextView txtUserShipAd = findViewById(R.id.txtPickupAd);
+        TextView txtPickupTitle = findViewById(R.id.txtPickupAddress);
         TextView tvDes = findViewById(R.id.txtDescription);
         ImageView img = findViewById(R.id.imgProductItemDetail);
         Button btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
+        RadioGroup rdbtnGroup = findViewById(R.id.rdbtnGroup);
+        RadioButton rdbtnPickup = findViewById(R.id.rdbtnPickup);
+        RadioButton rdbtnDelivery = findViewById(R.id.rdbtnDelivery);
 
 
 
@@ -50,6 +56,20 @@ public class ItemDetailActivity extends AppCompatActivity {
         tvDes.setText(product.getDescription());
         txtSellerInfo.setText(product.getSeller());
         txtUserShipAd.setText(product.getPickupAddress());
+
+        rdbtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rdbtnPickup) {
+                    txtUserShipAd.setVisibility(View.VISIBLE);
+                    txtPickupTitle.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.rdbtnDelivery) {
+
+                    txtUserShipAd.setVisibility(View.GONE);
+                    txtPickupTitle.setVisibility(View.GONE);
+                }
+            }
+        });
 
         Glide.with(this)
                 .load(product.getImagePath())

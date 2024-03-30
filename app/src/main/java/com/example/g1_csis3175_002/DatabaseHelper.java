@@ -31,12 +31,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T2COL2 = "ProductName";
     final static String T2COL3 = "Description";
     final static String T2COL4 = "Price";
-    final static String T2COL5 = "Location";
+    final static String T2COL5 = "PickupAddress";
     final static String T2COL6 = "Category";
     final static String T2COL7 = "SellOrShare";
     final static String T2COL8 = "ImagePath";
     final static String T2COL9 = "Seller";
-    final static String T2COL10 = "PickupAddress";
+
     final static String TABLE3_NAME = "UserOrder";
     final static String T3COL1 = "OrderID";
     final static String T3COL2 = "ShippingAddress";
@@ -89,10 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL7 + " TEXT," +
                 T2COL8 + " TEXT," +
                 T2COL9 + " TEXT," +
-                T2COL10 + " TEXT," +
                 "FOREIGN KEY (" + T2COL9 + ") REFERENCES " + TABLE1_NAME + "(" +
-                T1COL1 + ")," +
-                "FOREIGN KEY (" + T2COL10 + ") REFERENCES " + TABLE1_NAME + "(" +
                 T1COL1 + ")" + ");";
 
         String queryTable3 = "CREATE TABLE " + TABLE3_NAME + "(" +
@@ -321,21 +318,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //2-Product
     // addProduct
-    public boolean addProduct(String productName, String description, String price, String location,
-                           String category, String sellOrShare, String imagePath, String seller,
-                              String pickupAddress) {
+    public boolean addProduct(String productName, String description, String price, String pickupAddress,
+                           String category, String sellOrShare, String imagePath, String seller) {
         try{
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(T2COL2, productName);
             values.put(T2COL3, description);
             values.put(T2COL4, price);
-            values.put(T2COL5, location);
+            values.put(T2COL5, pickupAddress);
             values.put(T2COL6, category);
             values.put(T2COL7, sellOrShare);
             values.put(T2COL8, imagePath);
             values.put(T2COL9, seller);
-            values.put(T2COL10, pickupAddress);
 
             long result = db.insert(TABLE2_NAME, null, values);
             return result != -1;
@@ -355,14 +350,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         ProductModel product = null;
         try (Cursor cursor = db.query(TABLE2_NAME, new String[] {T2COL2, T2COL3, T2COL4, T2COL8,
-                T2COL9, T2COL10}, T2COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null)) {
+                T2COL9, T2COL5}, T2COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null)) {
             if (cursor.moveToFirst()) {
                 String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
                 String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
                 String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
                 String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
-                String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL10));
+                String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
 
                 product = new ProductModel(productName, price, imagePath, description, seller, pickupAddress);
 
@@ -397,35 +392,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private Cursor getProductById(int productId) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String[] columns = {T2COL2, T2COL3, T2COL4, T2COL8, T2COL9, T2COL10};
+        String[] columns = {T2COL2, T2COL3, T2COL4, T2COL8, T2COL9, T2COL5};
         String selection = T2COL1 + "=?";
         String[] selectionArgs = {String.valueOf(productId)};
 
         return sqLiteDatabase.query(TABLE2_NAME, columns, selection, selectionArgs, null, null, null);
     }
 
-    public String getPickupAddressByUsername(String username) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String pickupAddress = null;
-
-        try (Cursor cursor = db.query(
-                TABLE1_NAME,
-                new String[]{T1COL4},
-                T1COL1 + "=?",
-                new String[]{username},
-                null,
-                null,
-                null)) {
-
-            if (cursor.moveToFirst()) {
-                pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T1COL4));
-            }
-        } catch (Exception e) {
-            Log.e("DatabaseHelper", "Error getting pickup address: " + e.getMessage());
-        }
-
-        return pickupAddress;
-    }
+//    public String getPickupAddressByUsername(String username) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        String pickupAddress = null;
+//
+//        try (Cursor cursor = db.query(
+//                TABLE1_NAME,
+//                new String[]{T1COL4},
+//                T1COL1 + "=?",
+//                new String[]{username},
+//                null,
+//                null,
+//                null)) {
+//
+//            if (cursor.moveToFirst()) {
+//                pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T1COL4));
+//            }
+//        } catch (Exception e) {
+//            Log.e("DatabaseHelper", "Error getting pickup address: " + e.getMessage());
+//        }
+//
+//        return pickupAddress;
+//    }
 
 
     public boolean addOrder(Integer oId, String address, String date, String status, int productID){
@@ -472,9 +467,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL2,
                 T2COL3,
                 T2COL4,
+                T2COL5,
                 T2COL8,
                 T2COL9,
-                T2COL10
         };
 
         Cursor cursor = db.query(
@@ -495,7 +490,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
                 String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
                 String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
-                String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL10));
+                String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
 
                 ProductModel product = new ProductModel(productID, productName, price, imagePath,
                         description, seller, pickupAddress);
@@ -540,7 +535,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
                 String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
                 String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
-                String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL10));
+                String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
 
                 ProductModel product = new ProductModel(productName, price, imagePath,
                         description, seller, pickupAddress);

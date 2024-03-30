@@ -87,7 +87,6 @@
     <string name="enter_item_tittle">Enter Item Title</string>
     <string name="item_description">Description</string>
     <string name="enter_price">Enter Price</string>
-    <string name="item_location">Location</string>
     <string name="type_service">Type Of Service</string>
     <string name="item_sell">Sell</string>
     <string name="item_share">Share</string>
@@ -123,7 +122,10 @@
     <string name="todo">TODO</string>
     <string name="txtProductDetails">Product Details</string>
     <string name="txtEditShippingAddress">Edit Shipping Address</string>
-    <string name="txtPickupAddress">Pick-up Address:</string>
+    <string name="txtPickupAddress">Pick-up Address</string>
+    <string name="txtPickup">Pick up</string>
+    <string name="txtDelivery">Delivery</string>
+    <string name="btnAddToCart">Add to Cart</string>
 
     <string-array name="txtDeliveryOpt">
         <item>Choose Delivery Option</item>

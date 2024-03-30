@@ -53,7 +53,8 @@
         android:layout_marginTop="12dp"
         android:text="@string/txtPrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgProductItemDetail" />
+        app:layout_constraintTop_toBottomOf="@+id/imgProductItemDetail"
+        tools:ignore="TextSizeCheck" />
 
     <TextView
         android:id="@+id/tvSellerInformation"
@@ -76,20 +77,18 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="@string/seller"
-        app:layout_constraintBottom_toTopOf="@+id/txtPickupAddress"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSellerInformation"
-        app:layout_constraintVertical_bias="0.142" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSellerInformation" />
 
     <TextView
         android:id="@+id/txtPickupAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="72dp"
         android:text="@string/txtPickupAddress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSellerInfo" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rdbtnGroup" />
 
     <Button
         android:id="@+id/btnPlaceOrder"
@@ -145,9 +144,9 @@
         android:id="@+id/txtSellerInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.132"
+        app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintStart_toEndOf="@+id/tvSeller"
         app:layout_constraintTop_toBottomOf="@+id/tvSellerInformation" />
 
@@ -166,12 +165,53 @@
         android:id="@+id/txtPickupAd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPickupAddress" />
+
+    <RadioGroup
+        android:id="@+id/rdbtnGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/rdbtnPickup"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgProductItemDetail"
+        app:layout_constraintVertical_bias="0.052"
+        tools:ignore="TextSizeCheck">
+
+        <RadioButton
+            android:id="@+id/rdbtnPickup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/txtPickup"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/rdbtnDelivery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/txtDelivery"
+            android:textSize="12sp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnAddToCart"
+        android:layout_width="365dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#74A13F"
+        android:text="@string/btnAddToCart"
+        android:textColor="#3E2723"
         app:layout_constraintBottom_toTopOf="@+id/btnPlaceOrder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.176"
-        app:layout_constraintStart_toEndOf="@+id/txtPickupAddress"
-        app:layout_constraintTop_toBottomOf="@+id/txtSellerInfo"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,7 +41,8 @@ public class ListItemSeller extends AppCompatActivity {
     private EditText edtItemtitle, editTextDescription, editTextPrice, editTextLocation;
     private Spinner spinnerCategory;
     private RadioGroup radioGroupSellShare;
-    private RadioButton radioButtonSell, radioButtonShare;
+    private RadioButton radioButtonSell;
+
 
 
     @Override
@@ -63,10 +64,23 @@ public class ListItemSeller extends AppCompatActivity {
         spinnerCategory = findViewById(R.id.spinnerCategory);
         radioGroupSellShare = findViewById(R.id.radioGroupSellShare);
         radioButtonSell = findViewById(R.id.radioButtonSell);
-        radioButtonShare = findViewById(R.id.radioButtonShare);
         imgView = findViewById(R.id.imgView);
         Button btnAddImage = findViewById(R.id.btnAddImage);
         Button btnList = findViewById(R.id.btnList);
+
+        radioGroupSellShare.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.radioButtonSell) {
+                    editTextPrice.setEnabled(true);
+                    editTextPrice.setText("");
+                    editTextPrice.requestFocus();
+                } else if (checkedId == R.id.radioButtonShare) {
+                    editTextPrice.setEnabled(false);
+                    editTextPrice.setText("0");
+                }
+            }
+        });
 
 
         btnList.setOnClickListener(new View.OnClickListener() {
@@ -75,32 +89,36 @@ public class ListItemSeller extends AppCompatActivity {
                 SharedPreferences sharedPref =
                         PreferenceManager.getDefaultSharedPreferences(ListItemSeller.this);
                 String seller = sharedPref.getString("username", "");
-                String pickupAddress = db.getPickupAddressByUsername(seller);
+//                String pickupAddress = db.getPickupAddressByUsername(seller);
 
-                if (pickupAddress != null) {
+//                if (pickupAddress != null) {
+
+
 
                     String productName = edtItemtitle.getText().toString();
                     String description = editTextDescription.getText().toString();
                     String price = editTextPrice.getText().toString();
-                    String location = editTextLocation.getText().toString();
                     String category = spinnerCategory.getSelectedItem().toString();
                     String sellOrShare = radioButtonSell.isChecked() ? "Sell" : "Share";
                     // Save the image to the filesystem
                     String imagePath = saveImageToInternalStorage(imgView);
+                    String pickupAddress = editTextLocation.getText().toString();
+
+
 
 
                     // Insert data into the database
 
-                    boolean inserted = db.addProduct(productName, description, price, location,
+                    boolean inserted = db.addProduct(productName, description, price,
                             category, sellOrShare, imagePath, seller, pickupAddress);
                     if (inserted) {
                         Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(ListItemSeller.this, "Failed to list item", Toast.LENGTH_SHORT).show();
                     }
-                } else{
-                    Toast.makeText(ListItemSeller.this, "Failed to retrieve pickup address", Toast.LENGTH_SHORT).show();
-                }
+//                } else{
+//                    Toast.makeText(ListItemSeller.this, "Failed to retrieve pickup address", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 

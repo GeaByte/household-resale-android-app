@@ -17,12 +17,17 @@ public class OrderModel {
         this.productImagePath = productImagePath;
     }
 
-    public OrderModel(int id, String shippingAddress, String date, String status) {
+    public OrderModel(int id, String shippingAddress, String date, String status,String productImagePath ) {
         this.id = id;
         this.itemNames = itemNames;
         this.date = date;
         this.status = status;
         this.shippingAddress = shippingAddress;
+        this.productImagePath = productImagePath;
+
+    }
+
+    public OrderModel() {
 
     }
 

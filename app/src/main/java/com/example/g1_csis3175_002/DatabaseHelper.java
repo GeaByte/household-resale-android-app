@@ -201,7 +201,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
     public String addUser(String username, String name, String address, String zipcode, String city,
-                           int contact, String email, String password){
+                          int contact, String email, String password){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         //check unique email
@@ -320,9 +320,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String shippingAddress = cursor.getString(cursor.getColumnIndexOrThrow(T8COL2));
             String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(T8COL3));
             String orderStatus = cursor.getString(cursor.getColumnIndexOrThrow(T8COL4));
+            String image = cursor.getString(cursor.getColumnIndexOrThrow(T8COL5));
 
             // Create the OrderModel object
-            order = new OrderModel(id, shippingAddress, orderDate, orderStatus);
+            order = new OrderModel(id, shippingAddress, orderDate, orderStatus,image);
 
 
             // Close the cursor
@@ -374,7 +375,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //2-Product
     // addProduct
     public boolean addProduct(String productName, String description, String price, String location,
-                           String category, String sellOrShare, String imagePath) {
+                              String category, String sellOrShare, String imagePath) {
         try{
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -473,7 +474,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T8COL5));
 
                     // Create an OrderModel object and add it to the list
-                    OrderModel order = new OrderModel(orderId, shippingAddress, orderDate, status);
+                    OrderModel order = new OrderModel(orderId, shippingAddress, orderDate, status, imagePath);
                     orders.add(order);
                 } while (cursor.moveToNext());
             }

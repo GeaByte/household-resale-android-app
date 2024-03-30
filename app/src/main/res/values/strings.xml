@@ -105,7 +105,7 @@
     <string name="txtItemName">Item Name:</string>
     <string name="txtOrderDate">Order Date:</string>
     <string name="txtStatus">Status:</string>
-    <string name="btnView">View</string>
+    <string name="btnView">Cancel Order</string>
     <string name="btnEdit">Edit</string>
     <string name="txtOrderDetail">Order Details</string>
     <string name="txtShippingAddress">Shipping Address:</string>

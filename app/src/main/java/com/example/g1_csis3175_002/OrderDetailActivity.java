@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,11 @@ public class OrderDetailActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private ProductModel product;
 
+    int position;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +50,20 @@ public class OrderDetailActivity extends AppCompatActivity {
 
 
 
+
+
         // Retrieve the order ID from the intent extras
         int orderId = getIntent().getIntExtra("ORDER_ID", -1); // Example: retrieving order ID
+        OrderModel or = new OrderModel();
+
+
+
 
         // Retrieve the order details from the database based on the order ID
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         OrderModel order = dbHelper.getOrderById(orderId);
+
+
 
         // Populate the views with the order details
         if (order != null) {
@@ -62,5 +76,9 @@ public class OrderDetailActivity extends AppCompatActivity {
             orderStatusTextView.setText(order.getStatus());
 
         }
+
+
     }
+
+
 }

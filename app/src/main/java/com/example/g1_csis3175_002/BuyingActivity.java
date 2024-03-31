@@ -2,28 +2,37 @@ package com.example.g1_csis3175_002;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class BuyingActivity extends AppCompatActivity {
+public class BuyingActivity extends AppCompatActivity implements LocationHelper.LocationCallbackListener {
     GridView productGV;
     DatabaseHelper databaseHelper;
     ProductGVAdapter adapter;
+    private double longtitude;
+    private double latitude;
+    private LocationHelper locationHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buying);
 
+        TextView title = findViewById(R.id.tvBuyTitle);
+
         databaseHelper = new DatabaseHelper(this);
+        locationHelper = new LocationHelper(this);
+
         //sending instant reminder notification
 //        NotificationHelper.showNotification(this, "Pick-up Reminder", "testing");
         Spinner spSort = findViewById(R.id.spSort);
@@ -75,7 +84,11 @@ public class BuyingActivity extends AppCompatActivity {
                     case 2:
                         //get user's location
                         //each item's location
-                        //calculate distance
+                        //calculate distance in km
+                        double distance = LocationHelper.calculateDistance(latitude, longtitude, 40.7128, -120);
+                        //lat 37.42
+                        //long -122.08
+                        title.setText(String.valueOf(distance));
                         //sort by distance
                         break;
                 }
@@ -95,12 +108,18 @@ public class BuyingActivity extends AppCompatActivity {
         detailIntent.putExtra("ProductID", productID);
         startActivity(detailIntent);
     }
-
-    public List sort(List productList){
-        //sort by price
-        //sort by most recent
-        //sort by distance
-        return productList;
+    @Override
+    protected void onStart(){
+        super.onStart();
+        locationHelper.requestLocationUpdates(this);
     }
 
+
+    @Override
+    public void onLocationAvailable(Location location) {
+        if (location != null){
+            latitude = location.getLatitude();
+            longtitude = location.getLongitude();
+        }
+    }
 }

@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,7 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class ListingItemActivity extends AppCompatActivity {
+public class ListingItemActivity extends AppCompatActivity implements LocationHelper.LocationCallbackListener{
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imgView;
@@ -42,7 +43,9 @@ public class ListingItemActivity extends AppCompatActivity {
     private Spinner spinnerCategory;
     private RadioGroup radioGroupSellShare;
     private RadioButton radioButtonSell;
-
+    private double longtitude;
+    private double latitude;
+    private LocationHelper locationHelper;
 
 
     @Override
@@ -57,6 +60,7 @@ public class ListingItemActivity extends AppCompatActivity {
             return insets;
         });
 
+        locationHelper = new LocationHelper(this);
         edtItemtitle = findViewById(R.id.edtItemtitle);
         editTextDescription = findViewById(R.id.editTextDescription);
         editTextPrice = findViewById(R.id.editTextPrice);
@@ -179,5 +183,27 @@ public class ListingItemActivity extends AppCompatActivity {
         }
 
         return file.getAbsolutePath();
+    }
+
+    //for location
+    public void onClickSelect(View view){
+        int productID = (int) view.getTag();
+        Intent detailIntent = new Intent(ListingItemActivity.this, ItemDetailActivity.class);
+        detailIntent.putExtra("ProductID", productID);
+        startActivity(detailIntent);
+    }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        locationHelper.requestLocationUpdates(this);
+    }
+
+
+    @Override
+    public void onLocationAvailable(Location location) {
+        if (location != null){
+            latitude = location.getLatitude();
+            longtitude = location.getLongitude();
+        }
     }
 }

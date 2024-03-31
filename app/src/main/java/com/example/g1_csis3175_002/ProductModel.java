@@ -18,8 +18,6 @@ public class ProductModel implements Serializable {
     private String itemDetail;
     private String deliveryOption;
     private String orderStatus;
-    private String seller;
-    private String pickupAddress;
 
     private Date orderDate;
 
@@ -29,16 +27,13 @@ public class ProductModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    public ProductModel(int productID, String productName, double price,
-                        String imagePath,String description, String seller, String pickupAddress) {
+    public ProductModel(int productID, String productName, double price, String imagePath,String description) {
         this.productID = productID;
         this.productName = productName;
         this.imgid = imgid;
         this.price = price;
         this.imagePath = imagePath;
         this.description = description;
-        this.seller = seller;
-        this.pickupAddress = pickupAddress;
 
     }
 
@@ -51,14 +46,11 @@ public class ProductModel implements Serializable {
         this.imagePath = imagePath;
     }
 
-    public ProductModel(String productName, double price, String imagePath,
-                        String description, String seller, String pickupAddress) {
+    public ProductModel(String productName, double price, String imagePath,String description) {
         this.productName = productName;
         this.price = price;
         this.imagePath = imagePath;
         this.description = description;
-        this.seller = seller;
-        this.pickupAddress = pickupAddress;
     }
 
     public ProductModel(String productName, double price, String imagePath,String description, Date orderDate) {
@@ -131,12 +123,16 @@ public class ProductModel implements Serializable {
 
     public String getOrderStatus() { return orderStatus;}
 
-
-    public String getPickupAddress() {
-        return pickupAddress;
+    public Date getOrderDate() {
+        return orderDate;
     }
 
-    public void setPickupAddress(String pickupAddress) {
-        this.pickupAddress = pickupAddress;
-    }
+    public void setOrderDate(Date orderDate) {this.orderDate = orderDate;}
+
+    public String getShippingAddress() {return shippingAddress;}
+    public void setShippingAddress (String shippingAddress){this.shippingAddress=shippingAddress;}
+
+
+
+
 }

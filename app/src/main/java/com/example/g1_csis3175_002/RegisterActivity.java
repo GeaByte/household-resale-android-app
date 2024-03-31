@@ -25,22 +25,21 @@ public class RegisterActivity extends AppCompatActivity {
         EditText phone = findViewById(R.id.edPhone);
         EditText email = findViewById(R.id.edCreateEmail);
         EditText password = findViewById(R.id.edCreatPassword);
-        Spinner city = findViewById(R.id.spCity);
-        Button btRegister = findViewById(R.id.btCreatAcc);
+        Spinner spCity = (Spinner) findViewById(R.id.spCity);
+        Button btRegister = (Button) findViewById(R.id.btCreatAcc);
         databaseHelper = new DatabaseHelper(this);
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             String isInserted;
             @Override
             public void onClick(View v) {
-                //addUser(String username, String name, String address, String zipcode, String city,
-                //int contact, String email, String password)
+                String city = spCity.getSelectedItem().toString();
                 isInserted = databaseHelper.addUser(
                         username.getText().toString(),
                         name.getText().toString(),
                         address.getText().toString(),
                         zipcode.getText().toString(),
-                        city.getSelectedItem().toString(),
+                        city,
                         Integer.parseInt(phone.getText().toString()),
                         email.getText().toString(),
                         password.getText().toString()

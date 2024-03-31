@@ -21,30 +21,51 @@
 
 
             <EditText
+                android:id="@+id/edtItemtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:autofillHints=""
+                android:hint="@string/enter_item_tittle"
+                android:inputType="text"
+                android:textSize="20sp" />
+
+            <EditText
                 android:id="@+id/editTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/edtItemtitle"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:autofillHints=""
                 android:hint="@string/item_description"
                 android:inputType="textMultiLine"
                 android:minLines="3"
-                android:textSize="20sp"
-                tools:ignore="NotSibling" />
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editTextPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextDescription"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:autofillHints=""
+                android:hint="@string/enter_price"
+                android:inputType="numberDecimal"
+                android:minHeight="48dp"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/editTextLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editTextDescription"
+                android:layout_below="@id/editTextPrice"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="0dp"
                 android:layout_marginEnd="16dp"
                 android:autofillHints=""
-                android:hint="@string/txtPickupAddress"
+                android:hint="@string/item_location"
                 android:inputType="text"
                 android:textSize="20sp" />
 
@@ -97,31 +118,15 @@
 
             </RadioGroup>
 
-            <EditText
-                android:id="@+id/editTextPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/radioGroupSellShare"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
-                android:autofillHints=""
-                android:hint="@string/enter_price"
-                android:inputType="numberDecimal"
-                android:minHeight="48dp"
-                android:textSize="20sp" />
-
             <Button
                 android:id="@+id/btnAddImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editTextPrice"
+                android:layout_below="@+id/radioGroupSellShare"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="131dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="27dp"
                 android:layout_marginEnd="130dp"
                 android:backgroundTint="#03A9F4"
                 android:drawableStart="@drawable/baseline_add_a_photo_24"
@@ -160,26 +165,14 @@
         android:id="@+id/txtViewEditTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="108dp"
         android:drawableLeft="@drawable/baseline_edit_24"
         android:text="@string/edit_title"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="RtlHardcoded,UseCompatTextViewDrawableXml" />
-
-    <EditText
-        android:id="@+id/edtItemtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:hint="@string/enter_item_tittle"
-        android:inputType="text"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="82dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

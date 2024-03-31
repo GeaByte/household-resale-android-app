@@ -4,34 +4,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class BuyingActivity extends AppCompatActivity {
     GridView productGV;
     DatabaseHelper databaseHelper;
-
-
+    ProductGVAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buying);
+
         databaseHelper = new DatabaseHelper(this);
-
-
-        //sending reminder notification
+        //sending instant reminder notification
 //        NotificationHelper.showNotification(this, "Pick-up Reminder", "testing");
-
-        SearchView searchView = findViewById(R.id.searchView);
-
+        Spinner spSort = findViewById(R.id.spSort);
         productGV = findViewById(R.id.GVbuying);
-        ArrayList<ProductModel> productModelArrayList;
-        productModelArrayList = databaseHelper.getAllProducts();
-        ProductGVAdapter adapter = new ProductGVAdapter(this, productModelArrayList);
+        List<ProductModel> productModelList;
+        productModelList = databaseHelper.getAllProducts();
+        adapter = new ProductGVAdapter(BuyingActivity.this, productModelList);
         productGV.setAdapter(adapter);
-
+        SearchView searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -47,9 +48,32 @@ public class BuyingActivity extends AppCompatActivity {
                 return true;
             }
         });
+        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                switch (position){
+                    //sort by most recent
+                    case 0:
+                        break;
+                    //sort by price from low to high
+                    case 1:
+                        Collections.sort(productModelList, (p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
+                        adapter = new ProductGVAdapter(BuyingActivity.this, productModelList);
+                        productGV.setAdapter(adapter);
+                        break;
+                    //sort by distance from close to away
+                    case 2:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
-
-
 
     public void onClickSelect(View view){
         int productID = (int) view.getTag();
@@ -57,4 +81,12 @@ public class BuyingActivity extends AppCompatActivity {
         detailIntent.putExtra("ProductID", productID);
         startActivity(detailIntent);
     }
+
+    public List sort(List productList){
+        //sort by price
+        //sort by most recent
+        //sort by distance
+        return productList;
+    }
+
 }

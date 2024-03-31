@@ -115,10 +115,6 @@ public class ItemDetailActivity extends AppCompatActivity {
 
 
     public void onClickBack(View view){
-        /*
-        need to implement Back button to previous browsing stage
-        not from top again
-         */
         startActivity(new Intent(ItemDetailActivity.this, BuyingActivity.class));
     }
 }

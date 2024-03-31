@@ -69,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onClickSellAnItem(View view){
-        startActivity(new Intent(HomeActivity.this, ListItemSeller.class));
+        startActivity(new Intent(HomeActivity.this, ListingItemActivity.class));
     }
 
     public void onClickViewOrderHistory(View view){

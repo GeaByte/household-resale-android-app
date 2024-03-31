@@ -25,7 +25,7 @@
             android:name=".OrderHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ListItemSeller"
+            android:name=".ListingItemActivity"
             android:exported="false" />
         <activity
             android:name=".UserOrSellerActivity"

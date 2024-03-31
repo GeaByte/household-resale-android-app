@@ -33,7 +33,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class ListItemSeller extends AppCompatActivity {
+public class ListingItemActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imgView;
@@ -47,10 +47,10 @@ public class ListItemSeller extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DatabaseHelper db = new DatabaseHelper(ListItemSeller.this);
+        DatabaseHelper db = new DatabaseHelper(ListingItemActivity.this);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_listing_product);
+        setContentView(R.layout.activity_listing_item);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -85,7 +85,7 @@ public class ListItemSeller extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences sharedPref =
-                        PreferenceManager.getDefaultSharedPreferences(ListItemSeller.this);
+                        PreferenceManager.getDefaultSharedPreferences(ListingItemActivity.this);
                 String seller = sharedPref.getString("username", "");
 //                String pickupAddress = db.getPickupAddressByUsername(seller);
 
@@ -111,10 +111,10 @@ public class ListItemSeller extends AppCompatActivity {
                     boolean inserted = db.addProduct(productName, description, price, pickupAddress,
                             category, sellOrShare, imagePath, seller);
                     if (inserted) {
-                        Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(ListItemSeller.this, HomeActivity.class));
+                        Toast.makeText(ListingItemActivity.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ListingItemActivity.this, HomeActivity.class));
                     } else {
-                        Toast.makeText(ListItemSeller.this, "Failed to list item", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ListingItemActivity.this, "Failed to list item", Toast.LENGTH_SHORT).show();
                     }
             }
         });

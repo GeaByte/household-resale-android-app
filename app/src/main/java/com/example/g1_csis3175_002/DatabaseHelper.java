@@ -165,8 +165,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(T1COL6, contact);
         values.put(T1COL7, email);
         values.put(T1COL8, password);
-        values.put(T1COL9, isBuyer ? 1 : 0);
-        values.put(T1COL10, isSeller ? 1 : 0);
+        values.put(T1COL9, 0);
+        values.put(T1COL10, 0);
 
 
         long r = sqLiteDatabase.insert(TABLE1_NAME, null, values);

@@ -98,30 +98,25 @@ public class OrderDetailLVAdapter extends ArrayAdapter<OrderModel>{
         return dateFormat.format(date);
     }
 
-    // Calculate the status based on the order date
-    private String calculateStatus(String orderDate) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        try {
-            Date date = dateFormat.parse(orderDate);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_YEAR, 15); // Add 10 days to the order date
-            Date shippingDate = calendar.getTime();
-            calendar.add(Calendar.DAY_OF_YEAR, 10); // Add 5 more days for delivery
-            Date deliveryDate = calendar.getTime();
-            Date currentDate = new Date();
-            if (currentDate.before(shippingDate)) {
-                return "Processing";
-            } else if (currentDate.before(deliveryDate)) {
-                return "Shipping";
-            } else {
-                return "Delivered";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public View getView(int position, View convertView, ViewGroup parent){
+        View listitemView = convertView;
+        if (listitemView == null){
+            listitemView = LayoutInflater.from(getContext()).inflate(R.layout.listview_layout_order_history, parent, false);
         }
-        return "";
+        OrderModel orderModel = getItem(position);
+        TextView orderId = listitemView.findViewById(R.id.tvShowOrderID);
+        TextView itemName = listitemView.findViewById(R.id.tvShowItemName);
+        TextView orderDate = listitemView.findViewById(R.id.tvShowOrderDate);
+        TextView status = listitemView.findViewById(R.id.tvShowStatus);
+        orderId.setText(Long.toString(orderModel.getId()));
+        String[] itemNames = orderModel.getItemNames();
+        String items = String.join(", ", itemNames);
+        itemName.setText(items);
+        orderDate.setText(orderModel.getDate());
+        status.setText(orderModel.getStatus());
+        return listitemView;
     }
+}
 
 
 }

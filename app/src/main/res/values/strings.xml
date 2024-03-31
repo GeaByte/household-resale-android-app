@@ -35,7 +35,7 @@
     <string name="imgProductDescription">Product Image</string>
     <string name="txtProductName">Product Name: </string>
     <string name="btnSelect">Select</string>
-    <string name="txtPrice">$19.99</string>
+    <string name="txtPrice">Price</string>
     <string name="reg_text">Don\'t have an account?</string>
     <string name="buyer">Buyer</string>
     <string name="seller">Seller</string>
@@ -87,7 +87,6 @@
     <string name="enter_item_tittle">Enter Item Title</string>
     <string name="item_description">Description</string>
     <string name="enter_price">Enter Price</string>
-    <string name="item_location">Location</string>
     <string name="type_service">Type Of Service</string>
     <string name="item_sell">Sell</string>
     <string name="item_share">Share</string>
@@ -114,7 +113,6 @@
     <string name="txtOriginalPrice">Original Price:</string>
     <string name="txtDiscountPrice">Discount Price:</string>
     <string name="txtSellerInformation">Seller Information:</string>
-    <string name="txtContact">Contact:</string>
     <string name="btnPlaceOrder">Place Order</string>
     <string name="btnBack">Back</string>
     <string name="edit_button">Edit</string>
@@ -122,8 +120,12 @@
     <string name="txtEditOrder">Edit Order</string>
     <string name="btnSaveEdit">Save Edit</string>
     <string name="todo">TODO</string>
-    <string name="txtItemDetail">Order Detail</string>
+    <string name="txtProductDetails">Product Details</string>
     <string name="txtEditShippingAddress">Edit Shipping Address</string>
+    <string name="txtPickupAddress">Pick-up Address</string>
+    <string name="txtPickup">Pick up</string>
+    <string name="txtDelivery">Delivery</string>
+    <string name="btnAddToCart">Add to Cart</string>
 
     <string-array name="txtDeliveryOpt">
         <item>Choose Delivery Option</item>

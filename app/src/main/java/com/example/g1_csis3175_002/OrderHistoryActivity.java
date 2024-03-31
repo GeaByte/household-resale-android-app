@@ -69,32 +69,28 @@ public class OrderHistoryActivity extends AppCompatActivity {
     }
 
     public void onCancelClick(View view) {
-        // Find the parent ListView item containing the button
+        // Find the parent row view
         View parentRow = (View) view.getParent();
-        ListView listView = (ListView) parentRow.getParent();
 
-        // Get the position of the button within the ListView
+        // Directly use the listView reference since we are in the same activity
+        ListView listView = findViewById(R.id.lvOrders);
+
+        // Get the position of the clicked button's parent layout in the ListView
         int position = listView.getPositionForView(parentRow);
 
         // Get the corresponding OrderModel object
         OrderModel order = (OrderModel) listView.getAdapter().getItem(position);
 
-        // Check if the order status is "Delivered"
         if (order.getStatus().equalsIgnoreCase("Delivered")) {
-            // Show a message that cancellation is not allowed for delivered orders
             Toast.makeText(this, "Cancellation is not allowed for delivered orders", Toast.LENGTH_SHORT).show();
         } else {
-            // Remove the order from the database
+            // Assuming you have access to delete the order directly
             DatabaseHelper dbHelper = new DatabaseHelper(this);
             dbHelper.deleteOrder(order.getId());
 
-            // Remove the order from the ArrayList used by the adapter
+            // Update the adapter and ListView
             ((OrderDetailLVAdapter) listView.getAdapter()).remove(order);
-
-            // Notify the adapter that the data set has changed
             ((OrderDetailLVAdapter) listView.getAdapter()).notifyDataSetChanged();
-
-            // Show a toast message indicating the order has been canceled
             Toast.makeText(this, "Order with ID " + order.getId() + " has been canceled", Toast.LENGTH_SHORT).show();
         }
     }

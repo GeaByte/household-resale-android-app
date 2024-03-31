@@ -1,6 +1,8 @@
 package com.example.g1_csis3175_002;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.concurrent.TimeUnit;
 
 public class HomeActivity extends AppCompatActivity {
     String usernamePreferences;
@@ -40,12 +44,24 @@ public class HomeActivity extends AppCompatActivity {
         usernamePreferences = sharedPref.getString("username", "");
         String emailPreferences = sharedPref.getString("email", "");
 
-        /*
-
-         */
         profileIcon.setImageResource(R.drawable.buyer);
         username.setText(usernamePreferences);
         userEmail.setText(emailPreferences);
+
+        //check for notification permission
+        if (!NotificationHelper.isNotificationPermissionGranted(this)){
+            //if not, ask for permission
+            NotificationHelper.showPermissionDialog(this);
+        }
+
+        /*
+         * Move this part to after purchase
+         * */
+        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationHelper.class)
+                .setInitialDelay(5, TimeUnit.SECONDS)
+                .build();
+        WorkManager.getInstance(this).enqueue(notificationWork);
+
     }
 
     public void onClickBuyAnItem(View view){

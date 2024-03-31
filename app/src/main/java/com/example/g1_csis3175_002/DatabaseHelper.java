@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -26,6 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T1COL8 = "Password";
     final static String T1COL9 = "IsBuyer";
     final static String T1COL10 = "IsSeller";
+
     final static String TABLE2_NAME = "Product";
     final static String T2COL1 = "ProductID";
     final static String T2COL2 = "ProductName";
@@ -36,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T2COL7 = "SellOrShare";
     final static String T2COL8 = "ImagePath";
     final static String T2COL9 = "Seller";
+    final static String T2COL10 = "UploadTime";
 
     final static String TABLE3_NAME = "UserOrder";
     final static String T3COL1 = "OrderID";
@@ -89,6 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL7 + " TEXT," +
                 T2COL8 + " TEXT," +
                 T2COL9 + " TEXT," +
+                T2COL10 + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
                 "FOREIGN KEY (" + T2COL9 + ") REFERENCES " + TABLE1_NAME + "(" +
                 T1COL1 + ")" + ");";
 
@@ -470,6 +474,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL5,
                 T2COL8,
                 T2COL9,
+                T2COL10,
         };
 
         Cursor cursor = db.query(
@@ -491,9 +496,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
                 String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
                 String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
+                String uploadTime = cursor.getString(cursor.getColumnIndexOrThrow(T2COL10));
 
                 ProductModel product = new ProductModel(productID, productName, price, imagePath,
-                        description, seller, pickupAddress);
+                        description, seller, pickupAddress, uploadTime);
                 productList.add(product);
             } while (cursor.moveToNext());
 
@@ -501,6 +507,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return productList;
+    }
+
+    public ArrayList<ProductModel> getAllProductsByR(){
+        ArrayList<ProductModel> products = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE2_NAME, null);
+        if (cursor.moveToFirst()){
+            do{
+                int productID = cursor.getInt(cursor.getColumnIndexOrThrow(T2COL1));
+                String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
+                String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
+                String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
+                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(T2COL10));
+                ProductModel product = new ProductModel(productID, productName, price, imagePath,
+                        description, seller, pickupAddress, timestamp);
+                products.add(product);
+            } while(cursor.moveToNext());
+            cursor.close();
+        }
+        return products;
     }
 
     public ArrayList<ProductModel> searchProducts(String query) {

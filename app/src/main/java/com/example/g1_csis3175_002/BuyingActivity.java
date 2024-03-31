@@ -54,15 +54,29 @@ public class BuyingActivity extends AppCompatActivity {
                 switch (position){
                     //sort by most recent
                     case 0:
+                        //for api 21
+                        Collections.sort(productModelList, new Comparator<ProductModel>() {
+                            @Override
+                            public int compare(ProductModel p1, ProductModel p2) {
+                                return p2.getUploadTime().compareTo(p1.getUploadTime());
+                            }
+                        });
+                        adapter = new ProductGVAdapter(BuyingActivity.this, productModelList);
+                        productGV.setAdapter(adapter);
                         break;
                     //sort by price from low to high
                     case 1:
+                        //for api 21
                         Collections.sort(productModelList, (p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
                         adapter = new ProductGVAdapter(BuyingActivity.this, productModelList);
                         productGV.setAdapter(adapter);
                         break;
                     //sort by distance from close to away
                     case 2:
+                        //get user's location
+                        //each item's location
+                        //calculate distance
+                        //sort by distance
                         break;
                 }
             }

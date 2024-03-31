@@ -1,15 +1,8 @@
 package com.example.g1_csis3175_002;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Button btnLogin = (Button) findViewById(R.id.btLogin);
-        Button btnRegister = (Button) findViewById(R.id.btRegister);
+        Button btnLogin = findViewById(R.id.btLogin);
+        Button btnRegister = findViewById(R.id.btRegister);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {

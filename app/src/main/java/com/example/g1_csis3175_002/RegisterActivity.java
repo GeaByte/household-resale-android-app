@@ -25,8 +25,8 @@ public class RegisterActivity extends AppCompatActivity {
         EditText phone = findViewById(R.id.edPhone);
         EditText email = findViewById(R.id.edCreateEmail);
         EditText password = findViewById(R.id.edCreatPassword);
-        Spinner city = (Spinner) findViewById(R.id.spCity);
-        Button btRegister = (Button) findViewById(R.id.btCreatAcc);
+        Spinner city = findViewById(R.id.spCity);
+        Button btRegister = findViewById(R.id.btCreatAcc);
         databaseHelper = new DatabaseHelper(this);
 
         btRegister.setOnClickListener(new View.OnClickListener() {

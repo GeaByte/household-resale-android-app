@@ -108,8 +108,9 @@ public class ListItemSeller extends AppCompatActivity {
 
 
                     // Insert data into the database
-
-                    boolean inserted = db.addProduct(productName, description, price,
+                    //addProduct(String productName, String description, String price, String pickupAddress,
+                    //String category, String sellOrShare, String imagePath, String seller)
+                    boolean inserted = db.addProduct(productName, description, price, pickupAddress,
                             category, sellOrShare, imagePath, seller);
                     if (inserted) {
                         Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();

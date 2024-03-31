@@ -489,12 +489,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return orders;
     }
 
-    public void deleteOrder(int orderId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE8_NAME, T8COL1 + " = ?", new String[]{String.valueOf(orderId)});
-        db.close();
-    }
-
     // updateProduct
     public boolean updateProduct(int productId, String productName, String description, String price, String location,
                                  String category, String sellOrShare, String imagePath) {

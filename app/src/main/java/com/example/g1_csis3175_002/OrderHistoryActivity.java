@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,37 @@ public class OrderHistoryActivity extends AppCompatActivity {
         startActivity(new Intent(OrderHistoryActivity.this, OrderDetailActivity.class));
 
 
+    }
+
+    public void onCancelClick(View view) {
+        // Find the parent ListView item containing the button
+        View parentRow = (View) view.getParent();
+        ListView listView = (ListView) parentRow.getParent();
+
+        // Get the position of the button within the ListView
+        int position = listView.getPositionForView(parentRow);
+
+        // Get the corresponding OrderModel object
+        OrderModel order = (OrderModel) listView.getAdapter().getItem(position);
+
+        // Check if the order status is "Delivered"
+        if (order.getStatus().equalsIgnoreCase("Delivered")) {
+            // Show a message that cancellation is not allowed for delivered orders
+            Toast.makeText(this, "Cancellation is not allowed for delivered orders", Toast.LENGTH_SHORT).show();
+        } else {
+            // Remove the order from the database
+            DatabaseHelper dbHelper = new DatabaseHelper(this);
+            dbHelper.deleteOrder(order.getId());
+
+            // Remove the order from the ArrayList used by the adapter
+            ((OrderDetailLVAdapter) listView.getAdapter()).remove(order);
+
+            // Notify the adapter that the data set has changed
+            ((OrderDetailLVAdapter) listView.getAdapter()).notifyDataSetChanged();
+
+            // Show a toast message indicating the order has been canceled
+            Toast.makeText(this, "Order with ID " + order.getId() + " has been canceled", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

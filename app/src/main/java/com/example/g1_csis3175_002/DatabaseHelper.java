@@ -286,6 +286,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowsAffected > 0;
     }
 
+    public void deleteOrder(int orderId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE8_NAME, T8COL1 + " = ?", new String[]{String.valueOf(orderId)});
+        db.close();
+    }
+
 
     // Method to retrieve order details by ID
     public OrderModel getOrderById(int orderId) {

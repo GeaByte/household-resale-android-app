@@ -2,6 +2,7 @@ package com.example.g1_csis3175_002;
 
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -39,11 +41,13 @@ public class ListItemSeller extends AppCompatActivity {
     private EditText edtItemtitle, editTextDescription, editTextPrice, editTextLocation;
     private Spinner spinnerCategory;
     private RadioGroup radioGroupSellShare;
-    private RadioButton radioButtonSell, radioButtonShare;
+    private RadioButton radioButtonSell;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DatabaseHelper db = new DatabaseHelper(ListItemSeller.this);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_product_add);
@@ -60,36 +64,59 @@ public class ListItemSeller extends AppCompatActivity {
         spinnerCategory = findViewById(R.id.spinnerCategory);
         radioGroupSellShare = findViewById(R.id.radioGroupSellShare);
         radioButtonSell = findViewById(R.id.radioButtonSell);
-        radioButtonShare = findViewById(R.id.radioButtonShare);
         imgView = findViewById(R.id.imgView);
         Button btnAddImage = findViewById(R.id.btnAddImage);
         Button btnList = findViewById(R.id.btnList);
+
+        radioGroupSellShare.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.radioButtonSell) {
+                    editTextPrice.setEnabled(true);
+                    editTextPrice.setText("");
+                    editTextPrice.requestFocus();
+                } else if (checkedId == R.id.radioButtonShare) {
+                    editTextPrice.setEnabled(false);
+                    editTextPrice.setText("0");
+                }
+            }
+        });
 
 
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPref =
+                        PreferenceManager.getDefaultSharedPreferences(ListItemSeller.this);
+                String seller = sharedPref.getString("username", "");
+//                String pickupAddress = db.getPickupAddressByUsername(seller);
 
-                    // Get data from views
+//                if (pickupAddress != null) {
+
+
+
                     String productName = edtItemtitle.getText().toString();
                     String description = editTextDescription.getText().toString();
                     String price = editTextPrice.getText().toString();
-                    String location = editTextLocation.getText().toString();
                     String category = spinnerCategory.getSelectedItem().toString();
                     String sellOrShare = radioButtonSell.isChecked() ? "Sell" : "Share";
-                // Save the image to the filesystem
-                String imagePath = saveImageToInternalStorage(imgView);
+                    // Save the image to the filesystem
+                    String imagePath = saveImageToInternalStorage(imgView);
+                    String pickupAddress = editTextLocation.getText().toString();
 
-                // Insert data into the database
-                DatabaseHelper dbHelper = new DatabaseHelper(ListItemSeller.this);
-                boolean inserted = dbHelper.addProduct(productName, description, price, location, category, sellOrShare, imagePath);
-                if (inserted) {
-                    Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ListItemSeller.this, HomeActivity.class));
-                } else {
-                    Toast.makeText(ListItemSeller.this, "Failed to list item", Toast.LENGTH_SHORT).show();
-                }
 
+
+
+                    // Insert data into the database
+
+                    boolean inserted = db.addProduct(productName, description, price,
+                            category, sellOrShare, imagePath, seller);
+                    if (inserted) {
+                        Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ListItemSeller.this, HomeActivity.class));
+                    } else {
+                        Toast.makeText(ListItemSeller.this, "Failed to list item", Toast.LENGTH_SHORT).show();
+                    }
             }
         });
 

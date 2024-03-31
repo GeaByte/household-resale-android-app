@@ -16,17 +16,22 @@ public class ProductModel implements Serializable {
     private String itemDetail;
     private String deliveryOption;
     private String orderStatus;
+    private String seller;
+    private String pickupAddress;
 
     private static final long serialVersionUID = 1L;
 
 
-    public ProductModel(int productID, String productName, double price, String imagePath,String description) {
+    public ProductModel(int productID, String productName, double price,
+                        String imagePath,String description, String seller, String pickupAddress) {
         this.productID = productID;
         this.productName = productName;
         this.imgid = imgid;
         this.price = price;
         this.imagePath = imagePath;
         this.description = description;
+        this.seller = seller;
+        this.pickupAddress = pickupAddress;
 
     }
 
@@ -39,11 +44,14 @@ public class ProductModel implements Serializable {
         this.imagePath = imagePath;
     }
 
-    public ProductModel(String productName, double price, String imagePath,String description) {
+    public ProductModel(String productName, double price, String imagePath,
+                        String description, String seller, String pickupAddress) {
         this.productName = productName;
         this.price = price;
         this.imagePath = imagePath;
         this.description = description;
+        this.seller = seller;
+        this.pickupAddress = pickupAddress;
     }
 
     public void setPrice(double price) {
@@ -98,5 +106,19 @@ public class ProductModel implements Serializable {
 
     public String getOrderStatus() { return orderStatus;}
 
+    public String getSeller() {
+        return seller;
+    }
 
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    public String getPickupAddress() {
+        return pickupAddress;
+    }
+
+    public void setPickupAddress(String pickupAddress) {
+        this.pickupAddress = pickupAddress;
+    }
 }

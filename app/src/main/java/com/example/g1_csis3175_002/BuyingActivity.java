@@ -12,14 +12,14 @@ import java.util.ArrayList;
 public class BuyingActivity extends AppCompatActivity {
     GridView productGV;
     DatabaseHelper databaseHelper;
-//    DatabaseHelperSeller databaseHelperSeller;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buying);
         databaseHelper = new DatabaseHelper(this);
-//        databaseHelperSeller = new DatabaseHelperSeller(this);
+
 
         //sending reminder notification
 //        NotificationHelper.showNotification(this, "Pick-up Reminder", "testing");

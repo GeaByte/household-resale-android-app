@@ -10,100 +10,100 @@
         android:id="@+id/tvItemDetailTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/txtItemDetail"
+        android:text="@string/txtProductDetails"
         android:textColor="#000000"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.028" />
 
     <TextView
         android:id="@+id/tvProductNameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:text="@string/txtProductName"
         android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemDetailTitle" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.119" />
 
     <ImageView
         android:id="@+id/imgProductItemDetail"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_width="177dp"
+        android:layout_height="151dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
         android:contentDescription="@string/imgProductDescription"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.395"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProductNameTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDescription"
+        app:layout_constraintVertical_bias="0.09" />
 
     <TextView
-        android:id="@+id/tvOriginalPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/txtPrice"
+        android:layout_width="47dp"
+        android:layout_height="22dp"
         android:layout_marginStart="24dp"
-        android:text="@string/txtOriginalPrice"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tvDiscountPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/txtDiscountPrice"
+        android:layout_marginTop="12dp"
+        android:text="@string/txtPrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOriginalPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/imgProductItemDetail"
+        tools:ignore="TextSizeCheck" />
 
     <TextView
         android:id="@+id/tvSellerInformation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:text="@string/txtSellerInformation"
         android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/btnPlaceOrder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiscountPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPrice"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvSeller"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/seller"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSellerInformation" />
 
     <TextView
-        android:id="@+id/tvSellerContact"
+        android:id="@+id/txtPickupAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/txtContact"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSeller" />
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="72dp"
+        android:text="@string/txtPickupAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rdbtnGroup" />
 
     <Button
         android:id="@+id/btnPlaceOrder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="#2196F3"
         android:text="@string/btnPlaceOrder"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSellerContact"
         tools:ignore="TextContrastCheck" />
 
     <Button
@@ -112,81 +112,106 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/btnBack"
         android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPlaceOrder" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtProductName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
         android:layout_marginTop="1dp"
-        android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/tvProductNameTitle"
         app:layout_constraintTop_toTopOf="@+id/tvProductNameTitle" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtProductPrice"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="66dp"
-        android:layout_marginEnd="214dp"
-        android:layout_marginBottom="26dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="292dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvOriginalPrice"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toEndOf="@+id/txtPrice"
         app:layout_constraintTop_toBottomOf="@+id/imgProductItemDetail" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtSellerInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="111dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/tvSellerInformation"
-        app:layout_constraintTop_toBottomOf="@+id/imgProductItemDetail" />
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintStart_toEndOf="@+id/tvSeller"
+        app:layout_constraintTop_toBottomOf="@+id/tvSellerInformation" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvSellerInformation"
-        app:layout_constraintStart_toStartOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvSeller"
-        app:layout_constraintStart_toEndOf="@+id/tvSeller" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvSellerContact"
-        app:layout_constraintStart_toStartOf="@+id/textView5" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="22dp"
-        android:text="TextView"
+        android:id="@+id/txtDescription"
+        android:layout_width="345dp"
+        android:layout_height="29dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgProductItemDetail" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.188" />
+
+    <TextView
+        android:id="@+id/txtPickupAd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPickupAddress" />
+
+    <RadioGroup
+        android:id="@+id/rdbtnGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/rdbtnPickup"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgProductItemDetail"
+        app:layout_constraintVertical_bias="0.052"
+        tools:ignore="TextSizeCheck">
+
+        <RadioButton
+            android:id="@+id/rdbtnPickup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/txtPickup"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/rdbtnDelivery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/txtDelivery"
+            android:textSize="12sp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnAddToCart"
+        android:layout_width="365dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#74A13F"
+        android:text="@string/btnAddToCart"
+        android:textColor="#3E2723"
+        app:layout_constraintBottom_toTopOf="@+id/btnPlaceOrder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -269,9 +269,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // getUser
-    public Cursor getUser(String username) {
+    public UserModel getUser(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE1_NAME, null, T1COL1 + "=?", new String[] { username }, null, null, null);
+        UserModel user = null;
+        try (Cursor cursor = db.query(TABLE1_NAME, new String[] {T1COL2, T1COL3, T1COL4, T1COL5, T1COL6, T1COL7, T1COL8}, T1COL1 + "=?", new String[] {username}, null, null, null)) {
+            if (cursor.moveToFirst()) {
+                String fullname = cursor.getString(cursor.getColumnIndexOrThrow(T1COL2));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow(T1COL3));
+                String zipCode = cursor.getString(cursor.getColumnIndexOrThrow(T1COL4));
+                String city = cursor.getString(cursor.getColumnIndexOrThrow(T1COL5));
+                int number = cursor.getInt(cursor.getColumnIndexOrThrow(T1COL6));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow(T1COL7));
+                String password = cursor.getString(cursor.getColumnIndexOrThrow(T1COL8));
+
+                user = new UserModel(fullname, username, address, zipCode, city, number, email, password);
+            }
+        }
+        return user;
     }
 
 

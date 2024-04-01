@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class ListingItemActivity extends AppCompatActivity{
 
@@ -42,7 +43,7 @@ public class ListingItemActivity extends AppCompatActivity{
     private Spinner spinnerCategory;
     private RadioGroup radioGroupSellShare;
     private RadioButton radioButtonSell;
-
+    private LocationHelper locationHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DatabaseHelper db = new DatabaseHelper(ListingItemActivity.this);
@@ -65,7 +66,7 @@ public class ListingItemActivity extends AppCompatActivity{
         imgView = findViewById(R.id.imgView);
         Button btnAddImage = findViewById(R.id.btnAddImage);
         Button btnList = findViewById(R.id.btnList);
-
+        locationHelper = new LocationHelper(this);
         radioGroupSellShare.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -97,12 +98,14 @@ public class ListingItemActivity extends AppCompatActivity{
                     // Save the image to the filesystem
                     String imagePath = saveImageToInternalStorage(imgView);
                     String pickupAddress = editTextLocation.getText().toString();
-
+                    ArrayList<Double> coordinates = locationHelper.convertToGeo(pickupAddress);
+                    double latitude = coordinates.get(0);
+                    double longitude = coordinates.get(1);
                     // Insert data into the database
                     //addProduct(String productName, String description, String price, String pickupAddress,
                     //String category, String sellOrShare, String imagePath, String seller)
                     boolean inserted = db.addProduct(productName, description, price, pickupAddress,
-                            category, sellOrShare, imagePath, seller);
+                            category, sellOrShare, imagePath, seller, (float)latitude, (float)longitude);
                     if (inserted) {
                         Toast.makeText(ListingItemActivity.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ListingItemActivity.this, HomeActivity.class));

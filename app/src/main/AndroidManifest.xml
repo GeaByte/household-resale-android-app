@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+<!--  get permission for user's approximate location  -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<!--  get permission for user's precise location  -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<!--  get permission for sending notification  -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:allowBackup="true"

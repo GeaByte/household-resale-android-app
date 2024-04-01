@@ -1,7 +1,6 @@
 package com.example.g1_csis3175_002;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class ProductModel implements Serializable, Comparable<ProductModel> {
     private int productID;
@@ -24,14 +23,16 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
 
 
 
-    private ArrayList<Double> coordinates;
+    private double latitude;
+    private double longitude;
     private Double distance;
 
 
     private static final long serialVersionUID = 1L;
 
     public ProductModel(int productID, String productName, double price,
-                        String imagePath, String description, String seller, String pickupAddress, String uploadTime) {
+                        String imagePath, String description, String seller, String pickupAddress, String uploadTime
+    , double latitude, double longitude) {
         this.productID = productID;
         this.productName = productName;
         this.price = price;
@@ -40,6 +41,8 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
         this.seller = seller;
         this.pickupAddress = pickupAddress;
         this.uploadTime = uploadTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public ProductModel(int productID, String productName, double price,
@@ -145,16 +148,20 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
         this.pickupAddress = pickupAddress;
     }
 
-    public double calculateDistance(LocationHelper lp, double userLatitude, double userLongitude, double itemLatitude, double itemLongitude){
-        return lp.calculateDistance(userLatitude, userLongitude, itemLatitude, itemLongitude);
+    public double getLatitude() {
+        return latitude;
     }
 
-    public ArrayList<Double> getCoordinates() {
-        return coordinates;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public void setCoordinates(ArrayList<Double> coordinates) {
-        this.coordinates = coordinates;
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public void setDistance(Double distance) {
@@ -168,5 +175,27 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     @Override
     public int compareTo(ProductModel o) {
         return Double.compare(this.distance, o.distance);
+    }
+
+    public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+        final int EARTH_RADIUS = 6371; // Earth's radius in kilometers
+        // Convert latitude and longitude from degrees to radians
+        double lat1Rad = Math.toRadians(lat1);
+        double lon1Rad = Math.toRadians(lon1);
+        double lat2Rad = Math.toRadians(lat2);
+        double lon2Rad = Math.toRadians(lon2);
+
+        // Calculate differences between the two points' latitudes and longitudes
+        double deltaLat = lat2Rad - lat1Rad;
+        double deltaLon = lon2Rad - lon1Rad;
+
+        // Calculate distance using Haversine formula
+        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+                Math.cos(lat1Rad) * Math.cos(lat2Rad) *
+                        Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        // Distance in kilometers
+        return EARTH_RADIUS * c;
     }
 }

@@ -83,10 +83,9 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
                     //sort by distance from close to away
                     case 2:
                         for (ProductModel pm : productModelList){
-                            pm.setCoordinates(locationHelper.convertToGeo(pm.getPickupAddress()));
-                            pm.setDistance(pm.calculateDistance(locationHelper, latitude, longitude, pm.getCoordinates().get(0), pm.getCoordinates().get(1)));
+                            pm.setDistance(ProductModel.calculateDistance(latitude, longitude, pm.getLatitude(), pm.getLongitude()));
                         }
-                        Collections.sort(productModelList, Collections.reverseOrder());
+                        Collections.sort(productModelList);
                         adapter = new ProductGVAdapter(BuyingActivity.this, productModelList);
                         productGV.setAdapter(adapter);
                         break;

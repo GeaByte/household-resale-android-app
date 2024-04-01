@@ -39,6 +39,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T2COL8 = "ImagePath";
     final static String T2COL9 = "Seller";
     final static String T2COL10 = "UploadTime";
+    final static String T2COL11 = "Latitude";
+    final static String T2COL12 = "Longitude";
 
     final static String TABLE3_NAME = "UserOrder";
     final static String T3COL1 = "OrderID";
@@ -102,6 +104,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL8 + " TEXT," +
                 T2COL9 + " TEXT," +
                 T2COL10 + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
+                T2COL11 + " FLOAT," +
+                T2COL12 + " FLOAT," +
                 "FOREIGN KEY (" + T2COL9 + ") REFERENCES " + TABLE1_NAME + "(" +
                 T1COL1 + ")" + ");";
 
@@ -438,7 +442,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //2-Product
     // addProduct
     public boolean addProduct(String productName, String description, String price, String pickupAddress,
-                           String category, String sellOrShare, String imagePath, String seller) {
+                           String category, String sellOrShare, String imagePath, String seller, float latitude, float longitude) {
         try{
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -450,6 +454,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(T2COL7, sellOrShare);
             values.put(T2COL8, imagePath);
             values.put(T2COL9, seller);
+            values.put(T2COL11, latitude);
+            values.put(T2COL12, longitude);
 
             long result = db.insert(TABLE2_NAME, null, values);
             return result != -1;
@@ -590,6 +596,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL8,
                 T2COL9,
                 T2COL10,
+                T2COL11,
+                T2COL12,
         };
 
         Cursor cursor = db.query(
@@ -612,9 +620,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
                 String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
                 String uploadTime = cursor.getString(cursor.getColumnIndexOrThrow(T2COL10));
+                double latitude = cursor.getFloat(cursor.getColumnIndexOrThrow(T2COL11));
+                double longitude = cursor.getFloat(cursor.getColumnIndexOrThrow(T2COL12));
 
                 ProductModel product = new ProductModel(productID, productName, price, imagePath,
-                        description, seller, pickupAddress, uploadTime);
+                        description, seller, pickupAddress, uploadTime, latitude, longitude);
                 productList.add(product);
             } while (cursor.moveToNext());
 
@@ -739,10 +749,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             productValues.put(T2COL2, "ProductName" + i);
             productValues.put(T2COL3, "Description" + i);
             productValues.put(T2COL4, i*10);
-            productValues.put(T2COL5, "700 Royal Ave, New Westminster, BC");
+            productValues.put(T2COL5, "700 Royal Ave, New Westminster BC V3M 5Z5");
             productValues.put(T2COL6, "Category" + i);
             productValues.put(T2COL7, i % 2 == 0 ? "Sell" : "Share");
             productValues.put(T2COL8, "/data/data/com.example.g1_csis3175_002/app_Images/" + i + ".jpg");
+            productValues.put(T2COL11, "42");
+            productValues.put(T2COL12, "-122");
             db.insert(TABLE2_NAME, null, productValues);
         }
 

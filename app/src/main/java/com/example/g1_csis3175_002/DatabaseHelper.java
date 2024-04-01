@@ -639,11 +639,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] projection = {
+                T2COL1,
                 T2COL2,
                 T2COL3,
                 T2COL4,
+                T2COL5,
                 T2COL8,
-                T2COL9
+                T2COL9,
+                T2COL10,
+                T2COL11,
+                T2COL12,
         };
 
         String selection = T2COL2 + " LIKE ?";
@@ -661,15 +666,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
+                int productID = cursor.getInt(cursor.getColumnIndexOrThrow(T2COL1));
                 String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
                 String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
                 String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
                 String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
                 String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
+                String uploadTime = cursor.getString(cursor.getColumnIndexOrThrow(T2COL10));
+                double latitude = cursor.getFloat(cursor.getColumnIndexOrThrow(T2COL11));
+                double longitude = cursor.getFloat(cursor.getColumnIndexOrThrow(T2COL12));
 
-                ProductModel product = new ProductModel(productName, price, imagePath,
-                        description, seller, pickupAddress);
+                ProductModel product = new ProductModel(productID, productName, price, imagePath,
+                        description, seller, pickupAddress, uploadTime, latitude, longitude);
                 productList.add(product);
             } while (cursor.moveToNext());
 

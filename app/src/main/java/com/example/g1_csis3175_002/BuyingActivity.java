@@ -23,6 +23,7 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
     private double longitude;
     private double latitude;
     private LocationHelper locationHelper;
+    private List<ProductModel> productModelList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,26 +38,29 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
 //        NotificationHelper.showNotification(this, "Pick-up Reminder", "testing");
         Spinner spSort = findViewById(R.id.spSort);
         productGV = findViewById(R.id.GVbuying);
-        List<ProductModel> productModelList;
         productModelList = databaseHelper.getAllProducts();
         adapter = new ProductGVAdapter(BuyingActivity.this, productModelList);
         productGV.setAdapter(adapter);
         SearchView searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            //is called when user submits the query (press enter)
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                ArrayList<ProductModel> filteredList = databaseHelper.searchProducts(newText);
+                productModelList.clear();
+                productModelList = databaseHelper.searchProducts(query);
                 adapter.clear();
-                adapter.addAll(filteredList);
-                adapter.notifyDataSetChanged();
+                adapter.addAll(productModelList);
+                productGV.setAdapter(adapter);
                 return true;
             }
+            //is called when the query text change
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
         });
+
+        //get spinner selection for sorting
         spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {

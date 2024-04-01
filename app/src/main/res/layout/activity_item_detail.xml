@@ -63,12 +63,10 @@
         android:layout_marginTop="12dp"
         android:text="@string/txtSellerInformation"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/btnPlaceOrder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPrice"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
 
     <TextView
         android:id="@+id/tvSeller"
@@ -84,27 +82,11 @@
         android:id="@+id/txtPickupAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="284dp"
         android:text="@string/txtPickupAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rdbtnGroup" />
-
-    <Button
-        android:id="@+id/btnPlaceOrder"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="4dp"
-        android:backgroundTint="#2196F3"
-        android:text="@string/btnPlaceOrder"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/btnBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSeller" />
 
     <Button
         android:id="@+id/btnBack"
@@ -165,10 +147,11 @@
         android:id="@+id/txtPickupAd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPickupAddress" />
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="12dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/txtPickupAddress"
+        app:layout_constraintTop_toBottomOf="@+id/tvSeller" />
 
     <RadioGroup
         android:id="@+id/rdbtnGroup"
@@ -209,9 +192,24 @@
         android:backgroundTint="#74A13F"
         android:text="@string/btnAddToCart"
         android:textColor="#3E2723"
-        app:layout_constraintBottom_toTopOf="@+id/btnPlaceOrder"
+        app:layout_constraintBottom_toTopOf="@+id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edDeliveryAd"
+        android:layout_width="151dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/edAddress"
+        android:inputType="text"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSeller" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

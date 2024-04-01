@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T1COL9 = "IsBuyer";
     final static String T1COL10 = "IsSeller";
     final static String TABLE2_NAME = "Product";
-    final static String T2COL1 = "ProductID";
+    final static String T2COL1 = "ProductId";
     final static String T2COL2 = "ProductName";
     final static String T2COL3 = "Description";
     final static String T2COL4 = "Price";
@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     final static String TABLE3_NAME = "UserOrder";
     final static String T3COL1 = "OrderID";
-    final static String T3COL2 = "ShippingAddress";
+    final static String T3COL2 = "Address";
     final static String T3COL3 = "OrderDate";
     final static String T3COL4 = "OrderStatus";
     final static String T3COL5 = "ProductId";
@@ -51,14 +51,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     final static String T5COL1 = "Username";
-    final static String T5COL2 = "ProductID";
+    final static String T5COL2 = "ProductId";
     final static String TABLE6_NAME = "Seller_sells_Product";
     final static String T6COL1 = "Username";
-    final static String T6COL2 = "ProductID";
+    final static String T6COL2 = "ProductId";
     final static String T6COL3 = "PriceDiscount";
     final static String TABLE7_NAME = "Seller_shares_Product";
     final static String T7COL1 = "Username";
-    final static String T7COL2 = "ProductID";
+    final static String T7COL2 = "ProductId";
     final static int DATABASE_VERSION = 1;
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -318,11 +318,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //2-Product
     // addProduct
-    public boolean addProduct(String productName, String description, String price, String pickupAddress,
+    public boolean addProduct(int productId, String productName, String description, String price, String pickupAddress,
                            String category, String sellOrShare, String imagePath, String seller) {
         try{
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
+            values.put(T2COL1, productId);
             values.put(T2COL2, productName);
             values.put(T2COL3, description);
             values.put(T2COL4, price);
@@ -399,62 +400,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sqLiteDatabase.query(TABLE2_NAME, columns, selection, selectionArgs, null, null, null);
     }
 
-//    public String getPickupAddressByUsername(String username) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String pickupAddress = null;
-//
-//        try (Cursor cursor = db.query(
-//                TABLE1_NAME,
-//                new String[]{T1COL4},
-//                T1COL1 + "=?",
-//                new String[]{username},
-//                null,
-//                null,
-//                null)) {
-//
-//            if (cursor.moveToFirst()) {
-//                pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T1COL4));
-//            }
-//        } catch (Exception e) {
-//            Log.e("DatabaseHelper", "Error getting pickup address: " + e.getMessage());
-//        }
-//
-//        return pickupAddress;
-//    }
-
-
-    public boolean addOrder(Integer oId, String address, String date, String status, int productID){
+    public boolean addOrder(int oId, String address, String date, String status, int productId){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(T3COL1,oId);
         values.put(T3COL2, address);
         values.put(T3COL3,date);
         values.put(T3COL4, status);
-        values.put(T3COL5, productID);
+        values.put(T3COL5, productId);
 
-        long r = sqLiteDatabase.insert(TABLE2_NAME, null, values);
+        long r = sqLiteDatabase.insert(TABLE3_NAME, null, values);
 
-        if (r != -1) {
-            Cursor cursor = getProductById(productID);
-            if (cursor != null && cursor.moveToFirst()) {
-                @SuppressLint("Range") String productName = cursor.getString(cursor.getColumnIndex(T2COL2));
-                @SuppressLint("Range") String productDescription = cursor.getString(cursor.getColumnIndex(T2COL3));
-                @SuppressLint("Range") double productPrice = cursor.getDouble(cursor.getColumnIndex(T2COL4));
-                @SuppressLint("Range") String productImagePath = cursor.getString(cursor.getColumnIndex(T2COL8));
-                cursor.close();
 
-                ContentValues orderProductValues = new ContentValues();
-                orderProductValues.put(T5COL1, oId);
-                orderProductValues.put(T5COL2, productID);
-                long result = sqLiteDatabase.insert(TABLE5_NAME, null, orderProductValues);
-
-                if(result != -1) {
-                    // Do something with the retrieved product information if needed
-                    return true;
-                }
-            }
-        }
-        return false;
+        return r != -1;
     }
 
 
@@ -484,7 +442,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                int productID = cursor.getInt(cursor.getColumnIndexOrThrow(T2COL1));
+                int productId = cursor.getInt(cursor.getColumnIndexOrThrow(T2COL1));
                 String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
                 String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
@@ -492,7 +450,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
                 String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
 
-                ProductModel product = new ProductModel(productID, productName, price, imagePath,
+                ProductModel product = new ProductModel(productId, productName, price, imagePath,
                         description, seller, pickupAddress);
                 productList.add(product);
             } while (cursor.moveToNext());
@@ -511,6 +469,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL2,
                 T2COL3,
                 T2COL4,
+                T2COL5,
                 T2COL8,
                 T2COL9
         };
@@ -580,6 +539,70 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return orderItems;
     }
+
+    public ArrayList<ProductModel> getAllCartItems() {
+        ArrayList<ProductModel> cartItems = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT Product." + T2COL1 + ", Product." + T2COL2 + ", Product." + T2COL4 +
+                " FROM " + TABLE3_NAME +
+                " INNER JOIN " + TABLE2_NAME +
+                " ON " + TABLE3_NAME + "." + T3COL5 + " = " + TABLE2_NAME + "." + T2COL1 +
+                " WHERE " + T3COL4 + " = 'Cart'";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String productName = cursor.getString(cursor.getColumnIndex(T2COL2));
+                @SuppressLint("Range") int productId = cursor.getInt(cursor.getColumnIndex(T2COL1));
+                @SuppressLint("Range") double price = cursor.getDouble(cursor.getColumnIndex(T2COL4));
+                ProductModel product = new ProductModel(productName, productId, price);
+                cartItems.add(product);
+                Log.d("DatabaseHelper", "Item added to cart: " + productName);
+                Log.d("DatabaseHelper", "ProductName: " + productName + ", Price: " + price);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return cartItems;
+    }
+
+    @SuppressLint("Range")
+    public int getProductIDFromOrder(int orderId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int productId = -1; // Valor padrão para indicar que não foi encontrado
+
+        Cursor cursor = db.rawQuery("SELECT " + T3COL5 + " FROM " + TABLE3_NAME +
+                " WHERE " + T3COL1 + " = ?", new String[]{String.valueOf(orderId)});
+        if (cursor.moveToFirst()) {
+            productId = cursor.getInt(cursor.getColumnIndex("ProductID"));
+        }
+
+        cursor.close();
+        return productId;
+    }
+
+    public boolean deleteCartItem(int itemToRemove) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("DeleteCartItem", "Deleting item with ID: " + itemToRemove);
+        int rowsdeleted = db.delete(TABLE3_NAME, T3COL5 + "=?", new String[]{String.valueOf(itemToRemove)});
+        db.close();
+        return rowsdeleted > 0;
+    }
+
+    public boolean updateOrderStatus(int orderId, String newStatus) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(T3COL4, newStatus);
+
+        int rowsAffected = db.update(TABLE3_NAME, values, T3COL1 + " = ?",
+                new String[]{String.valueOf(orderId)});
+
+        return rowsAffected > 0;
+    }
+
+
 
     public void resetDatabase(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE1_NAME);

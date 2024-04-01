@@ -1,6 +1,14 @@
 package com.example.g1_csis3175_002;
 
+import android.annotation.SuppressLint;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class ProductModel implements Serializable {
     private int productID;
     private String productName;
@@ -18,6 +26,7 @@ public class ProductModel implements Serializable {
     private String orderStatus;
     private String seller;
     private String pickupAddress;
+    private String deliveryAddress;
 
     private static final long serialVersionUID = 1L;
 
@@ -54,6 +63,21 @@ public class ProductModel implements Serializable {
         this.pickupAddress = pickupAddress;
     }
 
+    public ProductModel(int imgid, String productName, double price){
+        this.imgid = imgid;
+        this.productName = productName;
+        this.price = price;
+    }
+    public ProductModel(String productName, int productID, double price){
+        this.productID = productID;
+        this.productName = productName;
+        this.price = price;
+    }
+
+    public ProductModel() {
+
+    }
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -77,6 +101,7 @@ public class ProductModel implements Serializable {
     public int getProductID() {
         return productID;
     }
+    public void setProductID(int productID) { this.productID = productID; }
 
     public int getImgid() {
         return imgid;
@@ -120,5 +145,27 @@ public class ProductModel implements Serializable {
 
     public void setPickupAddress(String pickupAddress) {
         this.pickupAddress = pickupAddress;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+
+    public String getCurrentDate() {
+
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String date = dateFormat.format(currentDate);
+
+        return date;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 }

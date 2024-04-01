@@ -4,24 +4,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
 public class ItemDetailActivity extends AppCompatActivity {
     private ProductModel product;
-
     DatabaseHelper databaseHelper;
+    private List<ProductModel> cartItemList;
+    EditText edDeliveryAd;
+    RadioButton rdbtnPickup;
+    RadioButton rdbtnDelivery;
+    int orderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +44,23 @@ public class ItemDetailActivity extends AppCompatActivity {
         TextView txtUserShipAd = findViewById(R.id.txtPickupAd);
         TextView txtPickupTitle = findViewById(R.id.txtPickupAddress);
         TextView tvDes = findViewById(R.id.txtDescription);
+        edDeliveryAd = findViewById(R.id.edDeliveryAd);
         ImageView img = findViewById(R.id.imgProductItemDetail);
-        Button btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
         RadioGroup rdbtnGroup = findViewById(R.id.rdbtnGroup);
-        RadioButton rdbtnPickup = findViewById(R.id.rdbtnPickup);
-        RadioButton rdbtnDelivery = findViewById(R.id.rdbtnDelivery);
+        rdbtnPickup = findViewById(R.id.rdbtnPickup);
+        rdbtnDelivery = findViewById(R.id.rdbtnDelivery);
 
+        Button btnAddToCart = findViewById(R.id.btnAddToCart);
+        cartItemList = new ArrayList<>();
 
-
-        int productID = getIntent().getIntExtra("ProductID", -1);
+        int productId = getIntent().getIntExtra("ProductID", -1);
+        Log.d("ProductDetail", "Product ID received: " + productId);
 
         Button back = findViewById(R.id.btnBack);
         back.setOnClickListener(this::onClickBack);
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        product = databaseHelper.getProduct(productID);
+        databaseHelper = new DatabaseHelper(this);
+        product = databaseHelper.getProduct(productId);
 
 
         tvPName.setText(product.getProductName());
@@ -63,10 +75,15 @@ public class ItemDetailActivity extends AppCompatActivity {
                 if (checkedId == R.id.rdbtnPickup) {
                     txtUserShipAd.setVisibility(View.VISIBLE);
                     txtPickupTitle.setVisibility(View.VISIBLE);
+                    txtUserShipAd.setVisibility(View.VISIBLE);
+                    edDeliveryAd.setVisibility(View.GONE);
+                    Log.d("ItemDetailActivity", "ProductId shippingAddress: " + product.getPickupAddress());
                 } else if (checkedId == R.id.rdbtnDelivery) {
 
                     txtUserShipAd.setVisibility(View.GONE);
                     txtPickupTitle.setVisibility(View.GONE);
+                    edDeliveryAd.setVisibility(View.VISIBLE);
+                    Log.d("ProductModel", "ProductId shippingAddress: " + product.getDeliveryAddress());
                 }
             }
         });
@@ -75,23 +92,11 @@ public class ItemDetailActivity extends AppCompatActivity {
                 .load(product.getImagePath())
                 .into(img);
 
-        btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                int orderId = generateRandomOrderId();
-//                String address = txtUserShipAd.getText().toString();
-//                String orderDate = getCurrentDate();
-//                String orderStatus = "Pending";
-//                ProductModel product = databaseHelper.getProduct(productID);
-//
-//                boolean orderPlaced = databaseHelper.addOrder(orderId, address, orderDate, orderStatus, productID);
-//                if (orderPlaced) {
-//                    Toast.makeText(ItemDetailActivity.this,
-//                            "Order successfully created.", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(ItemDetailActivity.this,
-//                            "Order was not created.", Toast.LENGTH_LONG).show();
-//                }
+                int orderId = generateRandomOrderId();
+                addToCart(product, orderId);
             }
         });
     }
@@ -103,22 +108,56 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         return orderId;
     }
-    public static String getCurrentDate() {
 
-        Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        String date = dateFormat.format(currentDate);
+    private void addToCart(ProductModel product, int orderId) {
 
-        return date;
+        if (databaseHelper == null) {
+            Toast.makeText(ItemDetailActivity.this, "Null Item.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Get the product ID and other necessary details
+        int productId = getIntent().getIntExtra("ProductID", -1);
+        product.setProductID(productId);
+
+
+        Log.d("ItemDetailActivity", "ProductId addToCart: " + productId);
+
+        String orderDate = product.getCurrentDate();
+        String orderStatus = "Cart";
+//        int orderId = generateRandomOrderId();
+        String addressToUse;
+        if (rdbtnPickup.isChecked()) {
+            addressToUse = product.getPickupAddress();
+        } else {
+            String deliveryAddress = edDeliveryAd.getText().toString();
+            addressToUse = deliveryAddress;
+        }
+
+        boolean success = databaseHelper.addOrder(orderId, addressToUse, orderDate,
+                orderStatus, productId);
+        if (success) {
+            Toast.makeText(ItemDetailActivity.this, "Item added to cart.", Toast.LENGTH_LONG).show();
+            // Show a success message or update UI accordingly
+
+            Intent intent = new Intent(ItemDetailActivity.this, Cart_Activity.class);
+            intent.putExtra("ProductID", productId);
+            startActivity(intent);
+
+            cartItemList.add(product);
+        } else {
+            Toast.makeText(ItemDetailActivity.this, "Failed to add item to cart.", Toast.LENGTH_LONG).show();
+            // Show an error message or handle the failure scenario
+        }
+
+        Intent intent = new Intent(ItemDetailActivity.this, Cart_Activity.class);
+        intent.putExtra("OrderID", orderId);
+        startActivity(intent);
     }
 
 
-
     public void onClickBack(View view){
-        /*
-        need to implement Back button to previous browsing stage
-        not from top again
-         */
+
         startActivity(new Intent(ItemDetailActivity.this, BuyingActivity.class));
     }
 }

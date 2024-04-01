@@ -58,23 +58,6 @@
     </string-array>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <string name="Test">Go to Testing Page</string>
     <string name="BuyingPage">Buying Page</string>
     <string name="HomePage">Home Page</string>
@@ -126,6 +109,19 @@
     <string name="txtPickup">Pick up</string>
     <string name="txtDelivery">Delivery</string>
     <string name="btnAddToCart">Add to Cart</string>
+    <string name="txtCart">Cart</string>
+    <string name="txtYourItems">Your Items</string>
+    <string name="btnRemove">Remove Item</string>
+    <string name="txtPayment">Payment Information</string>
+    <string name="txtCardInfo">Credit/Debit Card Information</string>
+    <string name="edCardNum">Card Number</string>
+    <string name="edCVV">CVV</string>
+    <string name="edExpDate">MM/YY</string>
+    <string name="edNameOnCard">Name on Card</string>
+    <string name="btnCheckOut">Check Out</string>
+    <string name="txtPaymentProcessed">Your payment has been processed. \n Thank you!</string>
+    <string name="btnReturnHome">Return To\nHome Page</string>
+    <string name="btnContinueShopping">Continue Shopping</string>
 
     <string-array name="txtDeliveryOpt">
         <item>Choose Delivery Option</item>

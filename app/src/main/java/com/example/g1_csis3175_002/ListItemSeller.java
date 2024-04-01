@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Random;
 
 public class ListItemSeller extends AppCompatActivity {
 
@@ -83,6 +84,7 @@ public class ListItemSeller extends AppCompatActivity {
         });
 
 
+
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,13 +105,14 @@ public class ListItemSeller extends AppCompatActivity {
                     // Save the image to the filesystem
                     String imagePath = saveImageToInternalStorage(imgView);
                     String pickupAddress = editTextLocation.getText().toString();
+                    int productId = generateRandomProductId();
 
 
 
 
                     // Insert data into the database
 
-                    boolean inserted = db.addProduct(productName, description, price,
+                    boolean inserted = db.addProduct(productId, productName, description, price,
                             category, sellOrShare, imagePath, seller, pickupAddress);
                     if (inserted) {
                         Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
@@ -182,5 +185,13 @@ public class ListItemSeller extends AppCompatActivity {
         }
 
         return file.getAbsolutePath();
+    }
+
+    public static int generateRandomProductId() {
+        Random random = new Random();
+
+        int productId = random.nextInt(9000) + 1000;
+
+        return productId;
     }
 }

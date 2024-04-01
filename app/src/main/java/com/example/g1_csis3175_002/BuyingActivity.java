@@ -107,13 +107,15 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
         detailIntent.putExtra("ProductID", productID);
         startActivity(detailIntent);
     }
+
+    //request user's current location
     @Override
     protected void onStart(){
         super.onStart();
         locationHelper.requestLocationUpdates(this);
     }
 
-    //get user's location
+    //if get user's location
     @Override
     public void onLocationAvailable(Location location) {
         if (location != null){

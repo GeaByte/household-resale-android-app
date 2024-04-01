@@ -27,13 +27,11 @@ public class HomeActivity extends AppCompatActivity {
         TextView userEmail = findViewById(R.id.tvUserEmail);
         Button buyItem = findViewById(R.id.btnBuyItem);
         Button sellItem = findViewById(R.id.btnSellItem);
-        Button viewEditOrder = findViewById(R.id.btnViewOrderHistory);
         Button viewOrderHistory = findViewById(R.id.btnViewOrderHistory);
         Button logout = findViewById(R.id.btnLogout);
         Button viewEditProfile = findViewById(R.id.btnEditProfile);
 
         viewEditProfile.setOnClickListener(this::onClickViewEditProfile);
-        viewEditOrder.setOnClickListener(this::onClickViewOrderHistory);
         viewOrderHistory.setOnClickListener(this::onClickViewOrderHistory);
         sellItem.setOnClickListener(this::onClickSellAnItem);
         buyItem.setOnClickListener(this::onClickBuyAnItem);
@@ -53,15 +51,6 @@ public class HomeActivity extends AppCompatActivity {
             //if not, ask for permission
             NotificationHelper.showPermissionDialog(this);
         }
-
-        /*
-         * Move this part to after purchase
-         * */
-        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationHelper.class)
-                .setInitialDelay(5, TimeUnit.SECONDS)
-                .build();
-        WorkManager.getInstance(this).enqueue(notificationWork);
-
     }
 
     public void onClickBuyAnItem(View view){

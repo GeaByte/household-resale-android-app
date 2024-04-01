@@ -1,6 +1,9 @@
 package com.example.g1_csis3175_002;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +21,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class ItemDetailActivity extends AppCompatActivity {
     private ProductModel product;
-
+    private Data.Builder notificationMessage;
     DatabaseHelper databaseHelper;
 
     @Override
@@ -64,10 +68,12 @@ public class ItemDetailActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rdbtnPickup) {
+                    //show pick up address
+
                     txtUserShipAd.setVisibility(View.VISIBLE);
                     txtPickupTitle.setVisibility(View.VISIBLE);
                 } else if (checkedId == R.id.rdbtnDelivery) {
-
+                    //hide pick up address
                     txtUserShipAd.setVisibility(View.GONE);
                     txtPickupTitle.setVisibility(View.GONE);
                 }
@@ -107,8 +113,26 @@ public class ItemDetailActivity extends AppCompatActivity {
                 boolean isSuccess = databaseHelper.insertOrder(productName, orderDate, status, imagePath);
 
                 if (isSuccess) {
-                    // Insertion successful
+                    //Insertion successful
                     Toast.makeText(ItemDetailActivity.this, "Order placed successfully", Toast.LENGTH_SHORT).show();
+                    //set up notification title and message
+                    notificationMessage = new Data.Builder();
+                    if(rdbtnPickup.isChecked()){
+                        notificationMessage.putString("title", "Your order is ready for pick up");
+                        notificationMessage.putString("content", String.format("%s is ready for pick up at %s", productName, product.getPickupAddress()));
+                    }else{
+                        notificationMessage.putString("title", "Your order is ready to ship");
+                        notificationMessage.putString("content", String.format("%s is ready to ship", productName));
+                    }
+                    Data data = notificationMessage.build();
+
+                    //Send notification after 5 seconds
+                    OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationHelper.class)
+                            .setInputData(data)
+                            .setInitialDelay(5, TimeUnit.SECONDS)
+                            .build();
+                    WorkManager.getInstance(ItemDetailActivity.this).enqueue(notificationWork);
+                    startActivity(new Intent(ItemDetailActivity.this, BuyingActivity.class));
                 } else {
                     // Error occurred while inserting
                     Toast.makeText(ItemDetailActivity.this, "Failed to placed order", Toast.LENGTH_SHORT).show();

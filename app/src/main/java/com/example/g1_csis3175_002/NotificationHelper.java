@@ -81,7 +81,9 @@ public class NotificationHelper extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        sendNotification("titleTest", "time test");
+        String title = getInputData().getString("title");
+        String content = getInputData().getString("content");
+        sendNotification(title, content);
         return Result.success();
     }
 

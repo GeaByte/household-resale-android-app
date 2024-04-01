@@ -126,6 +126,7 @@
     <string name="txtPickup">Pick up</string>
     <string name="txtDelivery">Delivery</string>
     <string name="btnAddToCart">Add to Cart</string>
+    <string name="btnEditProfile">View/Edit Profile</string>
 
     <string-array name="txtDeliveryOpt">
         <item>Choose Delivery Option</item>
@@ -137,4 +138,6 @@
         <item>Price</item>
         <item>Distance</item>
     </string-array>
+    <string name="btnProfileUpdate">Update Profile</string>
+    <string name="txtUpdateYourAccount">Update Your Account</string>
 </resources>

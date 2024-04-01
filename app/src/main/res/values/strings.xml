@@ -58,23 +58,6 @@
     </string-array>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <string name="Test">Go to Testing Page</string>
     <string name="BuyingPage">Buying Page</string>
     <string name="HomePage">Home Page</string>
@@ -124,6 +107,7 @@
     <string name="todo">TODO</string>
     <string name="txtItemDetail">Order Detail</string>
     <string name="txtEditShippingAddress">Edit Shipping Address</string>
+    <string name="btnEditProfile">View/Edit Profile</string>
 
     <string-array name="txtDeliveryOpt">
         <item>Choose Delivery Option</item>
@@ -131,4 +115,6 @@
         <item>Pick Up</item>
 
     </string-array>
+    <string name="btnProfileUpdate">Update Profile</string>
+    <string name="txtUpdateYourAccount">Update Your Account</string>
 </resources>

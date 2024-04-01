@@ -26,11 +26,13 @@ public class HomeActivity extends AppCompatActivity {
         Button viewEditOrder = findViewById(R.id.btnViewOrderHistory);
         Button viewOrderHistory = findViewById(R.id.btnViewOrderHistory);
         Button logout = findViewById(R.id.btnLogout);
+        Button viewEditProfile = findViewById(R.id.btnEditProfile);
 
-        buyItem.setOnClickListener(this::onClickBuyAnItem);
-        sellItem.setOnClickListener(this::onClickSellAnItem);
+        viewEditProfile.setOnClickListener(this::onClickViewEditProfile);
         viewEditOrder.setOnClickListener(this::onClickViewOrderHistory);
         viewOrderHistory.setOnClickListener(this::onClickViewOrderHistory);
+        sellItem.setOnClickListener(this::onClickSellAnItem);
+        buyItem.setOnClickListener(this::onClickBuyAnItem);
         logout.setOnClickListener(this::onClickLogout);
 
         SharedPreferences sharedPref =
@@ -60,9 +62,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void onClickLogout(View view){
-        /*
-        not sure if we need to do something to logout like session_destroy() in php.
-         */
         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
+    public void onClickViewEditProfile(View view){
+        Intent intent = new Intent(HomeActivity.this, RegisterActivity.class);
+        intent.putExtra("update", true);
+        startActivity(intent);
     }
 }

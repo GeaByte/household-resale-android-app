@@ -12,7 +12,7 @@
         android:id="@+id/imgLogo02"
         android:layout_width="100dp"
         android:layout_height="94dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/txLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

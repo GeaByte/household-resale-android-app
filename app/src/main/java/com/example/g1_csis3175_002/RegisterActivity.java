@@ -49,10 +49,12 @@ public class RegisterActivity extends AppCompatActivity {
             title.setText(R.string.txtUpdateYourAccount);
             name.setText(user.getFullname());
             username.setText(user.getUsername());
+            username.setEnabled(false);
             address.setText(user.getAddress());
             zipcode.setText(user.getZipCode());
             phone.setText(String.valueOf(user.getNumber()));
             email.setText(user.getEmail());
+            email.setEnabled(false);
             password.setText(user.getPassword());
             //get cities array
             String[] cities = getResources().getStringArray(R.array.cities);

@@ -62,6 +62,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String TABLE7_NAME = "Seller_shares_Product";
     final static String T7COL1 = "Username";
     final static String T7COL2 = "ProductID";
+
+    final static String TABLE8_NAME = "OrderStatus";
+    final static String T8COL1 = "OrderID";
+    final static String T8COL2 = "productName";
+    final static String T8COL3 = "OrderDate";
+    final static String T8COL4 = "Status";
+    final static String T8COL5 = "ImagePath";
+
+
     final static int DATABASE_VERSION = 1;
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -142,6 +151,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + T7COL2 + ") REFERENCES " + TABLE2_NAME + "(" +
                 T2COL1 + ")" + ");";
 
+        String queryTable8 = "CREATE TABLE " + TABLE8_NAME + "(" +
+                T8COL1 + " INTEGER PRIMARY KEY," +
+                T8COL2 + " TEXT," +
+                T8COL3 + " TEXT," +
+                T8COL4 + " TEXT," +
+                T8COL5 + " TEXT," +
+                "FOREIGN KEY(" + T8COL1 + ") REFERENCES " + TABLE2_NAME + "(" + T2COL1 + ")," +
+                "FOREIGN KEY(" + T8COL5 + ") REFERENCES " + TABLE2_NAME + "(" + T2COL8 + "))";
+
 
         sqLiteDatabase.execSQL(queryTable1);
         sqLiteDatabase.execSQL(queryTable2);
@@ -150,6 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(queryTable5);
         sqLiteDatabase.execSQL(queryTable6);
         sqLiteDatabase.execSQL(queryTable7);
+        sqLiteDatabase.execSQL(queryTable8);
 
 
     }
@@ -163,6 +182,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE5_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE8_NAME);
         onCreate(sqLiteDatabase);
     }
 
@@ -297,6 +317,87 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowsAffected > 0;
     }
 
+    public ArrayList<OrderModel> getAllOrders() {
+        ArrayList<OrderModel> orders = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            // Query the database to retrieve all orders
+            cursor = db.query(TABLE8_NAME, null, null, null, null, null, null);
+
+            // Iterate over the cursor and extract data from each row
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    int orderId = cursor.getInt(cursor.getColumnIndexOrThrow(T8COL1));
+                    String productName = cursor.getString(cursor.getColumnIndexOrThrow(T8COL2));
+                    String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(T8COL3));
+                    String status = cursor.getString(cursor.getColumnIndexOrThrow(T8COL4));
+                    String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T8COL5));
+
+                    // Create an OrderModel object and add it to the list
+                    OrderModel order = new OrderModel(orderId, productName, orderDate, status, imagePath);
+                    orders.add(order);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            // Close the cursor to release its resources
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        // Return the list of orders
+        return orders;
+    }
+
+    public void deleteOrder(int orderId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE8_NAME, T8COL1 + " = ?", new String[]{String.valueOf(orderId)});
+        db.close();
+    }
+
+    public boolean insertOrder(String shippingAddress, String orderDate, String status, String imagePath) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        // Get the last inserted order ID
+        int lastOrderId = getLastOrderId(db);
+
+        // Increment the last order ID to generate the new order ID
+        int newOrderId = lastOrderId + 1;
+
+        values.put(T8COL1, newOrderId);
+        values.put(T8COL2, shippingAddress);
+        values.put(T8COL3, orderDate);
+        values.put(T8COL4, status);
+        values.put(T8COL5, imagePath);
+
+        // Insert the values into the table
+        long newRowId = db.insert(TABLE8_NAME, null, values);
+
+        // Close the database connection
+        db.close();
+
+        // Return true if the insertion was successful, false otherwise
+        return newRowId != -1;
+    }
+
+    // Method to get the last inserted order ID
+    private int getLastOrderId(SQLiteDatabase db) {
+        String query = "SELECT MAX(" + T8COL1 + ") FROM " + TABLE8_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        int lastOrderId = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            lastOrderId = cursor.getInt(0);
+            cursor.close();
+        }
+        return lastOrderId;
+    }
+
+
+
     // updateUser
     public boolean updateUser(String username, String name, String address, String zipcode,
                               String city, int contact, String email, String password) {
@@ -321,13 +422,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowsDeleted > 0;
     }
 
-    public Cursor viewOrder(){
+   /* public Cursor viewOrder(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String query = " SELECT * FROM  " + "product";
         Cursor c = sqLiteDatabase.rawQuery(query,null);
         return c;
     }
-
+*/
 
 
 
@@ -609,6 +710,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE5_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE8_NAME);
 
         onCreate(db);
         insertFakeData(db);
@@ -643,5 +745,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             productValues.put(T2COL8, "/data/data/com.example.g1_csis3175_002/app_Images/" + i + ".jpg");
             db.insert(TABLE2_NAME, null, productValues);
         }
+
+       /* for (int i = 1; i <= 5; i++) {
+            ContentValues productValues = new ContentValues();
+            productValues.put(T8COL2, "ProductName" + i);
+            productValues.put(T8COL3, "Description" + i);
+            productValues.put(T8COL4, i*10);
+            productValues.put(T8COL5,  "/data/data/com.example.g1_csis3175_002/app_Images/image1710818257614.jpg");
+
+            db.insert(TABLE8_NAME, null, productValues);
+        }*/
+
+
+
     }
 }

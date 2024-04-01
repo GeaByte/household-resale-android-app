@@ -82,6 +82,17 @@
             android:layout_weight="1" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imgItem"
+        android:layout_width="wrap_content"
+        android:layout_height="81dp"
+        android:layout_gravity="left"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="TODO"
+        tools:ignore="ContentDescription,HardcodedText,ImageContrastCheck"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#4CAF50"
-            android:onClick="onClickView"
+            android:onClick="onCancelClick"
             android:text="@string/btnView"
             tools:ignore="ButtonStyle,UsingOnClickInXml" />
 

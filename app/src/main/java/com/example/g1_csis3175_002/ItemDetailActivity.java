@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -39,6 +40,8 @@ public class ItemDetailActivity extends AppCompatActivity {
         RadioGroup rdbtnGroup = findViewById(R.id.rdbtnGroup);
         RadioButton rdbtnPickup = findViewById(R.id.rdbtnPickup);
         RadioButton rdbtnDelivery = findViewById(R.id.rdbtnDelivery);
+
+
 
 
 
@@ -78,6 +81,11 @@ public class ItemDetailActivity extends AppCompatActivity {
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String productName = product.getProductName();
+                String orderDate = generateRandomOrderDate();
+                String status = generateRandomOrderStatus();
+                String imagePath = product.getImagePath();
 //                int orderId = generateRandomOrderId();
 //                String address = txtUserShipAd.getText().toString();
 //                String orderDate = getCurrentDate();
@@ -92,6 +100,19 @@ public class ItemDetailActivity extends AppCompatActivity {
 //                    Toast.makeText(ItemDetailActivity.this,
 //                            "Order was not created.", Toast.LENGTH_LONG).show();
 //                }
+
+
+
+                // Call the insertOrder method
+                boolean isSuccess = databaseHelper.insertOrder(productName, orderDate, status, imagePath);
+
+                if (isSuccess) {
+                    // Insertion successful
+                    Toast.makeText(ItemDetailActivity.this, "Order placed successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Error occurred while inserting
+                    Toast.makeText(ItemDetailActivity.this, "Failed to placed order", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -117,4 +138,41 @@ public class ItemDetailActivity extends AppCompatActivity {
     public void onClickBack(View view){
         startActivity(new Intent(ItemDetailActivity.this, BuyingActivity.class));
     }
+
+    // Method to generate a random order date
+    public static String generateRandomOrderDate() {
+        // Define the date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Get the current date
+        Date currentDate = new Date();
+
+        // Generate a random number of days to subtract from the current date (between 1 and 30)
+        Random random = new Random();
+        int randomDays = random.nextInt(30) + 1;
+
+        // Subtract the random number of days from the current date
+        long millis = currentDate.getTime() - (randomDays * 24L * 3600 * 1000);
+
+        // Create a new Date object with the random date
+        Date randomDate = new Date(millis);
+
+        // Format the random date as a string
+        return dateFormat.format(randomDate);
+    }
+
+    // Method to generate a random order status
+    public static String generateRandomOrderStatus() {
+        // Define an array of possible order statuses
+        String[] statuses = {"Processing", "Shipping", "Delivered"};
+
+        // Generate a random index to select a status from the array
+        Random random = new Random();
+        int randomIndex = random.nextInt(statuses.length);
+
+        // Return the randomly selected order status
+        return statuses[randomIndex];
+    }
+
+
 }

@@ -85,6 +85,7 @@ public class ListItemSeller extends AppCompatActivity {
                 boolean inserted = dbHelper.addProduct(productName, description, price, location, category, sellOrShare, imagePath);
                 if (inserted) {
                     Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ListItemSeller.this, HomeActivity.class));
                 } else {
                     Toast.makeText(ListItemSeller.this, "Failed to list item", Toast.LENGTH_SHORT).show();
                 }

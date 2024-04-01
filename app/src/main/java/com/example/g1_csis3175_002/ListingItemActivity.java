@@ -34,7 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class ListingItemActivity extends AppCompatActivity implements LocationHelper.LocationCallbackListener{
+public class ListingItemActivity extends AppCompatActivity{
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imgView;
@@ -43,10 +43,6 @@ public class ListingItemActivity extends AppCompatActivity implements LocationHe
     private Spinner spinnerCategory;
     private RadioGroup radioGroupSellShare;
     private RadioButton radioButtonSell;
-    private double longtitude;
-    private double latitude;
-    private LocationHelper locationHelper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +56,6 @@ public class ListingItemActivity extends AppCompatActivity implements LocationHe
             return insets;
         });
 
-        locationHelper = new LocationHelper(this);
         edtItemtitle = findViewById(R.id.edtItemtitle);
         editTextDescription = findViewById(R.id.editTextDescription);
         editTextPrice = findViewById(R.id.editTextPrice);
@@ -95,8 +90,6 @@ public class ListingItemActivity extends AppCompatActivity implements LocationHe
 
 //                if (pickupAddress != null) {
 
-
-
                     String productName = edtItemtitle.getText().toString();
                     String description = editTextDescription.getText().toString();
                     String price = editTextPrice.getText().toString();
@@ -105,9 +98,6 @@ public class ListingItemActivity extends AppCompatActivity implements LocationHe
                     // Save the image to the filesystem
                     String imagePath = saveImageToInternalStorage(imgView);
                     String pickupAddress = editTextLocation.getText().toString();
-
-
-
 
                     // Insert data into the database
                     //addProduct(String productName, String description, String price, String pickupAddress,
@@ -183,27 +173,5 @@ public class ListingItemActivity extends AppCompatActivity implements LocationHe
         }
 
         return file.getAbsolutePath();
-    }
-
-    //for location
-    public void onClickSelect(View view){
-        int productID = (int) view.getTag();
-        Intent detailIntent = new Intent(ListingItemActivity.this, ItemDetailActivity.class);
-        detailIntent.putExtra("ProductID", productID);
-        startActivity(detailIntent);
-    }
-    @Override
-    protected void onStart(){
-        super.onStart();
-        locationHelper.requestLocationUpdates(this);
-    }
-
-
-    @Override
-    public void onLocationAvailable(Location location) {
-        if (location != null){
-            latitude = location.getLatitude();
-            longtitude = location.getLongitude();
-        }
     }
 }

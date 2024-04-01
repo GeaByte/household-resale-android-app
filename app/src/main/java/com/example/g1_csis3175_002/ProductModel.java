@@ -1,7 +1,9 @@
 package com.example.g1_csis3175_002;
 
 import java.io.Serializable;
-public class ProductModel implements Serializable {
+import java.util.ArrayList;
+
+public class ProductModel implements Serializable, Comparable<ProductModel> {
     private int productID;
     private String productName;
     private int imgid;
@@ -20,6 +22,10 @@ public class ProductModel implements Serializable {
     private String pickupAddress;
     private String uploadTime;
 
+
+
+    private ArrayList<Double> coordinates;
+    private Double distance;
 
 
     private static final long serialVersionUID = 1L;
@@ -137,5 +143,30 @@ public class ProductModel implements Serializable {
 
     public void setPickupAddress(String pickupAddress) {
         this.pickupAddress = pickupAddress;
+    }
+
+    public double calculateDistance(LocationHelper lp, double userLatitude, double userLongitude, double itemLatitude, double itemLongitude){
+        return lp.calculateDistance(userLatitude, userLongitude, itemLatitude, itemLongitude);
+    }
+
+    public ArrayList<Double> getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(ArrayList<Double> coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    @Override
+    public int compareTo(ProductModel o) {
+        return Double.compare(this.distance, o.distance);
     }
 }

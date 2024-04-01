@@ -20,7 +20,7 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
     GridView productGV;
     DatabaseHelper databaseHelper;
     ProductGVAdapter adapter;
-    private double longtitude;
+    private double longitude;
     private double latitude;
     private LocationHelper locationHelper;
     @Override
@@ -82,14 +82,13 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
                         break;
                     //sort by distance from close to away
                     case 2:
-                        //get user's location
-                        //each item's location
-                        //calculate distance in km
-                        double distance = LocationHelper.calculateDistance(latitude, longtitude, 40.7128, -120);
-                        //lat 37.42
-                        //long -122.08
-                        title.setText(String.valueOf(distance));
-                        //sort by distance
+                        for (ProductModel pm : productModelList){
+                            pm.setCoordinates(locationHelper.convertToGeo(pm.getPickupAddress()));
+                            pm.setDistance(pm.calculateDistance(locationHelper, latitude, longitude, pm.getCoordinates().get(0), pm.getCoordinates().get(1)));
+                        }
+                        Collections.sort(productModelList, Collections.reverseOrder());
+                        adapter = new ProductGVAdapter(BuyingActivity.this, productModelList);
+                        productGV.setAdapter(adapter);
                         break;
                 }
             }
@@ -114,12 +113,12 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
         locationHelper.requestLocationUpdates(this);
     }
 
-
+    //get user's location
     @Override
     public void onLocationAvailable(Location location) {
         if (location != null){
             latitude = location.getLatitude();
-            longtitude = location.getLongitude();
+            longitude = location.getLongitude();
         }
     }
 }

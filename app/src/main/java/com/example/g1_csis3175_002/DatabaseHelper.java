@@ -509,29 +509,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return productList;
     }
 
-    public ArrayList<ProductModel> getAllProductsByR(){
-        ArrayList<ProductModel> products = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE2_NAME, null);
-        if (cursor.moveToFirst()){
-            do{
-                int productID = cursor.getInt(cursor.getColumnIndexOrThrow(T2COL1));
-                String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
-                String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
-                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
-                String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
-                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
-                String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
-                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(T2COL10));
-                ProductModel product = new ProductModel(productID, productName, price, imagePath,
-                        description, seller, pickupAddress, timestamp);
-                products.add(product);
-            } while(cursor.moveToNext());
-            cursor.close();
-        }
-        return products;
-    }
-
     public ArrayList<ProductModel> searchProducts(String query) {
         ArrayList<ProductModel> productList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -646,7 +623,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             productValues.put(T2COL2, "ProductName" + i);
             productValues.put(T2COL3, "Description" + i);
             productValues.put(T2COL4, i*10);
-            productValues.put(T2COL5, "Location" + i);
+            productValues.put(T2COL5, "700 Royal Ave, New Westminster, BC");
             productValues.put(T2COL6, "Category" + i);
             productValues.put(T2COL7, i % 2 == 0 ? "Sell" : "Share");
             productValues.put(T2COL8, "/data/data/com.example.g1_csis3175_002/app_Images/" + i + ".jpg");

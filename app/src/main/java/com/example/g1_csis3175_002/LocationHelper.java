@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Looper;
 
@@ -16,6 +18,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LocationHelper {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
@@ -23,10 +28,12 @@ public class LocationHelper {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
     private static final int EARTH_RADIUS = 6371; // Earth's radius in kilometers
+    private Geocoder geocoder;
 
     public LocationHelper(Context context) {
         this.context = context;
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
+        geocoder = new Geocoder(context);
     }
 
     public interface LocationCallbackListener {
@@ -52,7 +59,7 @@ public class LocationHelper {
 
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(10000); // 10 seconds
+        locationRequest.setInterval(600000); // 10 minutes
 
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
     }
@@ -61,6 +68,33 @@ public class LocationHelper {
         if (locationCallback != null) {
             fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         }
+    }
+
+    //convert item's address to Geographical coordinates
+    public ArrayList<Double> convertToGeo(String addressString){
+        try {
+            // Use Geocoder to get a list of Addresses from the provided address string
+            List<Address> addresses = geocoder.getFromLocationName(addressString, 1);
+
+            if (addresses != null && !addresses.isEmpty()) {
+                // Get the first address from the list
+                Address address = addresses.get(0);
+
+                // Retrieve latitude and longitude from the address object
+                double latitude = address.getLatitude();
+                double longitude = address.getLongitude();
+
+                // Now you have the latitude and longitude coordinates
+                ArrayList<Double> coordinates = new ArrayList();
+                coordinates.add(latitude);
+                coordinates.add(longitude);
+                return coordinates;
+            }
+        } catch (Exception e) {
+            // Handle exception
+            e.printStackTrace();
+        }
+        return null;
     }
 
     // Method to calculate distance between two points using Haversine formula

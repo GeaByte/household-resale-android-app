@@ -50,7 +50,7 @@ public class ListItemSeller extends AppCompatActivity {
         DatabaseHelper db = new DatabaseHelper(ListItemSeller.this);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_listing_product);
+        setContentView(R.layout.activity_product_add);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -73,6 +73,8 @@ public class ListItemSeller extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radioButtonSell) {
                     editTextPrice.setEnabled(true);
+                    editTextPrice.setText("");
+                    editTextPrice.requestFocus();
                 } else if (checkedId == R.id.radioButtonShare) {
                     editTextPrice.setEnabled(false);
                     editTextPrice.setText("0");

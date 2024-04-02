@@ -75,7 +75,7 @@ public class ListingItemActivity extends AppCompatActivity{
         if(isEdit){
             ProductModel pm = (ProductModel) getIntent().getSerializableExtra("product");
             edtItemtitle.setText(pm.getProductName());
-            editTextDescription.setText(pm.getItemDetail());
+            editTextDescription.setText(pm.getDescription());
             editTextPrice.setText(String.valueOf(pm.getPrice()));
             editTextLocation.setText(pm.getPickupAddress());
 //            spinnerCategory.setSelection(pm.get);

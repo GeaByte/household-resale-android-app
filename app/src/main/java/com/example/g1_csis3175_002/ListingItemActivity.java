@@ -33,6 +33,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ListingItemActivity extends AppCompatActivity{
 
@@ -80,6 +81,7 @@ public class ListingItemActivity extends AppCompatActivity{
         });
 
 
+
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,14 +100,14 @@ public class ListingItemActivity extends AppCompatActivity{
                     // Save the image to the filesystem
                     String imagePath = saveImageToInternalStorage(imgView);
                     String pickupAddress = editTextLocation.getText().toString();
+                    int productId = generateRandomProductId();
                     ArrayList<Double> coordinates = locationHelper.convertToGeo(pickupAddress);
                     double latitude = coordinates.get(0);
                     double longitude = coordinates.get(1);
+
                     // Insert data into the database
-                    //addProduct(String productName, String description, String price, String pickupAddress,
-                    //String category, String sellOrShare, String imagePath, String seller)
-                    boolean inserted = db.addProduct(productName, description, price, pickupAddress,
-                            category, sellOrShare, imagePath, seller, (float)latitude, (float)longitude);
+                    boolean inserted = db.addProduct(productId, productName, description, price, pickupAddress,
+                        category, sellOrShare, imagePath, seller, (float)latitude, (float)longitude);
                     if (inserted) {
                         Toast.makeText(ListingItemActivity.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ListingItemActivity.this, HomeActivity.class));
@@ -175,5 +177,13 @@ public class ListingItemActivity extends AppCompatActivity{
         }
 
         return file.getAbsolutePath();
+    }
+
+    public static int generateRandomProductId() {
+        Random random = new Random();
+
+        int productId = random.nextInt(9000) + 1000;
+
+        return productId;
     }
 }

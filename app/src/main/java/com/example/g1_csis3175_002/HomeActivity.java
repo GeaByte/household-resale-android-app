@@ -30,12 +30,14 @@ public class HomeActivity extends AppCompatActivity {
         Button viewOrderHistory = findViewById(R.id.btnViewOrderHistory);
         Button logout = findViewById(R.id.btnLogout);
         Button viewEditProfile = findViewById(R.id.btnEditProfile);
+        Button viewSellerItem = findViewById(R.id.btnViewSellingItem);
 
         viewEditProfile.setOnClickListener(this::onClickViewEditProfile);
         viewOrderHistory.setOnClickListener(this::onClickViewOrderHistory);
         sellItem.setOnClickListener(this::onClickSellAnItem);
         buyItem.setOnClickListener(this::onClickBuyAnItem);
         logout.setOnClickListener(this::onClickLogout);
+        viewSellerItem.setOnClickListener(this::onCLickViewSellingItem);
 
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(this);
@@ -75,5 +77,9 @@ public class HomeActivity extends AppCompatActivity {
         intent.putExtra("update", true);
         intent.putExtra("username", usernamePreferences);
         startActivity(intent);
+    }
+
+    public void onCLickViewSellingItem(View view){
+        startActivity(new Intent(HomeActivity.this, ViewSellingItemActivity.class));
     }
 }

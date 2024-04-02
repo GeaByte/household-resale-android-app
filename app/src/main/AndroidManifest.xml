@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-<!--  get permission for user's approximate location  -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-<!--  get permission for user's precise location  -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-<!--  get permission for sending notification  -->
+    <!-- get permission for user's approximate location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- get permission for user's precise location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- get permission for sending notification -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -18,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".ViewSellingItemActivity"
+            android:exported="false" />
         <activity
             android:name=".PaymentProcessed"
             android:exported="false" />

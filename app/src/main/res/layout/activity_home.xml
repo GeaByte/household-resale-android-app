@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:text="@string/homeTitle"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -21,10 +21,10 @@
     <LinearLayout
         android:id="@+id/loFeaturedItem"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="37dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/bg_input"
         android:backgroundTint="#DAD8D8"
         android:gravity="center"
@@ -38,7 +38,7 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:gravity="bottom"
-            android:minHeight="36sp"
+            android:minHeight="20dp"
             android:text="@string/txtfeaturedItems"
             android:textStyle="bold" />
 
@@ -46,9 +46,10 @@
             android:id="@+id/btnBuyItem"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:layout_margin="2dp"
             android:background="@drawable/bg_input"
             android:backgroundTint="#2196F3"
-            android:drawableLeft="@drawable/baseline_favorite_24"
+            android:drawableStart="@drawable/baseline_favorite_24"
             android:padding="10dp"
             android:text="@string/btnBuyAnItem"
             android:textColor="#212121" />
@@ -60,7 +61,7 @@
             android:layout_margin="2dp"
             android:background="@drawable/bg_input"
             android:backgroundTint="#2196F3"
-            android:drawableLeft="@drawable/baseline_sell_24"
+            android:drawableStart="@drawable/baseline_sell_24"
             android:padding="10dp"
             android:text="@string/btnSellAnItem"
             android:textColor="#212121" />
@@ -69,10 +70,10 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="353dp"
-        android:layout_height="169dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="37dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/bg_input"
         android:backgroundTint="#DAD8D8"
         android:gravity="center"
@@ -126,10 +127,10 @@
             android:id="@+id/btnEditProfile"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="2dp"
             android:background="@drawable/bg_input"
             android:backgroundTint="#2196F3"
-            android:drawableLeft="@drawable/baseline_settings_24"
+            android:drawableStart="@drawable/baseline_settings_24"
             android:padding="10dp"
             android:text="@string/btnEditProfile" />
 
@@ -140,7 +141,7 @@
             android:layout_margin="2dp"
             android:background="@drawable/bg_input"
             android:backgroundTint="#E91E1E"
-            android:drawableLeft="@drawable/baseline_logout_24"
+            android:drawableStart="@drawable/baseline_logout_24"
             android:padding="10dp"
             android:text="@string/btnLogout"
             tools:ignore="TextContrastCheck" />
@@ -150,10 +151,10 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="103dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="37dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/bg_input"
         android:backgroundTint="#DAD8D8"
         android:gravity="center"
@@ -168,7 +169,7 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:gravity="bottom"
-            android:minHeight="36sp"
+            android:minHeight="20sp"
             android:text="@string/txtorderManagement"
             android:textStyle="bold" />
 
@@ -176,12 +177,24 @@
             android:id="@+id/btnViewOrderHistory"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:layout_margin="2dp"
             android:background="@drawable/bg_input"
             android:backgroundTint="#2196F3"
-            android:drawableLeft="@drawable/baseline_list_alt_24"
+            android:drawableStart="@drawable/baseline_list_alt_24"
             android:padding="10dp"
             android:text="@string/btnViewOrderHistory"
             android:textColor="#212121" />
+
+        <Button
+            android:id="@+id/btnViewSellingItem"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_input"
+            android:backgroundTint="#2196F3"
+            android:drawableStart="@drawable/baseline_list_alt_24"
+            android:padding="10dp"
+            android:text="@string/btnViewSellingItem" />
 
     </LinearLayout>
 

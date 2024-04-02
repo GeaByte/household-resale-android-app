@@ -138,4 +138,7 @@
     <string name="btnViewDetail">View Detail Order</string>
     <string name="btnBackward">Back</string>
     <string name="txtTypeOfService">Pick-Up/Delivery:</string>
+    <string name="btnViewSellingItem">View Selling Item</string>
+    <string name="txtSellingItems">Selling Items</string>
+    <string name="btnCancel">Cancel</string>
 </resources>

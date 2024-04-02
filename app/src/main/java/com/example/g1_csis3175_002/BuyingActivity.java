@@ -9,9 +9,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -29,13 +27,9 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buying);
 
-        TextView title = findViewById(R.id.tvBuyTitle);
-
         databaseHelper = new DatabaseHelper(this);
         locationHelper = new LocationHelper(this);
 
-        //sending instant reminder notification
-//        NotificationHelper.showNotification(this, "Pick-up Reminder", "testing");
         Spinner spSort = findViewById(R.id.spSort);
         productGV = findViewById(R.id.GVbuying);
         productModelList = databaseHelper.getAllProducts();

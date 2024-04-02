@@ -39,7 +39,6 @@ public class ListingItemActivity extends AppCompatActivity{
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imgView;
-
     private EditText edtItemtitle, editTextDescription, editTextPrice, editTextLocation;
     private Spinner spinnerCategory;
     private RadioGroup radioGroupSellShare;
@@ -79,8 +78,6 @@ public class ListingItemActivity extends AppCompatActivity{
                 }
             }
         });
-
-
 
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,8 +120,6 @@ public class ListingItemActivity extends AppCompatActivity{
                 openFileChooser();
             }
         });
-
-
     }
     private void openFileChooser() {
         Intent intent = new Intent();

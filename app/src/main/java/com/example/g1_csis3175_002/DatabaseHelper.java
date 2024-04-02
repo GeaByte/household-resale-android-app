@@ -3,10 +3,12 @@ package com.example.g1_csis3175_002;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 //import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -53,8 +55,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T4COL1 = "Username";
     final static String T4COL2 = "OrderID";
     final static String TABLE5_NAME = "Buyer_buys_Product";
-
-
     final static String T5COL1 = "Username";
     final static String T5COL2 = "ProductId";
     final static String TABLE6_NAME = "Seller_sells_Product";
@@ -681,6 +681,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<ProductModel> getAllCartItems() {
         ArrayList<ProductModel> cartItems = new ArrayList<>();
+        UserModel user = new UserModel();
+        String username = user.getUsername();
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT Product." + T2COL1 + ", Product." + T2COL2 + ", Product." + T2COL4 +
                 " FROM " + TABLE3_NAME +
@@ -741,6 +743,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowsAffected > 0;
     }
 
+    public boolean addUserOrder(String username, int orderId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("orderId", orderId);
+
+        long result = db.insert("User_Has_Order", null, values);
+        return result != -1;
+    }
 
 
     public void resetDatabase(SQLiteDatabase db) {

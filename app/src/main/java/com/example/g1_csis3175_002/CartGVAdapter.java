@@ -22,7 +22,6 @@ import java.util.Locale;
 public class CartGVAdapter extends ArrayAdapter<ProductModel> {
 
     DatabaseHelper databaseHelper;
-
     public CartGVAdapter(@NonNull Context context, ArrayList<ProductModel> productModelArrayList,
                          DatabaseHelper dbHelper) {
         super(context, 0, productModelArrayList);

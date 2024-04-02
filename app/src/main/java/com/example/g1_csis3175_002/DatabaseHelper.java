@@ -132,7 +132,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String queryTable5 = "CREATE TABLE " + TABLE5_NAME + "(" +
                 T5COL1 + " TEXT," +
                 T5COL2 + " INTEGER," +
-                "PRIMARY KEY (" + T5COL1 + ", " + T5COL2 + ")," +
                 "FOREIGN KEY (" + T5COL1+ ") REFERENCES " + TABLE1_NAME + "(" +
                 T1COL1 + ")," +
                 "FOREIGN KEY(" + T5COL2 + ") REFERENCES " + TABLE2_NAME + "(" +
@@ -750,6 +749,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " ON " + TABLE3_NAME + "." + T3COL5 + " = " + TABLE2_NAME + "." + T2COL1 +
                 " WHERE " + T3COL4 + " = 'Cart'";
 
+//        "SELECT Product.ProductId, Product.productName, Product.Price " +
+//                "FROM Product " +
+//                "INNER JOIN Buyer_buys_Product ON Buyer_buys_Product.productId = Product.ProductId " +
+//                "WHERE Buyer_buys_Product.username = ? " +
+//                "AND UserOrder.OrderStatus = 'Cart'";
+
         Cursor cursor = db.rawQuery(query, null);
 
 
@@ -813,6 +818,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    public boolean addBuyerBuysProduct(String username, int productId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(T5COL1, username);
+        values.put(T5COL2, productId);
+
+        long result = db.insert(TABLE5_NAME, null, values);
+        return result != -1;
+    }
 
     public void resetDatabase(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE1_NAME);

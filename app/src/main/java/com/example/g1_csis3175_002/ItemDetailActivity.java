@@ -208,6 +208,13 @@ public class ItemDetailActivity extends AppCompatActivity {
         } else {
             Log.e("ItemDetailActivity", "Failed to add user order association.");
         }
+
+        boolean buyerBuysProductSuccess = databaseHelper.addBuyerBuysProduct(username, productId);
+        if (buyerBuysProductSuccess) {
+            Log.d("ItemDetailActivity", "Buyer association added successfully.");
+        } else {
+            Log.e("ItemDetailActivity", "Failed to add buyer association.");
+        }
     }
 
     public void onClickBack(View view){

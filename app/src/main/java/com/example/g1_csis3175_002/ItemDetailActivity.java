@@ -101,10 +101,9 @@ public class ItemDetailActivity extends AppCompatActivity {
                 .load(product.getImagePath())
                 .into(img);
 
-        btnAddToCart.setOnClickListener(this::addToCart);
-//        btnAddToCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                String productName = product.getProductName();
 //                String orderDate = generateRandomOrderDate();
 //                String status = generateRandomOrderStatus();
@@ -140,8 +139,10 @@ public class ItemDetailActivity extends AppCompatActivity {
 //                    // Error occurred while inserting
 //                    Toast.makeText(ItemDetailActivity.this, "Failed to placed order", Toast.LENGTH_SHORT).show();
 //                }
-//            }
-//        });
+                int oderId = generateRandomOrderId();
+                addToCart(product, orderId);
+            }
+        });
     }
 
     public static int generateRandomOrderId() {
@@ -152,17 +153,20 @@ public class ItemDetailActivity extends AppCompatActivity {
         return orderId;
     }
 
-    private void addToCart(View view) {
+    private void addToCart(ProductModel product, int orderId) {
         if (databaseHelper == null) {
             Toast.makeText(ItemDetailActivity.this, "Null Item.", Toast.LENGTH_LONG).show();
             return;
         }
 
+        int productId = getIntent().getIntExtra("ProductID", -1);
+        product.setProductID(productId);
+
         // Get the product ID and other necessary details
         Log.d("ItemDetailActivity", "ProductId addToCart: " + product.getProductID());
         String orderDate = product.getCurrentDate();
         String orderStatus = "Cart";
-//        int orderId = generateRandomOrderId();
+        orderId = generateRandomOrderId();
         String addressToUse;
         if (rdbtnPickup.isChecked()) {
             addressToUse = product.getPickupAddress();
@@ -177,7 +181,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             // Show a success message or update UI accordingly
 
             Intent intent = new Intent(ItemDetailActivity.this, Cart_Activity.class);
-            intent.putExtra("ProductID", product.getProductID());
+            intent.putExtra("ProductID", productId);
             intent.putExtra("OrderID", orderId);
             startActivity(intent);
 

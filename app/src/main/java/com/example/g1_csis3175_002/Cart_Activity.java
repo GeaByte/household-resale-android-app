@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Cart_Activity extends AppCompatActivity{
 

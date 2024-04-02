@@ -6,8 +6,10 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +40,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     RadioButton rdbtnDelivery;
     int orderId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         Button btnAddToCart = findViewById(R.id.btnAddToCart);
         cartItemList = new ArrayList<>();
+
 
 
 
@@ -101,10 +105,9 @@ public class ItemDetailActivity extends AppCompatActivity {
                 .load(product.getImagePath())
                 .into(img);
 
-        btnAddToCart.setOnClickListener(this::addToCart);
-//        btnAddToCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                String productName = product.getProductName();
 //                String orderDate = generateRandomOrderDate();
 //                String status = generateRandomOrderStatus();
@@ -140,8 +143,10 @@ public class ItemDetailActivity extends AppCompatActivity {
 //                    // Error occurred while inserting
 //                    Toast.makeText(ItemDetailActivity.this, "Failed to placed order", Toast.LENGTH_SHORT).show();
 //                }
-//            }
-//        });
+                int oderId = generateRandomOrderId();
+                addToCart(product, orderId);
+            }
+        });
     }
 
     public static int generateRandomOrderId() {
@@ -152,17 +157,20 @@ public class ItemDetailActivity extends AppCompatActivity {
         return orderId;
     }
 
-    private void addToCart(View view) {
+    private void addToCart(ProductModel product, int orderId) {
         if (databaseHelper == null) {
             Toast.makeText(ItemDetailActivity.this, "Null Item.", Toast.LENGTH_LONG).show();
             return;
         }
 
+        int productId = getIntent().getIntExtra("ProductID", -1);
+        product.setProductID(productId);
+
         // Get the product ID and other necessary details
         Log.d("ItemDetailActivity", "ProductId addToCart: " + product.getProductID());
         String orderDate = product.getCurrentDate();
         String orderStatus = "Cart";
-//        int orderId = generateRandomOrderId();
+        orderId = generateRandomOrderId();
         String addressToUse;
         if (rdbtnPickup.isChecked()) {
             addressToUse = product.getPickupAddress();
@@ -177,7 +185,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             // Show a success message or update UI accordingly
 
             Intent intent = new Intent(ItemDetailActivity.this, Cart_Activity.class);
-            intent.putExtra("ProductID", product.getProductID());
+            intent.putExtra("ProductID", productId);
             intent.putExtra("OrderID", orderId);
             startActivity(intent);
 
@@ -185,6 +193,20 @@ public class ItemDetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(ItemDetailActivity.this, "Failed to add item to cart.", Toast.LENGTH_LONG).show();
             // Show an error message or handle the failure scenario
+        }
+
+
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(ItemDetailActivity.this);
+        String username = sharedPref.getString("username", "");
+        UserModel user = new UserModel();
+        user.setUsername(username);
+
+        boolean userOrderSuccess = databaseHelper.addUserOrder(username, orderId);
+        if (userOrderSuccess) {
+            Log.d("ItemDetailActivity", "User order association added successfully.");
+        } else {
+            Log.e("ItemDetailActivity", "Failed to add user order association.");
         }
     }
 

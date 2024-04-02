@@ -121,6 +121,7 @@
     <string name="btnCheckOut">Check Out</string>
     <string name="txtPaymentProcessed">Your payment has been processed. \n Thank you!</string>
     <string name="btnReturnHome">Return To\nHome Page</string>
+    <string name="btnEditProfile">View/Edit Profile</string>
     <string name="btnContinueShopping">Continue Shopping</string>
 
     <string-array name="txtDeliveryOpt">

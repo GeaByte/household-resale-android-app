@@ -319,7 +319,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //2-Product
     // addProduct
     public boolean addProduct(int productId, String productName, String description, String price, String pickupAddress,
-                           String category, String sellOrShare, String imagePath, String seller) {
+                           String category, String sellOrShare, String imagePath, String seller, float latitude, float longitude) {
         try{
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -451,7 +451,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
 
                 ProductModel product = new ProductModel(productId, productName, price, imagePath,
-                        description, seller, pickupAddress);
+                        description, seller, pickupAddress, uploadTime, latitude, longitude);
                 productList.add(product);
             } while (cursor.moveToNext());
 

@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ListItemSeller extends AppCompatActivity {
@@ -106,14 +107,14 @@ public class ListItemSeller extends AppCompatActivity {
                     String imagePath = saveImageToInternalStorage(imgView);
                     String pickupAddress = editTextLocation.getText().toString();
                     int productId = generateRandomProductId();
-
-
-
+                    ArrayList<Double> coordinates = locationHelper.convertToGeo(pickupAddress);
+                    double latitude = coordinates.get(0);
+                    double longitude = coordinates.get(1);
 
                     // Insert data into the database
 
-                    boolean inserted = db.addProduct(productId, productName, description, price,
-                            category, sellOrShare, imagePath, seller, pickupAddress);
+                    boolean inserted = db.addProduct(productId, productName, description, price, pickupAddress,
+                        category, sellOrShare, imagePath, seller, (float)latitude, (float)longitude);
                     if (inserted) {
                         Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
                     } else {

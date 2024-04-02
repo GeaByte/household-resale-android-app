@@ -101,47 +101,47 @@ public class ItemDetailActivity extends AppCompatActivity {
                 .load(product.getImagePath())
                 .into(img);
 
-        btnAddToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String productName = product.getProductName();
-                String orderDate = generateRandomOrderDate();
-                String status = generateRandomOrderStatus();
-                String imagePath = product.getImagePath();
+        btnAddToCart.setOnClickListener(this::addToCart);
+//        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String productName = product.getProductName();
+//                String orderDate = generateRandomOrderDate();
+//                String status = generateRandomOrderStatus();
+//                String imagePath = product.getImagePath();
+//                // Call the insertOrder method
+//                boolean isSuccess = databaseHelper.insertOrder(productName, orderDate, status, imagePath);
+//
+//                if (isSuccess) {
+//                    //Insertion successful
+//                    Toast.makeText(ItemDetailActivity.this, "Order placed successfully", Toast.LENGTH_SHORT).show();
 
-                int orderId = generateRandomOrderId();
-                addToCart(product, orderId);
-
-                // Call the insertOrder method
-                boolean isSuccess = databaseHelper.insertOrder(productName, orderDate, status, imagePath);
-
-                if (isSuccess) {
-                    //Insertion successful
-                    Toast.makeText(ItemDetailActivity.this, "Order placed successfully", Toast.LENGTH_SHORT).show();
-                    //set up notification title and message
-                    notificationMessage = new Data.Builder();
-                    if(rdbtnPickup.isChecked()){
-                        notificationMessage.putString("title", "Your order is ready for pick up");
-                        notificationMessage.putString("content", String.format("%s is ready for pick up at %s", productName, product.getPickupAddress()));
-                    }else{
-                        notificationMessage.putString("title", "Your order is ready to ship");
-                        notificationMessage.putString("content", String.format("%s is ready to ship", productName));
-                    }
-                    Data data = notificationMessage.build();
-
-                    //Send notification after 5 seconds
-                    OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationHelper.class)
-                            .setInputData(data)
-                            .setInitialDelay(5, TimeUnit.SECONDS)
-                            .build();
-                    WorkManager.getInstance(ItemDetailActivity.this).enqueue(notificationWork);
-                    startActivity(new Intent(ItemDetailActivity.this, BuyingActivity.class));
-                } else {
-                    // Error occurred while inserting
-                    Toast.makeText(ItemDetailActivity.this, "Failed to placed order", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//                     /*
+//                    move message part to placing order
+//                     */
+//                    //set up notification title and message
+//                    notificationMessage = new Data.Builder();
+//                    if(rdbtnPickup.isChecked()){
+//                        notificationMessage.putString("title", "Your order is ready for pick up");
+//                        notificationMessage.putString("content", String.format("%s is ready for pick up at %s", productName, product.getPickupAddress()));
+//                    }else{
+//                        notificationMessage.putString("title", "Your order is ready to ship");
+//                        notificationMessage.putString("content", String.format("%s is ready to ship", productName));
+//                    }
+//                    Data data = notificationMessage.build();
+//                    //Send notification after 5 seconds
+//                    OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationHelper.class)
+//                            .setInputData(data)
+//                            .setInitialDelay(5, TimeUnit.SECONDS)
+//                            .build();
+//                    WorkManager.getInstance(ItemDetailActivity.this).enqueue(notificationWork);
+//                    startActivity(new Intent(ItemDetailActivity.this, BuyingActivity.class));
+//                } else {
+//                    // Error occurred while inserting
+//                    Toast.makeText(ItemDetailActivity.this, "Failed to placed order", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
 
     public static int generateRandomOrderId() {
@@ -152,21 +152,14 @@ public class ItemDetailActivity extends AppCompatActivity {
         return orderId;
     }
 
-    private void addToCart(ProductModel product, int orderId) {
-
-
+    private void addToCart(View view) {
         if (databaseHelper == null) {
             Toast.makeText(ItemDetailActivity.this, "Null Item.", Toast.LENGTH_LONG).show();
             return;
         }
 
         // Get the product ID and other necessary details
-        int productId = getIntent().getIntExtra("ProductID", -1);
-        product.setProductID(productId);
-
-
-        Log.d("ItemDetailActivity", "ProductId addToCart: " + productId);
-
+        Log.d("ItemDetailActivity", "ProductId addToCart: " + product.getProductID());
         String orderDate = product.getCurrentDate();
         String orderStatus = "Cart";
 //        int orderId = generateRandomOrderId();
@@ -177,15 +170,15 @@ public class ItemDetailActivity extends AppCompatActivity {
             String deliveryAddress = edDeliveryAd.getText().toString();
             addressToUse = deliveryAddress;
         }
-
         boolean success = databaseHelper.addOrder(orderId, addressToUse, orderDate,
-                orderStatus, productId);
+                orderStatus, product.getProductID());
         if (success) {
             Toast.makeText(ItemDetailActivity.this, "Item added to cart.", Toast.LENGTH_LONG).show();
             // Show a success message or update UI accordingly
 
             Intent intent = new Intent(ItemDetailActivity.this, Cart_Activity.class);
-            intent.putExtra("ProductID", productId);
+            intent.putExtra("ProductID", product.getProductID());
+            intent.putExtra("OrderID", orderId);
             startActivity(intent);
 
             cartItemList.add(product);
@@ -193,12 +186,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             Toast.makeText(ItemDetailActivity.this, "Failed to add item to cart.", Toast.LENGTH_LONG).show();
             // Show an error message or handle the failure scenario
         }
-
-        Intent intent = new Intent(ItemDetailActivity.this, Cart_Activity.class);
-        intent.putExtra("OrderID", orderId);
-        startActivity(intent);
     }
-
 
     public void onClickBack(View view){
 
@@ -239,6 +227,4 @@ public class ItemDetailActivity extends AppCompatActivity {
         // Return the randomly selected order status
         return statuses[randomIndex];
     }
-
-
 }

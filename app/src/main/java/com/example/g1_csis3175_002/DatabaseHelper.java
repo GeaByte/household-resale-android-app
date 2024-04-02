@@ -681,7 +681,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<ProductModel> getAllCartItems() {
         ArrayList<ProductModel> cartItems = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT Product." + T2COL1 + ", Product." + T2COL2 + ", Product." + T2COL4 +
                 " FROM " + TABLE3_NAME +
                 " INNER JOIN " + TABLE2_NAME +

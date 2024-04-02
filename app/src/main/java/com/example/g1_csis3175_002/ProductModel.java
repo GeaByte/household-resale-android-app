@@ -1,9 +1,5 @@
 package com.example.g1_csis3175_002;
 
-import android.annotation.SuppressLint;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
 import java.io.Serializable;
 
 import java.text.SimpleDateFormat;

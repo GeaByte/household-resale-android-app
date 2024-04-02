@@ -47,7 +47,7 @@ public class SellingItemLVAdapter extends ArrayAdapter<ProductModel> {
                 Intent intent = new Intent(getContext(), ListingItemActivity.class);
                 ProductModel product = db.getProduct(pm.getProductID());
                 intent.putExtra("product", product);
-                intent.putExtra("editProduct", true);
+                intent.putExtra("edit", true);
                 getContext().startActivity(intent);
             }
         });

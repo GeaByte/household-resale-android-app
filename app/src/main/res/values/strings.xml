@@ -141,4 +141,5 @@
     <string name="btnViewSellingItem">View Selling Item</string>
     <string name="txtSellingItems">Selling Items</string>
     <string name="btnCancel">Cancel</string>
+    <string name="btnUpdate">Update</string>
 </resources>

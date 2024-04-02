@@ -43,6 +43,7 @@ public class ListingItemActivity extends AppCompatActivity{
     private Spinner spinnerCategory;
     private RadioGroup radioGroupSellShare;
     private RadioButton radioButtonSell;
+    private RadioButton radioButtonShare;
     private LocationHelper locationHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +64,44 @@ public class ListingItemActivity extends AppCompatActivity{
         spinnerCategory = findViewById(R.id.spinnerCategory);
         radioGroupSellShare = findViewById(R.id.radioGroupSellShare);
         radioButtonSell = findViewById(R.id.radioButtonSell);
+        radioButtonShare = findViewById(R.id.radioButtonShare);
         imgView = findViewById(R.id.imgView);
         Button btnAddImage = findViewById(R.id.btnAddImage);
         Button btnList = findViewById(R.id.btnList);
         locationHelper = new LocationHelper(this);
+
+        //edit listing item
+        boolean isEdit = getIntent().getBooleanExtra("edit",false);
+        if(isEdit){
+            ProductModel pm = (ProductModel) getIntent().getSerializableExtra("product");
+            edtItemtitle.setText(pm.getProductName());
+            editTextDescription.setText(pm.getItemDetail());
+            editTextPrice.setText(String.valueOf(pm.getPrice()));
+            editTextLocation.setText(pm.getPickupAddress());
+//            spinnerCategory.setSelection(pm.get);
+//            if (pm.getDeliveryOption().equals("Sell")) {
+//                radioButtonSell.setChecked(true);
+//            } else {
+//                radioButtonShare.setChecked(true);
+//            }
+            btnList.setText(getString(R.string.btnUpdate));
+            btnList.setOnClickListener(new View.OnClickListener() {
+                String productName = edtItemtitle.getText().toString();
+                String description = editTextDescription.getText().toString();
+                String price = editTextPrice.getText().toString();
+                String location = editTextLocation.getText().toString();
+                String category = spinnerCategory.getSelectedItem().toString();
+                String sellOrShare = radioButtonSell.isChecked() ? "Sell" : "Share";
+                String imagePath = saveImageToInternalStorage(imgView);
+                @Override
+                public void onClick(View v) {
+                    db.updateProduct(pm.getProductID(), productName, description, price, location, category, sellOrShare, imagePath);
+                    startActivity(new Intent(ListingItemActivity.this, HomeActivity.class));
+                }
+            });
+        }//end of edit listing item
+
+
         radioGroupSellShare.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

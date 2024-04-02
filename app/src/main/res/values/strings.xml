@@ -140,4 +140,7 @@
     </string-array>
     <string name="btnProfileUpdate">Update Profile</string>
     <string name="txtUpdateYourAccount">Update Your Account</string>
+    <string name="btnViewDetail">View Detail Order</string>
+    <string name="btnBackward">Back</string>
+    <string name="txtTypeOfService">Pick-Up/Delivery:</string>
 </resources>

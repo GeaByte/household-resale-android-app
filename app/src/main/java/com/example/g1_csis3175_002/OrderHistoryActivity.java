@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.lvOrders);
 
 
+
         // Retrieve data from the database and populate the ArrayList
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         ArrayList<OrderModel> orders = dbHelper.getAllOrders();
@@ -31,6 +33,19 @@ public class OrderHistoryActivity extends AppCompatActivity {
         // Create custom adapter and set it to the ListView
         OrderDetailLVAdapter adapter = new OrderDetailLVAdapter(this, orders);
         listView.setAdapter(adapter);
+
+        // Set item click listener to the ListView
+    /*    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Start OrderDetailActivity and pass the order ID
+                OrderModel clickedOrder = (OrderModel) parent.getItemAtPosition(position);
+                int orderId = clickedOrder.getId();
+                Intent intent = new Intent(OrderHistoryActivity.this, OrderDetailActivity.class);
+                intent.putExtra("ORDER_ID", orderId);
+                startActivity(intent);
+            }
+        });*/
 
 
 
@@ -43,6 +58,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
         // Directly use the listView reference since we are in the same activity
         ListView listView = findViewById(R.id.lvOrders);
+
 
         // Get the position of the clicked button's parent layout in the ListView
         int position = listView.getPositionForView(parentRow);
@@ -63,6 +79,33 @@ public class OrderHistoryActivity extends AppCompatActivity {
             Toast.makeText(this, "Order with ID " + order.getId() + " has been canceled", Toast.LENGTH_SHORT).show();
         }
     }
+
+   /* public void onDetailView(View view){
+
+        startActivity(new Intent(OrderHistoryActivity.this,OrderDetailActivity.class));
+    }*/
+
+    public void onDetailView(View view) {
+        // Find the parent row view
+        View parentRow = (View) view.getParent();
+
+        // Directly use the listView reference since we are in the same activity
+        ListView listView = findViewById(R.id.lvOrders);
+
+        // Get the position of the clicked button's parent layout in the ListView
+        int position = listView.getPositionForView(parentRow);
+
+        // Get the corresponding OrderModel object
+        OrderModel clickedOrder = (OrderModel) listView.getItemAtPosition(position);
+
+        // Start OrderDetailActivity and pass the order ID
+        int orderId = clickedOrder.getId();
+        Intent intent = new Intent(OrderHistoryActivity.this, OrderDetailActivity.class);
+        intent.putExtra("ORDER_ID", orderId);
+        startActivity(intent);
+    }
+
+
 
 
 

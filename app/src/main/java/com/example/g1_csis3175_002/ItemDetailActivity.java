@@ -88,10 +88,27 @@ public class ItemDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                int selectedRadioButtonId = rdbtnGroup.getCheckedRadioButtonId();
+
                 String productName = product.getProductName();
                 String orderDate = generateRandomOrderDate();
                 String status = generateRandomOrderStatus();
                 String imagePath = product.getImagePath();
+                double price = product.getPrice();
+                String priceString = String.valueOf(price);
+                String typeOfService="";
+                if (selectedRadioButtonId == -1) {
+                    // Handle the case where no radio button is selected
+                } else {
+                    // Find the RadioButton view by its ID
+                    RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+
+                    // Get the text of the selected radio button
+                    typeOfService = selectedRadioButton.getText().toString();
+
+                    // Now you have the selected text from the radio button
+                }
+
 //                int orderId = generateRandomOrderId();
 //                String address = txtUserShipAd.getText().toString();
 //                String orderDate = getCurrentDate();
@@ -110,7 +127,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
 
                 // Call the insertOrder method
-                boolean isSuccess = databaseHelper.insertOrder(productName, orderDate, status, imagePath);
+                boolean isSuccess = databaseHelper.insertOrder(productName, orderDate, status, imagePath,priceString,typeOfService);
 
                 if (isSuccess) {
                     //Insertion successful

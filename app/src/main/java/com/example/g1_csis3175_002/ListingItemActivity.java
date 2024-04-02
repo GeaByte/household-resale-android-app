@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -114,6 +115,14 @@ public class ListingItemActivity extends AppCompatActivity{
                     } else {
                         Toast.makeText(ListingItemActivity.this, "Failed to list item", Toast.LENGTH_SHORT).show();
                     }
+
+                        // Code to store product and seller info in the seller table
+//                    boolean sellerSellShareProductSuccess = db.sellerSellShareProduct(seller, productId);
+//                    if (sellerSellShareProductSuccess) {
+//                        Log.d("ItemDetailActivity", "Seller association added successfully.");
+//                    } else {
+//                        Log.e("ItemDetailActivity", "Failed to add seller association.");
+//                    }
             }
         });
 

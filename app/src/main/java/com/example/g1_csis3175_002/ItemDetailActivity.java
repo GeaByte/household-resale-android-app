@@ -178,8 +178,11 @@ public class ItemDetailActivity extends AppCompatActivity {
             String deliveryAddress = edDeliveryAd.getText().toString();
             addressToUse = deliveryAddress;
         }
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(ItemDetailActivity.this);
+        String username = sharedPref.getString("username", "");
         boolean success = databaseHelper.addOrder(orderId, addressToUse, orderDate,
-                orderStatus, product.getProductID());
+                orderStatus, product.getProductID(), username);
         if (success) {
             Toast.makeText(ItemDetailActivity.this, "Item added to cart.", Toast.LENGTH_LONG).show();
             // Show a success message or update UI accordingly
@@ -196,9 +199,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         }
 
 
-        SharedPreferences sharedPref =
-                PreferenceManager.getDefaultSharedPreferences(ItemDetailActivity.this);
-        String username = sharedPref.getString("username", "");
+
         UserModel user = new UserModel();
         user.setUsername(username);
 

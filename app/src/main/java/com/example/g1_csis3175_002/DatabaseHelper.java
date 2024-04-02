@@ -50,6 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T3COL3 = "OrderDate";
     final static String T3COL4 = "OrderStatus";
     final static String T3COL5 = "ProductId";
+    final static String T3COL6 = "Username";
 
     final static String TABLE4_NAME = "User_has_Order";
     final static String T4COL1 = "Username";
@@ -117,6 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T3COL3 + " TEXT," +
                 T3COL4 + " TEXT," +
                 T3COL5 + " INTEGER," +
+                T3COL6 + " TEXT," +
                 "FOREIGN KEY(" + T3COL5 + ") REFERENCES " + TABLE2_NAME + "(" +
                 T2COL1 + ")" + ");";
 
@@ -584,7 +586,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sqLiteDatabase.query(TABLE2_NAME, columns, selection, selectionArgs, null, null, null);
     }
 
-    public boolean addOrder(int oId, String address, String date, String status, int productId){
+    public boolean addOrder(int oId, String address, String date, String status, int productId, String userName){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(T3COL1,oId);
@@ -592,6 +594,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(T3COL3,date);
         values.put(T3COL4, status);
         values.put(T3COL5, productId);
+        values.put(T3COL6, userName);
 
         long r = sqLiteDatabase.insert(TABLE3_NAME, null, values);
 
@@ -738,7 +741,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return orderItems;
     }
 
-    public ArrayList<ProductModel> getAllCartItems() {
+    public ArrayList<ProductModel> getAllCartItems(String userName) {
         ArrayList<ProductModel> cartItems = new ArrayList<>();
         UserModel user = new UserModel();
         String username = user.getUsername();
@@ -747,7 +750,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " FROM " + TABLE3_NAME +
                 " INNER JOIN " + TABLE2_NAME +
                 " ON " + TABLE3_NAME + "." + T3COL5 + " = " + TABLE2_NAME + "." + T2COL1 +
-                " WHERE " + T3COL4 + " = 'Cart'";
+                " WHERE " + T3COL4 + " = 'Cart'"+
+                " AND " + TABLE3_NAME + "." + T3COL6 + " = ?";
 
 //        "SELECT Product.ProductId, Product.productName, Product.Price " +
 //                "FROM Product " +
@@ -755,7 +759,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                "WHERE Buyer_buys_Product.username = ? " +
 //                "AND UserOrder.OrderStatus = 'Cart'";
 
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.rawQuery(query, new String[] {userName});
 
 
         if (cursor != null && cursor.moveToFirst()) {

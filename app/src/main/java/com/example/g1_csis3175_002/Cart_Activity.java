@@ -3,7 +3,9 @@ package com.example.g1_csis3175_002;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,8 +37,10 @@ public class Cart_Activity extends AppCompatActivity{
         txtCartTotal = findViewById(R.id.txtCartTotal);
 
 
-
-        ArrayList<ProductModel> cartItemList = databaseHelper.getAllCartItems();
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(Cart_Activity.this);
+        String username = sharedPref.getString("username", "");
+        ArrayList<ProductModel> cartItemList = databaseHelper.getAllCartItems(username);
 
         double cartTotal = 0.0;
         for (ProductModel item : cartItemList) {

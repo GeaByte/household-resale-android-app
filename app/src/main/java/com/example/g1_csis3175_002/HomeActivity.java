@@ -1,6 +1,8 @@
 package com.example.g1_csis3175_002;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,8 +13,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class HomeActivity extends AppCompatActivity {
+import java.util.concurrent.TimeUnit;
 
+public class HomeActivity extends AppCompatActivity {
+    String usernamePreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,27 +27,30 @@ public class HomeActivity extends AppCompatActivity {
         TextView userEmail = findViewById(R.id.tvUserEmail);
         Button buyItem = findViewById(R.id.btnBuyItem);
         Button sellItem = findViewById(R.id.btnSellItem);
-        Button viewEditOrder = findViewById(R.id.btnViewOrderHistory);
         Button viewOrderHistory = findViewById(R.id.btnViewOrderHistory);
         Button logout = findViewById(R.id.btnLogout);
+        Button viewEditProfile = findViewById(R.id.btnEditProfile);
 
-        buyItem.setOnClickListener(this::onClickBuyAnItem);
-        sellItem.setOnClickListener(this::onClickSellAnItem);
-        viewEditOrder.setOnClickListener(this::onClickViewOrderHistory);
+        viewEditProfile.setOnClickListener(this::onClickViewEditProfile);
         viewOrderHistory.setOnClickListener(this::onClickViewOrderHistory);
+        sellItem.setOnClickListener(this::onClickSellAnItem);
+        buyItem.setOnClickListener(this::onClickBuyAnItem);
         logout.setOnClickListener(this::onClickLogout);
 
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(this);
-        String usernamePreferences = sharedPref.getString("username", "");
+        usernamePreferences = sharedPref.getString("username", "");
         String emailPreferences = sharedPref.getString("email", "");
 
-        /*
-
-         */
         profileIcon.setImageResource(R.drawable.buyer);
         username.setText(usernamePreferences);
         userEmail.setText(emailPreferences);
+
+        //check for notification permission
+        if (!NotificationHelper.isNotificationPermissionGranted(this)){
+            //if not, ask for permission
+            NotificationHelper.showPermissionDialog(this);
+        }
     }
 
     public void onClickBuyAnItem(View view){
@@ -51,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onClickSellAnItem(View view){
-        startActivity(new Intent(HomeActivity.this, ListItemSeller.class));
+        startActivity(new Intent(HomeActivity.this, ListingItemActivity.class));
     }
 
     public void onClickViewOrderHistory(View view){
@@ -60,9 +67,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void onClickLogout(View view){
-        /*
-        not sure if we need to do something to logout like session_destroy() in php.
-         */
         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
+    public void onClickViewEditProfile(View view){
+        Intent intent = new Intent(HomeActivity.this, RegisterActivity.class);
+        intent.putExtra("update", true);
+        intent.putExtra("username", usernamePreferences);
+        startActivity(intent);
     }
 }

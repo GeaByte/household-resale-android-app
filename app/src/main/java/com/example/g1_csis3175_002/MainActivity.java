@@ -1,7 +1,6 @@
 package com.example.g1_csis3175_002;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,8 +18,11 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         dbHelper.resetDatabase(db);
 
-        Button btnLogin = (Button) findViewById(R.id.btLogin);
-        Button btnRegister = (Button) findViewById(R.id.btRegister);
+
+
+        Button btnLogin = findViewById(R.id.btLogin);
+        Button btnRegister = findViewById(R.id.btRegister);
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,4 +38,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 }

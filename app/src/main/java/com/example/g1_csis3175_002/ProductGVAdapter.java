@@ -13,11 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import com.bumptech.glide.Glide;
 
 public class ProductGVAdapter extends ArrayAdapter<ProductModel> {
-    public ProductGVAdapter(@NonNull Context context, ArrayList<ProductModel> productModelArrayList) {
+    public ProductGVAdapter(@NonNull Context context, List<ProductModel> productModelArrayList) {
         super(context, 0, productModelArrayList);
     }
     @NonNull

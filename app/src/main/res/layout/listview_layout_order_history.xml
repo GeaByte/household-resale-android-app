@@ -90,7 +90,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:contentDescription="TODO"
-        tools:ignore="ContentDescription,HardcodedText,ImageContrastCheck"
+        tools:ignore="ContentDescription,HardcodedText,ImageContrastCheck,RtlHardcoded"
         tools:srcCompat="@tools:sample/avatars" />
 
     <LinearLayout
@@ -109,5 +109,14 @@
             tools:ignore="ButtonStyle,UsingOnClickInXml" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnViewDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-5dp"
+        android:backgroundTint="#03A9F4"
+        android:onClick="onDetailView"
+        android:text="@string/btnViewDetail" />
 
 </LinearLayout>

@@ -71,6 +71,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T8COL3 = "OrderDate";
     final static String T8COL4 = "Status";
     final static String T8COL5 = "ImagePath";
+    final static String T8COL6 = "Price";
+    final static String T8COL7 = "TypeService";
 
 
     final static int DATABASE_VERSION = 1;
@@ -161,6 +163,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T8COL3 + " TEXT," +
                 T8COL4 + " TEXT," +
                 T8COL5 + " TEXT," +
+                T8COL6 + " TEXT," +
+                T8COL7 + " TEXT," +
                 "FOREIGN KEY(" + T8COL1 + ") REFERENCES " + TABLE2_NAME + "(" + T2COL1 + ")," +
                 "FOREIGN KEY(" + T8COL5 + ") REFERENCES " + TABLE2_NAME + "(" + T2COL8 + "))";
 
@@ -339,9 +343,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(T8COL3));
                     String status = cursor.getString(cursor.getColumnIndexOrThrow(T8COL4));
                     String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T8COL5));
+                    String price = cursor.getString(cursor.getColumnIndexOrThrow(T8COL6));
+                    String typeService = cursor.getString(cursor.getColumnIndexOrThrow(T8COL7));
 
                     // Create an OrderModel object and add it to the list
-                    OrderModel order = new OrderModel(orderId, productName, orderDate, status, imagePath);
+                    OrderModel order = new OrderModel(orderId, productName, orderDate, status, imagePath,price,typeService);
                     orders.add(order);
                 } while (cursor.moveToNext());
             }
@@ -362,7 +368,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public boolean insertOrder(String shippingAddress, String orderDate, String status, String imagePath) {
+    public boolean insertOrder(String shippingAddress, String orderDate, String status, String imagePath, String price, String typeOfService) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -377,6 +383,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(T8COL3, orderDate);
         values.put(T8COL4, status);
         values.put(T8COL5, imagePath);
+        values.put(T8COL6,price);
+        values.put(T8COL7,typeOfService);
 
         // Insert the values into the table
         long newRowId = db.insert(TABLE8_NAME, null, values);
@@ -398,6 +406,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.close();
         }
         return lastOrderId;
+    }
+
+    public OrderModel getOrderById(int orderId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        OrderModel order = null;
+
+        // Define the columns you want to retrieve from the database
+        String[] projection = {
+                T8COL1, // Assuming the primary key column name is "OrderID"
+                T8COL2, // Product Name
+                T8COL3, // Order Date
+                T8COL4, // Order Status
+                T8COL5, // Image Path
+                T8COL6, // Price
+                T8COL7  // Type of Service
+        };
+
+        // Define the selection criteria (WHERE clause)
+        String selection = T8COL1 + " = ?";
+        String[] selectionArgs = { String.valueOf(orderId) };
+
+        Cursor cursor = db.query(
+                TABLE8_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            // Extract data from the cursor and create an OrderModel object
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(T8COL1));
+            String productName = cursor.getString(cursor.getColumnIndexOrThrow(T8COL2));
+            String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(T8COL3));
+            String orderStatus = cursor.getString(cursor.getColumnIndexOrThrow(T8COL4));
+            String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T8COL5));
+            String price = cursor.getString(cursor.getColumnIndexOrThrow(T8COL6));
+            String typeService = cursor.getString(cursor.getColumnIndexOrThrow(T8COL7));
+
+            // Create the OrderModel object
+            order = new OrderModel(id, productName, orderDate, orderStatus, imagePath, price, typeService);
+
+            // Close the cursor
+            cursor.close();
+        }
+
+        // Close the database connection
+        db.close();
+
+        return order;
     }
 
 

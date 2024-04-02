@@ -4,21 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.bumptech.glide.Glide;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
 
-    private TextView txtShippingAddress;
-    private TextView tvShowOrdate;
-    private TextView tvShowOrderStatus;
 
     // DatabaseHelper instance
     private DatabaseHelper dbHelper;
@@ -28,69 +24,56 @@ public class OrderDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
 
-        Button btnEdit = findViewById(R.id.btnEdit);
+        Button btnBack = findViewById(R.id.btnBackward);
         ImageView productImage = findViewById(R.id.imgOrderDetailProduct);
+        TextView orderID = findViewById(R.id.tvShowOrderId);
+        TextView price = findViewById(R.id.txtShowPrice);
+        TextView orderDate = findViewById(R.id.tvShowOrdate);
+        TextView status = findViewById(R.id.tvShowOrderStatus);
+        TextView typeOfService = findViewById(R.id.tvShowService);
 
-        // Initialize TextViews
-        txtShippingAddress = findViewById(R.id.txtShippingAddress);
-        tvShowOrdate = findViewById(R.id.tvShowOrdate);
-        tvShowOrderStatus = findViewById(R.id.tvShowOrderStatus);
-
-        // Get order ID from intent or any other source
-        int orderId = getIntent().getIntExtra("ORDER_ID", -1);
 
         // Initialize DatabaseHelper
         dbHelper = new DatabaseHelper(this);
 
+        // Get order ID from intent extra
+        Intent intent = getIntent();
+        int orderId = intent.getIntExtra("ORDER_ID", -1);
 
-        // Get order details
-        Cursor cursor = dbHelper.getOrderDetails(orderId);
+        // Get OrderModel object corresponding to the order ID
+        OrderModel order = dbHelper.getOrderById(orderId);
 
-        // Move the cursor to the first row
-        if (cursor != null && cursor.moveToFirst()) {
-            // Retrieve data from the cursor
-            String shippingAddress = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.T3COL2));
-            String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.T3COL3));
-            String orderStatus = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.T3COL4));
-
-            // Populate TextViews with the retrieved data
-            txtShippingAddress.setText(shippingAddress);
-            tvShowOrdate.setText(orderDate);
-            tvShowOrderStatus.setText(orderStatus);
-
-            // Close the cursor
-            cursor.close();
+        // Populate views with order details
+        if (order != null) {
+            orderID.setText(String.valueOf(order.getId()));
+            price.setText(order.getPrice());
+            orderDate.setText(order.getDate());
+            status.setText(order.getStatus());
+            typeOfService.setText(order.getTypeOfService());
+            // Set product image using Glide or any other image loading library
+            Glide.with(this).load(order.getProductImagePath()).into(productImage);
         }
 
-
-
-
-        String statusOrder = tvShowOrderStatus.getText().toString();
-        /*String statusOrder = "Deliveried"; //test */
-
-        if (statusOrder != "Deliveried"){
-            btnEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(OrderDetailActivity.this,Edit_Order.class));
-                }
-            });
-        }
-        else
-            btnEdit.setText("Report");
-
-
-        /*
-        sample data
-         */
-
-        /*id.setText("001");
-        deliveryOption.setText("Delivery");
-        status.setText("Selling");
-        productImage.setImageResource(R.drawable.logo);*/
-
-        //check order status
-        //if delivered: change button to report
-        //if not delivered: keep it as edit
+        // Set onClickListener for back button
+        btnBack.setOnClickListener(v -> onBackPressed());
     }
-}
+
+
+
+
+
+
+
+      /*  btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OrderDetailActivity.this,OrderHistoryActivity.class));
+            }
+        });*/
+
+
+
+
+
+
+    }

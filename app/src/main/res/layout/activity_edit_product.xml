@@ -123,8 +123,10 @@
                 android:layout_marginStart="131dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="130dp"
+                android:background="@drawable/bg_input"
                 android:backgroundTint="#03A9F4"
                 android:drawableStart="@drawable/baseline_add_a_photo_24"
+                android:padding="10dp"
                 android:text="@string/addImage"
                 android:textSize="16sp" />
 

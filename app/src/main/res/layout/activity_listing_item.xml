@@ -8,18 +8,6 @@
     tools:context=".ListingItemActivity">
 
 
-    <ImageView
-        android:id="@+id/imgLogo02"
-        android:layout_width="100dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="24dp"
-        android:contentDescription="@string/txLogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -141,8 +129,10 @@
                 android:layout_marginStart="131dp"
                 android:layout_marginTop="27dp"
                 android:layout_marginEnd="130dp"
+                android:background="@drawable/bg_input"
                 android:backgroundTint="#03A9F4"
                 android:drawableStart="@drawable/baseline_add_a_photo_24"
+                android:padding="10dp"
                 android:text="@string/addImage"
                 android:textSize="16sp" />
 
@@ -166,6 +156,10 @@
                 android:layout_below="@id/imgView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
+                android:background="@drawable/bg_input"
+                android:backgroundTint="#4CAF50"
+                android:drawableLeft="@drawable/baseline_done_24"
+                android:padding="10dp"
                 android:text="@string/listButton"
                 android:textSize="20sp" />
 

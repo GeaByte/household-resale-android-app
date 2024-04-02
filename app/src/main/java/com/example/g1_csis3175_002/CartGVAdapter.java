@@ -62,6 +62,7 @@ public class CartGVAdapter extends ArrayAdapter<ProductModel> {
         return listitemView;
     }
 
+
     // Remove item from cart
     private void removeItem(int position) {
         ProductModel itemToRemove = getItem(position);

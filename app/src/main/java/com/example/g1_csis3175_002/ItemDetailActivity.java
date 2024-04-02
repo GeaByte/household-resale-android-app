@@ -1,6 +1,9 @@
 package com.example.g1_csis3175_002;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class ItemDetailActivity extends AppCompatActivity {
     private ProductModel product;
@@ -191,6 +195,40 @@ public class ItemDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Method to generate a random order date
+    public static String generateRandomOrderDate() {
+        // Define the date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Get the current date
+        Date currentDate = new Date();
+
+        // Generate a random number of days to subtract from the current date (between 1 and 30)
+        Random random = new Random();
+        int randomDays = random.nextInt(30) + 1;
+
+        // Subtract the random number of days from the current date
+        long millis = currentDate.getTime() - (randomDays * 24L * 3600 * 1000);
+
+        // Create a new Date object with the random date
+        Date randomDate = new Date(millis);
+
+        // Format the random date as a string
+        return dateFormat.format(randomDate);
+    }
+
+    // Method to generate a random order status
+    public static String generateRandomOrderStatus() {
+        // Define an array of possible order statuses
+        String[] statuses = {"Processing", "Shipping", "Delivered"};
+
+        // Generate a random index to select a status from the array
+        Random random = new Random();
+        int randomIndex = random.nextInt(statuses.length);
+
+        // Return the randomly selected order status
+        return statuses[randomIndex];
+    }
 
     public void onClickBack(View view){
 

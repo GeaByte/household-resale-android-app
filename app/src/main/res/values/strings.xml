@@ -128,6 +128,13 @@
         <item>Choose Delivery Option</item>
         <item>Delivery</item>
         <item>Pick Up</item>
-
     </string-array>
+
+    <string-array name="sort">
+        <item>Most Recent</item>
+        <item>Price</item>
+        <item>Distance</item>
+    </string-array>
+    <string name="btnProfileUpdate">Update Profile</string>
+    <string name="txtUpdateYourAccount">Update Your Account</string>
 </resources>

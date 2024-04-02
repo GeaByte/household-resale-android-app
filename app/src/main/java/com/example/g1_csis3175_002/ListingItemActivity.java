@@ -35,7 +35,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ListItemSeller extends AppCompatActivity {
+public class ListingItemActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imgView;
@@ -44,15 +44,16 @@ public class ListItemSeller extends AppCompatActivity {
     private Spinner spinnerCategory;
     private RadioGroup radioGroupSellShare;
     private RadioButton radioButtonSell;
+    private LocationHelper locationHelper;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DatabaseHelper db = new DatabaseHelper(ListItemSeller.this);
+        DatabaseHelper db = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_product_add);
+        setContentView(R.layout.activity_listing_item);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -69,6 +70,7 @@ public class ListItemSeller extends AppCompatActivity {
         imgView = findViewById(R.id.imgView);
         Button btnAddImage = findViewById(R.id.btnAddImage);
         Button btnList = findViewById(R.id.btnList);
+        locationHelper = new LocationHelper(this);
 
         radioGroupSellShare.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -90,7 +92,7 @@ public class ListItemSeller extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences sharedPref =
-                        PreferenceManager.getDefaultSharedPreferences(ListItemSeller.this);
+                        PreferenceManager.getDefaultSharedPreferences(ListingItemActivity.this);
                 String seller = sharedPref.getString("username", "");
 //                String pickupAddress = db.getPickupAddressByUsername(seller);
 
@@ -113,12 +115,12 @@ public class ListItemSeller extends AppCompatActivity {
 
                     // Insert data into the database
 
-                    boolean inserted = db.addProduct(productId, productName, description, price, pickupAddress,
+                    boolean inserted = db.addProduct(productName, description, price, pickupAddress,
                         category, sellOrShare, imagePath, seller, (float)latitude, (float)longitude);
                     if (inserted) {
-                        Toast.makeText(ListItemSeller.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ListingItemActivity.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ListItemSeller.this, "Failed to list item", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ListingItemActivity.this, "Failed to list item", Toast.LENGTH_SHORT).show();
                     }
 //                } else{
 //                    Toast.makeText(ListItemSeller.this, "Failed to retrieve pickup address", Toast.LENGTH_SHORT).show();

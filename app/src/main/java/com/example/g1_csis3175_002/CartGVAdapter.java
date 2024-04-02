@@ -22,10 +22,19 @@ import java.util.Locale;
 public class CartGVAdapter extends ArrayAdapter<ProductModel> {
 
     DatabaseHelper databaseHelper;
+    private OnRemoveItemClickListener removeItemClickListener;
+
+    public interface OnRemoveItemClickListener {
+        void onRemoveItemClick(int position);
+    }
     public CartGVAdapter(@NonNull Context context, ArrayList<ProductModel> productModelArrayList,
                          DatabaseHelper dbHelper) {
         super(context, 0, productModelArrayList);
         this.databaseHelper = dbHelper;
+    }
+
+    public void setOnRemoveItemClickListener(OnRemoveItemClickListener listener) {
+        this.removeItemClickListener = listener;
     }
 
     @NonNull
@@ -53,28 +62,34 @@ public class CartGVAdapter extends ArrayAdapter<ProductModel> {
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 removeItem(position);
             }
         });
 
+        btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (removeItemClickListener != null) {
+                    removeItemClickListener.onRemoveItemClick(position);
+                }
+            }
+        });
 
         return listitemView;
     }
 
     // Remove item from cart
-    private void removeItem(int position) {
+    public double removeItem(int position) {
         ProductModel itemToRemove = getItem(position);
         int productId = itemToRemove.getProductID();
         Log.d("CartGVAdapter", "Removing item: " + itemToRemove.getProductName() + ", ID: " + itemToRemove.getProductID());
         if (itemToRemove != null) {
-            // Remove do banco de dados
-            if (databaseHelper.deleteCartItem(itemToRemove.getProductID())) {
-                // Remove da lista exibida
-                remove(itemToRemove);
-                notifyDataSetChanged();
-            } else {
-                Toast.makeText(getContext(), "Falha ao remover o item.", Toast.LENGTH_SHORT).show();
-            }
+            double itemPrice = itemToRemove.getPrice();
+            remove(itemToRemove);
+            notifyDataSetChanged();
+            return itemPrice;
         }
+        return 0.0;
     }
 }

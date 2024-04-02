@@ -20,6 +20,7 @@ public class Cart_Activity extends AppCompatActivity{
     GridView cartItems;
     TextView txtCartTotal;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,7 @@ public class Cart_Activity extends AppCompatActivity{
         txtCartTotal = findViewById(R.id.txtCartTotal);
 
 
+
         ArrayList<ProductModel> cartItemList = databaseHelper.getAllCartItems();
 
         double cartTotal = 0.0;
@@ -46,6 +48,16 @@ public class Cart_Activity extends AppCompatActivity{
 
         cartItems.setAdapter(adapter);
 
+        adapter.setOnRemoveItemClickListener(new CartGVAdapter.OnRemoveItemClickListener() {
+            @Override
+            public void onRemoveItemClick(int position) {
+                double removedItemPrice = adapter.removeItem(position);
+                double cartTotal = Double.parseDouble(txtCartTotal.getText().toString().replace("Total: $", ""));
+                cartTotal -= removedItemPrice;
+                txtCartTotal.setText(String.format(Locale.US, "Total: $%.2f", cartTotal));
+            }
+        });
+
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +66,8 @@ public class Cart_Activity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+
 
         btnContinueShopping.setOnClickListener(new View.OnClickListener() {
             @Override

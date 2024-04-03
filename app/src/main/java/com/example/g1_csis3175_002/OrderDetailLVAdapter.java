@@ -86,10 +86,8 @@ public class OrderDetailLVAdapter extends ArrayAdapter<OrderModel> {
         TextView textShippingAddress = convertView.findViewById(R.id.tvShowItemName);
         TextView textOrderDate = convertView.findViewById(R.id.tvShowOrderDate);
         TextView textOrderStatus = convertView.findViewById(R.id.tvShowStatus);
+        TextView textItemName = convertView.findViewById(R.id.tvShowItemName);
         ImageView img = convertView.findViewById(R.id.imgItem);
-
-
-
 
         // Populate the data into the template view using the data object
         if (order != null) {
@@ -97,23 +95,17 @@ public class OrderDetailLVAdapter extends ArrayAdapter<OrderModel> {
             textShippingAddress.setText(" " + order.getShippingAddress());
             textOrderDate.setText(" "+ order.getDate());
             textOrderStatus.setText(" "+order.getStatus());
+            textItemName.setText(order.getItemNames());
            /* setDate(textOrderDate, order);
             setStatus(textOrderStatus, order);*/
-
             // Load image using Glide
             Glide.with(getContext())
                     .load(order.getProductImagePath()) // Assuming getOrder method returns the OrderModel object
                     .into(img);
-
-
-
-
         }
-
         // Return the completed view to render on screen
         return convertView;
     }
-
 
     private void setDate(TextView textView, OrderModel order) {
         textView.setText(" "+order.getDate());
@@ -122,17 +114,6 @@ public class OrderDetailLVAdapter extends ArrayAdapter<OrderModel> {
     // Set status for the order
     private void setStatus(TextView textView, OrderModel order) {
         textView.setText(" "+order.getStatus());
-    }
-
-    // Generate a random date that is more than 15 days ago
-    private String generateRandomDate() {
-        Calendar calendar = Calendar.getInstance();
-        Random random = new Random();
-        int daysAgo = random.nextInt(15) + 16; // Generate a number between 16 and 30
-        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo);
-        Date date = calendar.getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        return dateFormat.format(date);
     }
 
     // Calculate the status based on the order date
@@ -159,7 +140,4 @@ public class OrderDetailLVAdapter extends ArrayAdapter<OrderModel> {
         }
         return "";
     }
-
-
-
 }

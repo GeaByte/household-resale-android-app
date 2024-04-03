@@ -40,7 +40,8 @@
         android:hint="@string/edCardNum"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edNameOnCard" />
+        app:layout_constraintTop_toBottomOf="@+id/edNameOnCard"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/edCVV"
@@ -53,7 +54,8 @@
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edCardNum"
-        tools:inputType="number" />
+        tools:inputType="number"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/edExpDate"
@@ -65,7 +67,8 @@
         android:hint="@string/edExpDate"
         android:inputType="datetime|date"
         app:layout_constraintStart_toEndOf="@+id/edCVV"
-        app:layout_constraintTop_toBottomOf="@+id/edCardNum" />
+        app:layout_constraintTop_toBottomOf="@+id/edCardNum"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/edNameOnCard"
@@ -77,7 +80,8 @@
         android:hint="@string/edNameOnCard"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCardInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCardInfo"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btnPlaceOrder"

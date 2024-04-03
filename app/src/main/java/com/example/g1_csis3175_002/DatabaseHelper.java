@@ -777,19 +777,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cartItems;
     }
 
-    @SuppressLint("Range")
-    public int getProductIDFromOrder(int orderId) {
+    public ProductModel getOrder(int orderId) {
         SQLiteDatabase db = this.getReadableDatabase();
+        ProductModel pm = null;
         int productId = -1; // Valor padrão para indicar que não foi encontrado
-
-        Cursor cursor = db.rawQuery("SELECT " + T3COL5 + " FROM " + TABLE3_NAME +
-                " WHERE " + T3COL1 + " = ?", new String[]{String.valueOf(orderId)});
+        //need pname and address
+        Cursor cursor = db.rawQuery("SELECT " + TABLE2_NAME + "." + T2COL2 + ", " + TABLE3_NAME + "." + T3COL2 +
+                " FROM " + TABLE3_NAME + " INNER JOIN " + TABLE2_NAME +
+                " ON " + TABLE3_NAME + "." + T3COL5 + " = " + TABLE2_NAME + "." + T2COL1 +
+                " WHERE " + TABLE3_NAME + "." + T3COL1 + " = ?", new String[]{String.valueOf(orderId)});
         if (cursor.moveToFirst()) {
-            productId = cursor.getInt(cursor.getColumnIndex("ProductID"));
+            do{
+                String productName = cursor.getString(0);
+                String address = cursor.getString(1);
+                pm = new ProductModel();
+                pm.setProductName(productName);
+                pm.setPickupAddress(address);
+            }while(cursor.moveToNext());
         }
-
         cursor.close();
-        return productId;
+        return pm;
     }
 
     public boolean deleteCartItem(int itemToRemove) {

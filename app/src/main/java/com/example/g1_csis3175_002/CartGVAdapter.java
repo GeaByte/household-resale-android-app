@@ -53,7 +53,6 @@ public class CartGVAdapter extends ArrayAdapter<ProductModel> {
         productName.setText(cartItemList.getProductName());
         productPrice.setText(String.format(Locale.US, "$%.2f", cartItemList.getPrice()));
         int orderId = cartItemList.getOrderId();
-        int productId = databaseHelper.getProductIDFromOrder(orderId);
 
         Glide.with(getContext())
                 .load(cartItemList.getImagePath())
@@ -62,7 +61,6 @@ public class CartGVAdapter extends ArrayAdapter<ProductModel> {
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 removeItem(position);
             }
         });

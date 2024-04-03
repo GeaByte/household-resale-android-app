@@ -85,7 +85,6 @@ public class ItemDetailActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rdbtnPickup) {
                     //show pick up address
-
                     txtUserShipAd.setVisibility(View.VISIBLE);
                     txtPickupTitle.setVisibility(View.VISIBLE);
                     txtUserShipAd.setVisibility(View.VISIBLE);
@@ -143,7 +142,6 @@ public class ItemDetailActivity extends AppCompatActivity {
 //                    // Error occurred while inserting
 //                    Toast.makeText(ItemDetailActivity.this, "Failed to placed order", Toast.LENGTH_SHORT).show();
 //                }
-                int oderId = generateRandomOrderId();
                 addToCart(product, orderId);
             }
         });
@@ -172,11 +170,14 @@ public class ItemDetailActivity extends AppCompatActivity {
         String orderStatus = "Cart";
         orderId = generateRandomOrderId();
         String addressToUse;
+        String method;
         if (rdbtnPickup.isChecked()) {
             addressToUse = product.getPickupAddress();
+            method = "pickup";
         } else {
             String deliveryAddress = edDeliveryAd.getText().toString();
             addressToUse = deliveryAddress;
+            method = "delivery";
         }
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(ItemDetailActivity.this);
@@ -190,6 +191,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(ItemDetailActivity.this, Cart_Activity.class);
             intent.putExtra("ProductID", productId);
             intent.putExtra("OrderID", orderId);
+            intent.putExtra("method", method);
             startActivity(intent);
 
             cartItemList.add(product);
@@ -197,8 +199,6 @@ public class ItemDetailActivity extends AppCompatActivity {
             Toast.makeText(ItemDetailActivity.this, "Failed to add item to cart.", Toast.LENGTH_LONG).show();
             // Show an error message or handle the failure scenario
         }
-
-
 
         UserModel user = new UserModel();
         user.setUsername(username);
@@ -243,18 +243,5 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         // Format the random date as a string
         return dateFormat.format(randomDate);
-    }
-
-    // Method to generate a random order status
-    public static String generateRandomOrderStatus() {
-        // Define an array of possible order statuses
-        String[] statuses = {"Processing", "Shipping", "Delivered"};
-
-        // Generate a random index to select a status from the array
-        Random random = new Random();
-        int randomIndex = random.nextInt(statuses.length);
-
-        // Return the randomly selected order status
-        return statuses[randomIndex];
     }
 }

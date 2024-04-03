@@ -19,14 +19,9 @@ import java.util.Locale;
 import java.util.Random;
 
 public class Cart_Activity extends AppCompatActivity{
-
-
     DatabaseHelper databaseHelper;
     GridView cartItems;
     TextView txtCartTotal;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +31,9 @@ public class Cart_Activity extends AppCompatActivity{
         databaseHelper = new DatabaseHelper(this);
         cartItems = findViewById(R.id.cartGV);
         int orderId = getIntent().getIntExtra("OrderID", -1);
-        int productId = getIntent().getIntExtra("ProductID", -1);
         Button btnCheckOut= findViewById(R.id.btnCheckOut);
         Button btnContinueShopping = findViewById(R.id.btnContinueShopping);
         txtCartTotal = findViewById(R.id.txtCartTotal);
-
-
 
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(Cart_Activity.this);
@@ -75,10 +67,8 @@ public class Cart_Activity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(Cart_Activity.this, PlaceOrder_Activity.class);
                 intent.putExtra("OrderID", orderId);
+                intent.putExtra("method", getIntent().getStringExtra("method"));
                 startActivity(intent);
-
-
-
                 for(ProductModel item : cartItemList){
                     int orderID = item.getOrderId();
 
@@ -88,11 +78,6 @@ public class Cart_Activity extends AppCompatActivity{
                     String imagePath = item.getImagePath();
                     double price = item.getPrice();
                     String typeOfService = item.getTypeOfService();
-
-
-
-
-
 
                     boolean isSuccess = databaseHelper.insertOrder(productName, orderDate, status, imagePath,price, typeOfService );
                 }

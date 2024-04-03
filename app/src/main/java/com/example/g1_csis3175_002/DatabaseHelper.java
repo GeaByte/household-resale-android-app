@@ -536,17 +536,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ProductModel getProduct(long productId) {
         SQLiteDatabase db = this.getReadableDatabase();
         ProductModel product = null;
-        try (Cursor cursor = db.query(TABLE2_NAME, new String[] {T2COL2, T2COL3, T2COL4, T2COL8,
+        try (Cursor cursor = db.query(TABLE2_NAME, new String[] {T2COL2, T2COL3, T2COL4, T2COL7, T2COL8,
                 T2COL9, T2COL5}, T2COL1 + "=?", new String[] {String.valueOf(productId)}, null, null, null)) {
             if (cursor.moveToFirst()) {
                 String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
-                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
-                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
                 String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
-                String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
                 String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
+                String sellOrShare = cursor.getString(cursor.getColumnIndexOrThrow(T2COL7));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
+                String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
 
-                product = new ProductModel(productName, price, imagePath, description, seller, pickupAddress);
+                product = new ProductModel((int)productId, productName, price, imagePath, description, seller, pickupAddress, sellOrShare);
 
             }
         }

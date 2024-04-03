@@ -68,14 +68,16 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
         this.imagePath = imagePath;
     }
 
-    public ProductModel(String productName, double price, String imagePath,
-                        String description, String seller, String pickupAddress) {
+    public ProductModel(int productID, String productName, double price, String imagePath,
+                        String description, String seller, String pickupAddress, String sellOrShare) {
+        this.productID = productID;
         this.productName = productName;
         this.price = price;
         this.imagePath = imagePath;
         this.description = description;
         this.seller = seller;
         this.pickupAddress = pickupAddress;
+        this.deliveryOption = sellOrShare;
     }
 
     public String getUploadTime() {

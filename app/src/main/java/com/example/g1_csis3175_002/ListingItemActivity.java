@@ -45,9 +45,11 @@ public class ListingItemActivity extends AppCompatActivity{
     private RadioButton radioButtonSell;
     private RadioButton radioButtonShare;
     private LocationHelper locationHelper;
+    private DatabaseHelper db;
+    private ProductModel pm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DatabaseHelper db = new DatabaseHelper(ListingItemActivity.this);
+        db = new DatabaseHelper(ListingItemActivity.this);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_listing_item);
@@ -73,53 +75,26 @@ public class ListingItemActivity extends AppCompatActivity{
         //edit listing item
         boolean isEdit = getIntent().getBooleanExtra("edit",false);
         if(isEdit){
-            ProductModel pm = (ProductModel) getIntent().getSerializableExtra("product");
+            pm = (ProductModel) getIntent().getSerializableExtra("product");
             edtItemtitle.setText(pm.getProductName());
-            editTextDescription.setText(pm.getItemDetail());
+            editTextDescription.setText(pm.getDescription());
             editTextPrice.setText(String.valueOf(pm.getPrice()));
             editTextLocation.setText(pm.getPickupAddress());
 //            spinnerCategory.setSelection(pm.get);
-//            if (pm.getDeliveryOption().equals("Sell")) {
-//                radioButtonSell.setChecked(true);
-//            } else {
-//                radioButtonShare.setChecked(true);
-//            }
+            if (pm.getDeliveryOption().equals("Sell")) {
+                radioButtonSell.setChecked(true);
+            } else {
+                radioButtonShare.setChecked(true);
+            }
             btnList.setText(getString(R.string.btnUpdate));
+            btnList.setOnClickListener(this::onClickUpdate);
+        }else {
             btnList.setOnClickListener(new View.OnClickListener() {
-                String productName = edtItemtitle.getText().toString();
-                String description = editTextDescription.getText().toString();
-                String price = editTextPrice.getText().toString();
-                String location = editTextLocation.getText().toString();
-                String category = spinnerCategory.getSelectedItem().toString();
-                String sellOrShare = radioButtonSell.isChecked() ? "Sell" : "Share";
-                String imagePath = saveImageToInternalStorage(imgView);
                 @Override
                 public void onClick(View v) {
-                    db.updateProduct(pm.getProductID(), productName, description, price, location, category, sellOrShare, imagePath);
-                    startActivity(new Intent(ListingItemActivity.this, HomeActivity.class));
-                }
-            });
-        }//end of edit listing item
-
-
-        radioGroupSellShare.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radioButtonSell) {
-                    editTextPrice.setEnabled(true);
-                } else if (checkedId == R.id.radioButtonShare) {
-                    editTextPrice.setEnabled(false);
-                    editTextPrice.setText("0");
-                }
-            }
-        });
-
-        btnList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences sharedPref =
-                        PreferenceManager.getDefaultSharedPreferences(ListingItemActivity.this);
-                String seller = sharedPref.getString("username", "");
+                    SharedPreferences sharedPref =
+                            PreferenceManager.getDefaultSharedPreferences(ListingItemActivity.this);
+                    String seller = sharedPref.getString("username", "");
 //                String pickupAddress = db.getPickupAddressByUsername(seller);
 
 //                if (pickupAddress != null) {
@@ -139,15 +114,30 @@ public class ListingItemActivity extends AppCompatActivity{
 
                     // Insert data into the database
                     boolean inserted = db.addProduct(productId, productName, description, price, pickupAddress,
-                        category, sellOrShare, imagePath, seller, (float)latitude, (float)longitude);
+                            category, sellOrShare, imagePath, seller, (float) latitude, (float) longitude);
                     if (inserted) {
                         Toast.makeText(ListingItemActivity.this, "Item listed successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ListingItemActivity.this, HomeActivity.class));
                     } else {
                         Toast.makeText(ListingItemActivity.this, "Failed to list item", Toast.LENGTH_SHORT).show();
                     }
+                }
+            });
+        }//end of edit listing item
+
+        radioGroupSellShare.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.radioButtonSell) {
+                    editTextPrice.setEnabled(true);
+                } else if (checkedId == R.id.radioButtonShare) {
+                    editTextPrice.setEnabled(false);
+                    editTextPrice.setText("0");
+                }
             }
         });
+
+
 
         btnAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +145,18 @@ public class ListingItemActivity extends AppCompatActivity{
                 openFileChooser();
             }
         });
+    }
+
+    private void onClickUpdate(View view){
+        String productName = edtItemtitle.getText().toString();
+        String description = editTextDescription.getText().toString();
+        String price = editTextPrice.getText().toString();
+        String location = editTextLocation.getText().toString();
+        String category = spinnerCategory.getSelectedItem().toString();
+        String sellOrShare = radioButtonSell.isChecked() ? "Sell" : "Share";
+        String imagePath = saveImageToInternalStorage(imgView);
+        db.updateProduct(pm.getProductID(), productName, description, price, location, category, sellOrShare, imagePath);
+        startActivity(new Intent(ListingItemActivity.this, HomeActivity.class));
     }
     private void openFileChooser() {
         Intent intent = new Intent();

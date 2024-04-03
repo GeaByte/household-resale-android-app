@@ -113,6 +113,14 @@ public class ListingItemActivity extends AppCompatActivity{
                     double latitude = coordinates.get(0);
                     double longitude = coordinates.get(1);
 
+                    // Code to store product and seller info in the seller table
+//                    boolean sellerSellShareProductSuccess = db.sellerSellShareProduct(seller, productId);
+//                    if (sellerSellShareProductSuccess) {
+//                        Log.d("ItemDetailActivity", "Seller association added successfully.");
+//                    } else {
+//                        Log.e("ItemDetailActivity", "Failed to add seller association.");
+//                    }
+
                     // Insert data into the database
                     boolean inserted = db.addProduct(productId, productName, description, price, pickupAddress,
                             category, sellOrShare, imagePath, seller, (float) latitude, (float) longitude);

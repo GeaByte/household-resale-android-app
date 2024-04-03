@@ -31,6 +31,8 @@ public class HomeActivity extends AppCompatActivity {
         Button logout = findViewById(R.id.btnLogout);
         Button viewEditProfile = findViewById(R.id.btnEditProfile);
         Button viewSellerItem = findViewById(R.id.btnViewSellingItem);
+        Button btnShoppingCart = findViewById(R.id.btnShoppingCart);
+        btnShoppingCart.setOnClickListener(this::onClickShoppingCart);
 
         viewEditProfile.setOnClickListener(this::onClickViewEditProfile);
         viewOrderHistory.setOnClickListener(this::onClickViewOrderHistory);
@@ -81,5 +83,9 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onCLickViewSellingItem(View view){
         startActivity(new Intent(HomeActivity.this, ViewSellingItemActivity.class));
+    }
+
+    public void onClickShoppingCart(View view){
+        startActivity(new Intent(HomeActivity.this, Cart_Activity.class));
     }
 }

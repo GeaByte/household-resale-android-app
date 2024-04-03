@@ -44,6 +44,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T2COL11 = "Latitude";
     final static String T2COL12 = "Longitude";
 
+
+    final static String TABLE10_NAME = "Cart";
+    //serial number
+    final static String T10COL1 = "ID";
+    final static String T10COL2 = "Buyer";
+    final static String T10COL3 = "ProductId";
+    //pick up or delivery
+    final static String T10COL4 = "GetWay";
+
+    final static String TABLE9_NAME = "OrderDetail";
+    final static String T9COL1 = "ID";
+    final static String T9COL2 = "OrderID";
+    final static String T9COL3 = "ProductId";
+    final static String T9COL4 = "GetWay";
+
+    final static String TABLE11_NAME = "uOrder";
+    final static String T11COL1 = "OrderID";
+    final static String T11COL2 = "Buyer";
+    final static String T11COL3 = "OrderDate";
+    //processing XXX XXX
+    final static String T11COL4 = "OrderStatus";
+
+
     final static String TABLE3_NAME = "UserOrder";
     final static String T3COL1 = "OrderID";
     final static String T3COL2 = "Address";
@@ -76,7 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String T8COL7 = "TypeService";
 
 
-    final static int DATABASE_VERSION = 1;
+    final static int DATABASE_VERSION = 5;
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = getWritableDatabase();
@@ -111,6 +134,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 T2COL12 + " FLOAT," +
                 "FOREIGN KEY (" + T2COL9 + ") REFERENCES " + TABLE1_NAME + "(" +
                 T1COL1 + ")" + ");";
+
+        String queryTable10 = "CREATE TABLE " + TABLE10_NAME + "(" +
+                T10COL1 + " INTEGER PRIMARY KEY," +
+                T10COL2 + " TEXT," +
+                T10COL3 + " INTEGER," +
+                T10COL4 + " TEXT," +
+                "FOREIGN KEY (" + T10COL2+ ") REFERENCES " + TABLE1_NAME + "(" +
+                T1COL1 + ")," +
+                "FOREIGN KEY(" + T10COL3 + ") REFERENCES " + TABLE2_NAME + "(" +
+                T2COL1 + ")" + ");";
+
+        String queryTable9 = "CREATE TABLE IF NOT EXISTS " + TABLE9_NAME + "(" +
+                T9COL1 + " INTEGER PRIMARY KEY," +
+                T9COL2 + " INTEGER," +
+                T9COL3 + " INTEGER," +
+                T9COL4 + " TEXT," +
+                "FOREIGN KEY (" + T9COL2+ ") REFERENCES " + TABLE3_NAME + "(" +
+                T3COL1 + ")," +
+                "FOREIGN KEY(" + T9COL3 + ") REFERENCES " + TABLE2_NAME + "(" +
+                T2COL1 + ")" + ");";
+
+        String queryTable11 = "CREATE TABLE IF NOT EXISTS " + TABLE11_NAME + "(" +
+                T11COL1 + " INTEGER PRIMARY KEY," +
+                T11COL2 + " TEXT," +
+                T11COL3 + " TEXT," +
+                T11COL4 + " TEXT," +
+                "FOREIGN KEY(" + T11COL2 + ") REFERENCES " + TABLE1_NAME + "(" +
+                T1COL1 + ")" + ");";
+
 
         String queryTable3 = "CREATE TABLE " + TABLE3_NAME + "(" +
                 T3COL1 + " INTEGER PRIMARY KEY," +
@@ -178,6 +230,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(queryTable6);
         sqLiteDatabase.execSQL(queryTable7);
         sqLiteDatabase.execSQL(queryTable8);
+        sqLiteDatabase.execSQL(queryTable9);
+        sqLiteDatabase.execSQL(queryTable10);
+        sqLiteDatabase.execSQL(queryTable11);
 
 
     }
@@ -192,6 +247,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE8_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE9_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE10_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE11_NAME);
         onCreate(sqLiteDatabase);
     }
 
@@ -310,6 +368,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return user;
     }
+
+    public boolean addOrder(String userName, String orderDate, String orderStatus) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues orderValues = new ContentValues();
+        sqLiteDatabase.beginTransaction();
+        long orderId = -1;
+        Cursor cartItems = null;
+
+        try {
+            orderValues.put(T11COL2, userName);
+            orderValues.put(T11COL3, orderDate);
+            orderValues.put(T11COL4, orderStatus);
+            orderId = sqLiteDatabase.insert(TABLE11_NAME, null, orderValues);
+
+            if (orderId == -1) {
+                // 如果订单插入失败，则直接返回 false
+                Log.e("addOrder", "Order insertion failed");
+                return false;
+            }
+
+            cartItems = sqLiteDatabase.query(TABLE10_NAME, new String[]{T10COL1, T10COL3, T10COL4},
+                    T10COL2 + "=?", new String[]{userName}, null, null, null);
+
+            if (cartItems != null && cartItems.moveToFirst()) {
+                do {
+                    ContentValues orderDetailValues = new ContentValues();
+                    orderDetailValues.put(T9COL2, orderId);
+                    orderDetailValues.put(T9COL3, cartItems.getInt(cartItems.getColumnIndexOrThrow(T10COL3)));
+                    orderDetailValues.put(T9COL4, cartItems.getString(cartItems.getColumnIndexOrThrow(T10COL4)));
+
+                    if (sqLiteDatabase.insert(TABLE9_NAME, null, orderDetailValues) == -1) {
+                        Log.e("addOrder", "OrderDetail insertion failed");
+                        return false;  // 如果插入失败，回滚
+                    }
+
+                    if (sqLiteDatabase.delete(TABLE10_NAME, T10COL1 + "=?",
+                            new String[]{cartItems.getString(cartItems.getColumnIndexOrThrow(T10COL1))}) == 0) {
+                        Log.e("addOrder", "Cart item deletion failed");
+                        return false;  // 如果删除失败，回滚
+                    }
+                } while (cartItems.moveToNext());
+            }
+
+            sqLiteDatabase.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e("addOrder", "Error in adding order", e);
+            return false;
+        } finally {
+            if (cartItems != null) {
+                cartItems.close();
+            }
+            sqLiteDatabase.endTransaction();
+        }
+
+        return true;
+    }
+
 
     // get order details by order ID
     public Cursor getOrderDetails(int orderId) {
@@ -586,19 +701,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sqLiteDatabase.query(TABLE2_NAME, columns, selection, selectionArgs, null, null, null);
     }
 
-    public boolean addOrder(int oId, String address, String date, String status, int productId, String userName){
+    public boolean addCart(String buyer,int productId,String getWay){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(T3COL1,oId);
-        values.put(T3COL2, address);
-        values.put(T3COL3,date);
-        values.put(T3COL4, status);
-        values.put(T3COL5, productId);
-        values.put(T3COL6, userName);
+        values.put(T10COL2, buyer);
+        values.put(T10COL3, productId);
+        values.put(T10COL4, getWay);
 
-        long r = sqLiteDatabase.insert(TABLE3_NAME, null, values);
-
-
+        long r = sqLiteDatabase.insert(TABLE10_NAME, null, values);
         return r != -1;
     }
 
@@ -747,11 +857,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String username = user.getUsername();
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT Product." + T2COL1 + ", Product." + T2COL2 + ", Product." + T2COL4 +
-                " FROM " + TABLE3_NAME +
+                " FROM " + TABLE10_NAME +
                 " INNER JOIN " + TABLE2_NAME +
-                " ON " + TABLE3_NAME + "." + T3COL5 + " = " + TABLE2_NAME + "." + T2COL1 +
-                " WHERE " + T3COL4 + " = 'Cart'"+
-                " AND " + TABLE3_NAME + "." + T3COL6 + " = ?";
+                " ON " + TABLE10_NAME + "." + T10COL3 + " = " + TABLE2_NAME + "." + T2COL1 +
+                " WHERE " + TABLE10_NAME + "." + T10COL2 + " = ?";
 
 //        "SELECT Product.ProductId, Product.productName, Product.Price " +
 //                "FROM Product " +
@@ -841,6 +950,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE8_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE9_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE10_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE11_NAME);
 
         onCreate(db);
         insertFakeData(db);

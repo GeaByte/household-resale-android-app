@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class Cart_Activity extends AppCompatActivity{
@@ -65,9 +68,23 @@ public class Cart_Activity extends AppCompatActivity{
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Cart_Activity.this, PlaceOrder_Activity.class);
-                intent.putExtra("OrderID", orderId);
-                startActivity(intent);
+                DatabaseHelper databaseHelper = new DatabaseHelper(Cart_Activity.this);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String orderDate = dateFormat.format(new Date());
+
+
+                String orderStatus = "Pending";
+
+                boolean success = databaseHelper.addOrder(username, orderDate, orderStatus);
+
+                if (success) {
+                    Intent intent = new Intent(Cart_Activity.this, PlaceOrder_Activity.class);
+                    intent.putExtra("OrderID", orderId);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(Cart_Activity.this, "Error adding order", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -169,20 +169,19 @@ public class ItemDetailActivity extends AppCompatActivity {
         // Get the product ID and other necessary details
         Log.d("ItemDetailActivity", "ProductId addToCart: " + product.getProductID());
         String orderDate = product.getCurrentDate();
-        String orderStatus = "Cart";
+//        String orderStatus = "Cart";
         orderId = generateRandomOrderId();
-        String addressToUse;
+        String getWay;
         if (rdbtnPickup.isChecked()) {
-            addressToUse = product.getPickupAddress();
+            getWay = "pick up";
         } else {
             String deliveryAddress = edDeliveryAd.getText().toString();
-            addressToUse = deliveryAddress;
+            getWay = "delivery";
         }
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(ItemDetailActivity.this);
         String username = sharedPref.getString("username", "");
-        boolean success = databaseHelper.addOrder(orderId, addressToUse, orderDate,
-                orderStatus, product.getProductID(), username);
+        boolean success = databaseHelper.addCart(username,product.getProductID(), getWay);
         if (success) {
             Toast.makeText(ItemDetailActivity.this, "Item added to cart.", Toast.LENGTH_LONG).show();
             // Show a success message or update UI accordingly

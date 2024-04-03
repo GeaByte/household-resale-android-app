@@ -115,14 +115,6 @@ public class ListingItemActivity extends AppCompatActivity{
                     } else {
                         Toast.makeText(ListingItemActivity.this, "Failed to list item", Toast.LENGTH_SHORT).show();
                     }
-
-                        // Code to store product and seller info in the seller table
-//                    boolean sellerSellShareProductSuccess = db.sellerSellShareProduct(seller, productId);
-//                    if (sellerSellShareProductSuccess) {
-//                        Log.d("ItemDetailActivity", "Seller association added successfully.");
-//                    } else {
-//                        Log.e("ItemDetailActivity", "Failed to add seller association.");
-//                    }
             }
         });
 

@@ -110,7 +110,6 @@ public class ListingItemActivity extends AppCompatActivity{
                     // Save the image to the filesystem
                     String imagePath = saveImageToInternalStorage(imgView);
                     String pickupAddress = editTextLocation.getText().toString();
-                    int productId = generateRandomProductId();
                     ArrayList<Double> coordinates = locationHelper.convertToGeo(pickupAddress);
                     double latitude = coordinates.get(0);
                     double longitude = coordinates.get(1);
@@ -124,7 +123,7 @@ public class ListingItemActivity extends AppCompatActivity{
 //                    }
 
                     // Insert data into the database
-                    boolean inserted = db.addProduct(productId, productName, description, price, pickupAddress,
+                    boolean inserted = db.addProduct(productName, description, price, pickupAddress,
                             category, sellOrShare, imagePath, seller, (float) latitude, (float) longitude);
                     if (inserted) {
                         Toast.makeText(ListingItemActivity.this, "Item listed successfully", Toast.LENGTH_SHORT).show();

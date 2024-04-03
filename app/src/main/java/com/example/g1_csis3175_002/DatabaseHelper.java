@@ -502,12 +502,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //2-Product
     // addProduct
-    public boolean addProduct(int productId, String productName, String description, String price, String pickupAddress,
+    public boolean addProduct(String productName, String description, String price, String pickupAddress,
                            String category, String sellOrShare, String imagePath, String seller, float latitude, float longitude) {
         try{
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(T2COL1, productId);
             values.put(T2COL2, productName);
             values.put(T2COL3, description);
             values.put(T2COL4, price);

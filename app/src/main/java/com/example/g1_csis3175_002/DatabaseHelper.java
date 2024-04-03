@@ -344,7 +344,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(T8COL3));
                     String status = cursor.getString(cursor.getColumnIndexOrThrow(T8COL4));
                     String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T8COL5));
-                    String price = cursor.getString(cursor.getColumnIndexOrThrow(T8COL6));
+                    double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T8COL6));
                     String typeService = cursor.getString(cursor.getColumnIndexOrThrow(T8COL7));
 
                     // Create an OrderModel object and add it to the list
@@ -369,7 +369,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public boolean insertOrder(String shippingAddress, String orderDate, String status, String imagePath, String price, String typeOfService) {
+    public boolean insertOrder( String shippingAddress, String orderDate, String status, String imagePath, double price, String typeOfService) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -445,7 +445,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String orderDate = cursor.getString(cursor.getColumnIndexOrThrow(T8COL3));
             String orderStatus = cursor.getString(cursor.getColumnIndexOrThrow(T8COL4));
             String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T8COL5));
-            String price = cursor.getString(cursor.getColumnIndexOrThrow(T8COL6));
+            double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T8COL6));
             String typeService = cursor.getString(cursor.getColumnIndexOrThrow(T8COL7));
 
             // Create the OrderModel object
@@ -746,7 +746,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         UserModel user = new UserModel();
         String username = user.getUsername();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT Product." + T2COL1 + ", Product." + T2COL2 + ", Product." + T2COL4 +
+        String query = "SELECT Product." + T2COL1 + ", Product." + T2COL2 + ", Product." + T2COL4 + ", Product." + T2COL8 + ", Product." + T2COL7 +
                 " FROM " + TABLE3_NAME +
                 " INNER JOIN " + TABLE2_NAME +
                 " ON " + TABLE3_NAME + "." + T3COL5 + " = " + TABLE2_NAME + "." + T2COL1 +
@@ -767,7 +767,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 @SuppressLint("Range") String productName = cursor.getString(cursor.getColumnIndex(T2COL2));
                 @SuppressLint("Range") int productId = cursor.getInt(cursor.getColumnIndex(T2COL1));
                 @SuppressLint("Range") double price = cursor.getDouble(cursor.getColumnIndex(T2COL4));
-                ProductModel product = new ProductModel(productName, productId, price);
+                @SuppressLint("Range") String imagePath = cursor.getString(cursor.getColumnIndex(T2COL8));
+                @SuppressLint("Range") String sellOrShare = cursor.getString(cursor.getColumnIndex(T2COL7));
+                ProductModel product = new ProductModel(productName, productId, price, imagePath,sellOrShare );
                 cartItems.add(product);
                 Log.d("DatabaseHelper", "Item added to cart: " + productName);
                 Log.d("DatabaseHelper", "ProductName: " + productName + ", Price: " + price);

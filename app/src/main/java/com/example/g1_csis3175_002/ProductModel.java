@@ -29,6 +29,8 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     private double longitude;
     private Double distance;
 
+    private String typeOfService;
+
     private static final long serialVersionUID = 1L;
 
     public ProductModel(int productID, String productName, double price,
@@ -60,9 +62,9 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     }
 
     // Constructor
-    public ProductModel(int orderId, String itemDetail, String deliveryOption, String orderStatus, String imagePath) {
+    public ProductModel(int orderId, String productName, String deliveryOption, String orderStatus, String imagePath) {
         this.orderId = orderId;
-        this.itemDetail = itemDetail;
+        this.productName= productName;
         this.deliveryOption = deliveryOption;
         this.orderStatus = orderStatus;
         this.imagePath = imagePath;
@@ -91,6 +93,13 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
         this.productName = productName;
         this.price = price;
     }
+    public ProductModel(String productName, int productID, double price, String imagePath,String typeOfService){
+        this.productID = productID;
+        this.productName = productName;
+        this.price = price;
+        this.imagePath = imagePath;
+        this.typeOfService = typeOfService;
+    }
 
     public ProductModel() {
 
@@ -99,6 +108,7 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     public void setPrice(double price) {
         this.price = price;
     }
+    public void setTypeOfService(String typeOfService){this.typeOfService=typeOfService;}
 
     public double getPrice() {
         return price;
@@ -120,6 +130,7 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
         return productID;
     }
     public void setProductID(int productID) { this.productID = productID; }
+    public String getTypeOfService(){return typeOfService;}
 
     public int getImgid() {
         return imgid;

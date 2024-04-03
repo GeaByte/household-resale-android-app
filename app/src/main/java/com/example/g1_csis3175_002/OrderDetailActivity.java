@@ -43,10 +43,12 @@ public class OrderDetailActivity extends AppCompatActivity {
         // Get OrderModel object corresponding to the order ID
         OrderModel order = dbHelper.getOrderById(orderId);
 
+
+
         // Populate views with order details
         if (order != null) {
             orderID.setText(String.valueOf(order.getId()));
-            price.setText(order.getPrice());
+            price.setText(String.valueOf(order.getPrice()));
             orderDate.setText(order.getDate());
             status.setText(order.getStatus());
             typeOfService.setText(order.getTypeOfService());

@@ -10,10 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 public class Cart_Activity extends AppCompatActivity{
 
@@ -21,6 +24,8 @@ public class Cart_Activity extends AppCompatActivity{
     DatabaseHelper databaseHelper;
     GridView cartItems;
     TextView txtCartTotal;
+
+
 
 
     @Override
@@ -35,6 +40,7 @@ public class Cart_Activity extends AppCompatActivity{
         Button btnCheckOut= findViewById(R.id.btnCheckOut);
         Button btnContinueShopping = findViewById(R.id.btnContinueShopping);
         txtCartTotal = findViewById(R.id.txtCartTotal);
+
 
 
         SharedPreferences sharedPref =
@@ -59,15 +65,38 @@ public class Cart_Activity extends AppCompatActivity{
                 double cartTotal = Double.parseDouble(txtCartTotal.getText().toString().replace("Total: $", ""));
                 cartTotal -= removedItemPrice;
                 txtCartTotal.setText(String.format(Locale.US, "Total: $%.2f", cartTotal));
+
             }
         });
 
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Cart_Activity.this, PlaceOrder_Activity.class);
                 intent.putExtra("OrderID", orderId);
                 startActivity(intent);
+
+
+
+                for(ProductModel item : cartItemList){
+                    int orderID = item.getOrderId();
+
+                    String productName = item.getProductName();
+                    String orderDate = item.getCurrentDate();
+                    String status = generateRandomOrderStatus();
+                    String imagePath = item.getImagePath();
+                    double price = item.getPrice();
+                    String typeOfService = item.getTypeOfService();
+
+
+
+
+
+
+                    boolean isSuccess = databaseHelper.insertOrder(productName, orderDate, status, imagePath,price, typeOfService );
+                }
+
             }
         });
 
@@ -81,5 +110,18 @@ public class Cart_Activity extends AppCompatActivity{
         });
 
     }
+    public static String generateRandomOrderStatus() {
+        // Define an array of possible order statuses
+        String[] statuses = {"Processing", "Shipping", "Delivered"};
+
+        // Generate a random index to select a status from the array
+        Random random = new Random();
+        int randomIndex = random.nextInt(statuses.length);
+
+        // Return the randomly selected order status
+        return statuses[randomIndex];
+    }
+
+
 
 }

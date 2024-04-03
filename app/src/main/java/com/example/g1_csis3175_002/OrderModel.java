@@ -11,7 +11,7 @@ public class OrderModel {
     private String shippingAddress;
 
     private String productImagePath;
-    private String price;
+    private double price;
     private String typeOfService;
 
 
@@ -24,9 +24,9 @@ public class OrderModel {
         this.status = status;
     }
 
-    public OrderModel(int id, String shippingAddress, String date, String status,String productImagePath,String price, String typeOfService ) {
+    public OrderModel(int id, String productName, String date, String status,String productImagePath,double price, String typeOfService ) {
         this.id = id;
-        this.itemNames = itemNames;
+        this.itemNames = productName;
         this.date = date;
         this.status = status;
         this.shippingAddress = shippingAddress;
@@ -73,10 +73,10 @@ public class OrderModel {
         return productImagePath;
     }
 
-    public String getPrice(){return price;}
+    public double getPrice(){return price;}
     public String getTypeOfService(){return typeOfService;}
 
-    public void setPrice(String price){this.price = price;}
+    public void setPrice(double price){this.price = price;}
     public void setTypeOfService(String typeOfService){this.typeOfService=typeOfService;}
 
     public void setItemID(int itemID){this.itemID = itemID;

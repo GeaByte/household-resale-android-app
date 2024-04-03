@@ -655,6 +655,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return productList;
     }
 
+    public ArrayList<ProductModel> getUserProducts(String userName) {
+        ArrayList<ProductModel> productList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                T2COL1,
+                T2COL2,
+                T2COL3,
+                T2COL4,
+                T2COL5,
+                T2COL8,
+                T2COL9,
+                T2COL10,
+                T2COL11,
+                T2COL12,
+        };
+
+        String selection = T2COL9 + " = ?";
+        String[] selectionArgs = { userName };
+
+        Cursor cursor = db.query(
+                TABLE2_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int productId = cursor.getInt(cursor.getColumnIndexOrThrow(T2COL1));
+                String productName = cursor.getString(cursor.getColumnIndexOrThrow(T2COL2));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(T2COL3));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(T2COL4));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
+                String seller = cursor.getString(cursor.getColumnIndexOrThrow(T2COL9));
+                String pickupAddress = cursor.getString(cursor.getColumnIndexOrThrow(T2COL5));
+                String uploadTime = cursor.getString(cursor.getColumnIndexOrThrow(T2COL10));
+                double latitude = cursor.getFloat(cursor.getColumnIndexOrThrow(T2COL11));
+                double longitude = cursor.getFloat(cursor.getColumnIndexOrThrow(T2COL12));
+
+                ProductModel product = new ProductModel(productId, productName, price, imagePath,
+                        description, seller, pickupAddress, uploadTime, latitude, longitude);
+                productList.add(product);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return productList;
+    }
+
     public ArrayList<ProductModel> searchProducts(String query) {
         ArrayList<ProductModel> productList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();

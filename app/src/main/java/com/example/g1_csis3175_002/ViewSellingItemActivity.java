@@ -3,7 +3,9 @@ package com.example.g1_csis3175_002;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,7 +29,10 @@ public class ViewSellingItemActivity extends AppCompatActivity {
         back.setOnClickListener(this::onClickBack);
 
         //get selling product data
-        list = db.getAllProducts();
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(ViewSellingItemActivity.this);
+        String username = sharedPref.getString("username", "");
+        list = db.getUserProducts(username);
         //set listview
         ArrayAdapter<ProductModel> productModelArrayAdapter = new SellingItemLVAdapter(this, list);
         lv.setAdapter(productModelArrayAdapter);

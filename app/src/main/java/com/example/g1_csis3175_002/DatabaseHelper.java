@@ -934,6 +934,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             productValues.put(T2COL6, "Category" + i);
             productValues.put(T2COL7, i % 2 == 0 ? "Sell" : "Share");
             productValues.put(T2COL8, "/data/data/com.example.g1_csis3175_002/app_Images/" + i + ".jpg");
+            productValues.put(T2COL9, "username" + i);
             productValues.put(T2COL11, "42");
             productValues.put(T2COL12, "-122");
             db.insert(TABLE2_NAME, null, productValues);

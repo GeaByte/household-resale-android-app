@@ -71,8 +71,10 @@ public class ListingItemActivity extends AppCompatActivity{
         imgView = findViewById(R.id.imgView);
         Button btnAddImage = findViewById(R.id.btnAddImage);
         Button btnList = findViewById(R.id.btnList);
+        Button btnBack = findViewById(R.id.btnListingBack);
         locationHelper = new LocationHelper(this);
 
+        btnBack.setOnClickListener(this::onClickBack);
         //edit listing item
         boolean isEdit = getIntent().getBooleanExtra("edit",false);
         if(isEdit){
@@ -226,5 +228,9 @@ public class ListingItemActivity extends AppCompatActivity{
         int productId = random.nextInt(9000) + 1000;
 
         return productId;
+    }
+
+    public void onClickBack(View view){
+        startActivity(new Intent(ListingItemActivity.this, HomeActivity.class));
     }
 }

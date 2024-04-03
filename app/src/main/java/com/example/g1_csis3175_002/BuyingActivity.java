@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -36,6 +37,8 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
         adapter = new ProductGVAdapter(BuyingActivity.this, productModelList);
         productGV.setAdapter(adapter);
         SearchView searchView = findViewById(R.id.searchView);
+        Button btnBack = findViewById(R.id.btnBuyingBack);
+        btnBack.setOnClickListener(this::onClickBack);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             //is called when user submits the query (press enter)
             @Override
@@ -119,5 +122,9 @@ public class BuyingActivity extends AppCompatActivity implements LocationHelper.
             latitude = location.getLatitude();
             longitude = location.getLongitude();
         }
+    }
+
+    public void onClickBack(View view){
+        startActivity(new Intent(BuyingActivity.this, HomeActivity.class));
     }
 }

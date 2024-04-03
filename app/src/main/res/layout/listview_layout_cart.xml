@@ -23,27 +23,30 @@
 
             <ImageView
                 android:id="@+id/imgProductCart"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
+                android:layout_width="150dp"
+                android:layout_height="180dp"
                 android:contentDescription="@string/imgProductDescription"
                 tools:ignore="ImageContrastCheck"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/txtProductCart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtPriceCart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center" />
 
             <Button
                 android:id="@+id/btnRemove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_input"
                 android:backgroundTint="#E91E63"
                 android:text="@string/btnRemove"
                 tools:ignore="TextContrastCheck" />

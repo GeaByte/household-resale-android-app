@@ -58,9 +58,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final static String TABLE5_NAME = "Buyer_buys_Product";
     final static String T5COL1 = "Username";
     final static String T5COL2 = "ProductId";
-    final static String TABLE6_NAME = "Seller_SellsOrShares_Product";
+    final static String TABLE6_NAME = "Seller_sells_Product";
     final static String T6COL1 = "Username";
     final static String T6COL2 = "ProductId";
+    final static String T6COL3 = "PriceDiscount";
+    final static String TABLE7_NAME = "Seller_shares_Product";
+    final static String T7COL1 = "Username";
+    final static String T7COL2 = "ProductId";
 
     final static String TABLE8_NAME = "OrderStatus";
     final static String T8COL1 = "OrderID";
@@ -138,10 +142,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String queryTable6 = "CREATE TABLE " + TABLE6_NAME + "(" +
                 T6COL1 + " TEXT," +
                 T6COL2 + " INTEGER," +
+                T6COL3 + " REAL," +
                 "PRIMARY KEY (" + T6COL1 + ", " + T6COL2 + ")," +
                 "FOREIGN KEY (" + T6COL1+ ") REFERENCES " + TABLE1_NAME + "(" +
                 T1COL1 + ")," +
                 "FOREIGN KEY(" + T6COL2 + ") REFERENCES " + TABLE2_NAME + "(" +
+                T2COL1 + ")" + ");";
+
+        String queryTable7 = "CREATE TABLE " + TABLE7_NAME + "(" +
+                T7COL1 + " TEXT," +
+                T7COL2 + " INTEGER," +
+                "PRIMARY KEY (" + T7COL1 + ", " + T7COL2 + ")," +
+                "FOREIGN KEY (" + T7COL1+ ") REFERENCES " + TABLE1_NAME + "(" +
+                T1COL1 + ")," +
+                "FOREIGN KEY(" + T7COL2 + ") REFERENCES " + TABLE2_NAME + "(" +
                 T2COL1 + ")" + ");";
 
         String queryTable8 = "CREATE TABLE " + TABLE8_NAME + "(" +
@@ -162,6 +176,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(queryTable4);
         sqLiteDatabase.execSQL(queryTable5);
         sqLiteDatabase.execSQL(queryTable6);
+        sqLiteDatabase.execSQL(queryTable7);
         sqLiteDatabase.execSQL(queryTable8);
 
 
@@ -175,6 +190,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE4_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE5_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE8_NAME);
         onCreate(sqLiteDatabase);
     }
@@ -728,10 +744,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<ProductModel> getAllCartItems(String userName) {
         ArrayList<ProductModel> cartItems = new ArrayList<>();
-        UserModel user = new UserModel();
-        String username = user.getUsername();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT Product." + T2COL1 + ", Product." + T2COL2 + ", Product." + T2COL4 +
+        String query = "SELECT Product." + T2COL1 + ", Product." + T2COL2 + ", Product." + T2COL4 + ", Product." + T2COL8 +
                 " FROM " + TABLE3_NAME +
                 " INNER JOIN " + TABLE2_NAME +
                 " ON " + TABLE3_NAME + "." + T3COL5 + " = " + TABLE2_NAME + "." + T2COL1 +
@@ -746,13 +760,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, new String[] {userName});
 
-
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 @SuppressLint("Range") String productName = cursor.getString(cursor.getColumnIndex(T2COL2));
                 @SuppressLint("Range") int productId = cursor.getInt(cursor.getColumnIndex(T2COL1));
                 @SuppressLint("Range") double price = cursor.getDouble(cursor.getColumnIndex(T2COL4));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(T2COL8));
                 ProductModel product = new ProductModel(productName, productId, price);
+                product.setImagePath(imagePath);
                 cartItems.add(product);
                 Log.d("DatabaseHelper", "Item added to cart: " + productName);
                 Log.d("DatabaseHelper", "ProductName: " + productName + ", Price: " + price);
@@ -817,16 +832,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean sellerSellShareProductSuccess(String username, int productId){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(T6COL1, username);
-        values.put(T6COL2, productId);
-
-        long result = db.insert(TABLE6_NAME, null, values);
-        return result != -1;
-    }
-
     public void resetDatabase(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE1_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE2_NAME);
@@ -834,6 +839,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE4_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE5_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE6_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE7_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE8_NAME);
 
         onCreate(db);

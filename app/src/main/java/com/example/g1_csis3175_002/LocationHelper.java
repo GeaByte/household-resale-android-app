@@ -96,7 +96,24 @@ public class LocationHelper {
         }
         return null;
     }
-
-    // Method to calculate distance between two points using Haversine formula
+    /*
+//                    move message part to placing order
+//                     */
+//                    //set up notification title and message
+//                    notificationMessage = new Data.Builder();
+//                    if(rdbtnPickup.isChecked()){
+//                        notificationMessage.putString("title", "Your order is ready for pick up");
+//                        notificationMessage.putString("content", String.format("%s is ready for pick up at %s", productName, product.getPickupAddress()));
+//                    }else{
+//                        notificationMessage.putString("title", "Your order is ready to ship");
+//                        notificationMessage.putString("content", String.format("%s is ready to ship", productName));
+//                    }
+//                    Data data = notificationMessage.build();
+//                    //Send notification after 5 seconds
+//                    OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationHelper.class)
+//                            .setInputData(data)
+//                            .setInitialDelay(5, TimeUnit.SECONDS)
+//                            .build();
+//                    WorkManager.getInstance(ItemDetailActivity.this).enqueue(notificationWork);
 
 }
